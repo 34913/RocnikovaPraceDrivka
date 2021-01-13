@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocnikovaPraceDrivka.Androi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocnikovaPraceDrivka.iOS", "RocnikovaPraceDrivka\RocnikovaPraceDrivka.iOS\RocnikovaPraceDrivka.iOS.csproj", "{84512A52-F411-40A7-8D8F-FFB3CE419039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocnikovaPraceDrivka", "RocnikovaPraceDrivka\RocnikovaPraceDrivka\RocnikovaPraceDrivka.csproj", "{9DB375D1-5D1C-4826-A6C8-6F541296AE60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocnikovaPraceDrivka", "RocnikovaPraceDrivka\RocnikovaPraceDrivka\RocnikovaPraceDrivka.csproj", "{9DB375D1-5D1C-4826-A6C8-6F541296AE60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

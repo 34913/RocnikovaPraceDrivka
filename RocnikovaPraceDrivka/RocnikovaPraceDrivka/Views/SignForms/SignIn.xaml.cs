@@ -73,12 +73,16 @@ namespace RocnikovaPraceDrivka.Views.SignForms
                     first = true;
                 }
 
+                ClearPswd();
                 await DisplayAlert("Invalid input", s, "OK");
-			}
+                return;
+            }
 
             if (register && PswdEntry.Text != PswdVerifyEntry.Text)
             {
+                ClearPswd();
                 await DisplayAlert("Different passwords", "The passwords don't match each other", "OK");
+                return;
             }
 
 			if (!IsValidEmail(EmailEntry.Text))
@@ -193,11 +197,13 @@ namespace RocnikovaPraceDrivka.Views.SignForms
             {
                 PswdVerifyEntry.IsVisible = true;
                 ChangeSignButton.Text = "Login";
+                Title = "Login";
             }
             else
             {
                 PswdVerifyEntry.IsVisible = false;
                 ChangeSignButton.Text = "Register";
+                Title = "Register";
             }
         }
 

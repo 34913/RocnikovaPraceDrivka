@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace RocnikovaPraceDrivka.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Calendar : ContentPage
+	public partial class Calendar : TabbedPage
 	{
 		public Calendar()
 		{

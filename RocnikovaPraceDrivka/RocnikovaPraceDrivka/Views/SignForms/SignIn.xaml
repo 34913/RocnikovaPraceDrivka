@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RocnikovaPraceDrivka.Views.SignForms.SignIn"
+			 NavigationPage.HasNavigationBar="true"
+			 NavigationPage.HasBackButton="true"
+			 NavigationPage.BackButtonTitle="zpět">
+
+	<ContentPage.Resources>
+			
+	</ContentPage.Resources>
+	
+	<ContentPage.ToolbarItems>
+	
+	</ContentPage.ToolbarItems>
+
+	<StackLayout Padding="10">
+
+		<StackLayout WidthRequest="200"						 
+						 HorizontalOptions="Center"
+						 VerticalOptions="CenterAndExpand">
+
+			<Entry x:Name="EmailEntry"
+				   TextChanged="Entry_TextChanged"
+				   Completed="SubmitButton_Clicked"
+				   Placeholder="Email"
+				   Keyboard="Email"/>
+			<Entry x:Name="PswdEntry"
+				   TextChanged="Entry_TextChanged"
+				   Completed="SubmitButton_Clicked"
+				   Placeholder="Password"
+				   IsPassword="True"/>
+			<Entry x:Name="PswdVerifyEntry"
+				   TextChanged="Entry_TextChanged"
+				   Completed="SubmitButton_Clicked"
+				   Placeholder="Verify password"
+				   IsVisible="false"
+				   IsPassword="True"/>
+
+			<StackLayout WidthRequest="140"
+							 HorizontalOptions="Center"
+							 VerticalOptions="Center">
+				<Button Clicked="SubmitButton_Clicked"
+							Text="Submit"
+							HeightRequest="40"/>
+				<Button x:Name="ChangeSignButton"
+							Text="Register"
+							Clicked="ChangeSignButton_Clicked"
+							HeightRequest="40"/>
+				<Button Clicked="LostAccButton_Clicked"
+							Text="Lost Account"
+							HeightRequest="40"/>
+			</StackLayout>
+
+		</StackLayout>
+
+
+
+
+	</StackLayout>
+</ContentPage>

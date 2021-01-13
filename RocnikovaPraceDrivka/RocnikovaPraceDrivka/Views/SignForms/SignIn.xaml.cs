@@ -197,13 +197,13 @@ namespace RocnikovaPraceDrivka.Views.SignForms
             {
                 PswdVerifyEntry.IsVisible = true;
                 ChangeSignButton.Text = "Login";
-                Title = "Login";
+                Title = "Register";
             }
             else
             {
                 PswdVerifyEntry.IsVisible = false;
                 ChangeSignButton.Text = "Register";
-                Title = "Register";
+                Title = "Login";
             }
         }
 

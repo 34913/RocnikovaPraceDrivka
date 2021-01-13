@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace RocnikovaPraceDrivka.Views
+namespace RocnikovaPraceDrivka.Tabs
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Calendar : ContentPage
+	public partial class CalendarClassesTabs : TabbedPage
 	{
-		public Calendar()
+		public CalendarClassesTabs()
 		{
 			InitializeComponent();
-
-
 		}
-
 	}
 }

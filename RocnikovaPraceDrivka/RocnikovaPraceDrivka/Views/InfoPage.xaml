@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RocnikovaPraceDrivka.Views.InfoPage"
+			 Title="About author"
+			 NavigationPage.HasNavigationBar="True"
+			 NavigationPage.HasBackButton="True"
+			 NavigationPage.BackButtonTitle="Back">
+	<ContentPage.Content>
+		<StackLayout HorizontalOptions="Center"
+					 VerticalOptions="CenterAndExpand">
+
+			<Image Source="ja1.png"
+				   WidthRequest="250"
+				   HorizontalOptions="Center"/>
+
+			<StackLayout WidthRequest="250"
+						 HorizontalOptions="Center"
+						 Padding="0,50,0,0">
+				<Label Text="František Holý"
+					   HorizontalOptions="Center"/>
+				<Label Text="fandaholy1@gmail.com"
+					   HorizontalOptions="Center"/>
+
+				<Label Padding="0,30,0,0">
+					<Label.FormattedText>
+						<FormattedString>
+							<FormattedString.Spans>
+								<Span Text="I am "/>
+								<Span x:Name="AgeSpan"/>
+								<Span Text=" years old student, specializing in everything about IT"/>
+							</FormattedString.Spans>
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+
+				<Label Text="I love developing apps, especially anything about c, c++ and c#"/>
+				<Label Text="This was created as my seminar work, purpose of this work was to understand xamarin.forms."/>
+				<Label Text="I was quite new at the beggining, but i would appreciate any advice anyways"/>
+
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

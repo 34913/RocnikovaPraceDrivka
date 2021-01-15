@@ -6,31 +6,42 @@ namespace RocnikovaPraceDrivka.Controls
 {
 	public class ClassesManager
 	{
-		public List<Class> List { get; private set; }
+		public List<Class> ClsList { get; private set; }
 
 		//
 
 		public ClassesManager()
 		{
-			List = new List<Class>();
+			ClsList = new List<Class>();
 		}
 
 		//
-
+		
 		public void Add(Class cls)
 		{
-			List.Add(cls);
+			ClsList.Add(cls);
 		}
 
 		public void Update(Class cls, int index)
 		{
-			List[index] = cls;
+			ClsList[index] = cls;
+		}
+
+		public void Update(Class cls, Class last)
+		{
+			ClsList[ClsList.IndexOf(last)] = cls;
+		}
+
+		public void Delete(Class cls)
+		{
+			ClsList.RemoveAt(ClsList.IndexOf(cls));
 		}
 
 		public void Delete(int index)
 		{
-			List.RemoveAt(index);
+			ClsList.RemoveAt(index);
 		}
+
 
 		//
 

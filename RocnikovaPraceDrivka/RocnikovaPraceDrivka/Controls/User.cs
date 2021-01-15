@@ -24,15 +24,19 @@ namespace RocnikovaPraceDrivka.Controls
 			}
 		}
 
+		public string Email { get; private set; }
+
 		//
 
 		public User(string name)
 		{
+			Email = name;
 			Name = name;
 		}
 
-		public User(int id, string name)
+		public User(int id, string email)
 		{
+			Email = name;
 			Name = name;
 			Id = id;
 		}

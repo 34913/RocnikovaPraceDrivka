@@ -50,6 +50,10 @@ namespace RocnikovaPraceDrivka.Controls
 
 		//
 
+
+		/// <summary>
+		/// deletes user from sql table
+		/// </summary>
 		public void Delete()
 		{
 

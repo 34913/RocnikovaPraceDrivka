@@ -1,9 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-			xmlns:local="clr-namespace:RocnikovaPraceDrivka.Views"
-			x:Class="RocnikovaPraceDrivka.Views.Calendar"
-			Title="Calendar">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:local="clr-namespace:RocnikovaPraceDrivka.Views"
+			 x:Class="RocnikovaPraceDrivka.Views.Calendar"
+			 Title="Calendar"
+			 NavigationPage.HasNavigationBar="false">
 
+	<ScrollView Orientation="Horizontal">
+		<CollectionView x:Name="list"
+						BackgroundColor="Black">
+
+			<CollectionView.ItemsLayout>
+				<LinearItemsLayout 
+					Orientation="Vertical"
+					ItemSpacing="0"/>
+			</CollectionView.ItemsLayout>
+
+			<CollectionView.Header>
+				<Frame Margin="0,20,0,20" 
+					   BackgroundColor="LightGray">
+					<Label Text="List of your classes"
+							   TextColor="White"/>
+				</Frame>
+			</CollectionView.Header>
+
+			<CollectionView.EmptyView>
+				<Frame>
+					<Label Text="No classes created yet"
+						   HorizontalOptions="Center" 
+						   VerticalOptions="Center"
+						   TextColor="White"/>
+				</Frame>
+			</CollectionView.EmptyView>
+
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<Frame HeightRequest="50"
+						   CornerRadius="5"
+						   BackgroundColor="LightGray">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="100"/>
+							</Grid.ColumnDefinitions>
+
+							<Label Text="{Binding .}"
+								   TextColor="White"
+								   Grid.Column="0"
+								   VerticalTextAlignment="Center"
+								   HorizontalTextAlignment="Center"/>
+
+							
+
+						</Grid>
+					</Frame>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+
+
+
+
+		</CollectionView>
+
+	</ScrollView>
 
 </ContentPage>

@@ -5,11 +5,19 @@
 			 NavigationPage.HasNavigationBar="true"
 			 NavigationPage.HasBackButton="false">
 
+	<ContentPage.ToolbarItems>
+		<ToolbarItem IconImageSource="InfoIcon2.png"
+					 Clicked="IconToolbarItem_Clicked"/>
+	</ContentPage.ToolbarItems>
+	
 	<StackLayout Padding="10">
 
-		<StackLayout WidthRequest="200"						 
-						 HorizontalOptions="Center"
-						 VerticalOptions="CenterAndExpand">
+		<StackLayout WidthRequest="200"
+					 HorizontalOptions="Center"
+					 VerticalOptions="CenterAndExpand">
+			<Image Source="user2.png"
+				   HorizontalOptions="Center"
+				   WidthRequest="250"/>
 
 			<Entry x:Name="EmailEntry"
 				   TextChanged="Entry_TextChanged"
@@ -39,8 +47,8 @@
 							Clicked="ChangeSignButton_Clicked"
 							HeightRequest="40"/>
 				<Button Clicked="LostAccButton_Clicked"
-							Text="Lost Account"
-							HeightRequest="40"/>
+						Text="Lost Account"
+						HeightRequest="40"/>
 			</StackLayout>
 
 		</StackLayout>

@@ -130,7 +130,17 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="InfoIcon1.png" />
+    <Content Include="InfoIcon2.png" />
+    <Content Include="ja1.jpg" />
+    <Content Include="ja1.png" />
+    <Content Include="ja2.jpg" />
+    <Content Include="ja2.png" />
+    <Content Include="neco.gif" />
     <Content Include="Properties\Default.rd.xml" />
+    <Content Include="user1.png" />
+    <Content Include="user2.png" />
+    <Content Include="xd.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -143,6 +153,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Xamarin.FFImageLoading">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.11" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />

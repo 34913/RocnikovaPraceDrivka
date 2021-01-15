@@ -7,16 +7,4 @@
 			NavigationPage.HasBackButton="True"
 			NavigationPage.BackButtonTitle="Back">
 
-	<NavigationPage Title="Calendar">
-		<x:Arguments>
-			<local:Calendar/>
-		</x:Arguments>
-	</NavigationPage>
-
-	<NavigationPage Title="CLasses">
-		<x:Arguments>
-			<local:ClassesList/>
-		</x:Arguments>
-	</NavigationPage>
-
 </TabbedPage>

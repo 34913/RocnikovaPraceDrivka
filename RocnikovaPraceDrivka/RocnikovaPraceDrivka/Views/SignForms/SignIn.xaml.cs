@@ -15,9 +15,20 @@ namespace RocnikovaPraceDrivka.Views.SignForms
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SignIn : ContentPage
 	{
+
+        /// <summary>
+        /// boolean val, if true, the user has not been logged in on this device
+        /// </summary>
         private bool register;
 
+        /// <summary>
+        /// register properties key
+        /// </summary>
         protected string registeredKey = "registerKey";
+        
+        /// <summary>
+        /// login properties key
+        /// </summary>
         protected string loginNameKey = "loginNameKey";
 
         //
@@ -39,6 +50,8 @@ namespace RocnikovaPraceDrivka.Views.SignForms
 		}
 
         //
+
+        // systems calling
 
 		private async void SubmitButton_Clicked(object sender, EventArgs e)
 		{
@@ -110,8 +123,12 @@ namespace RocnikovaPraceDrivka.Views.SignForms
 
                 ChangeModeAction();
 
-                if (Application.Current.MainPage is NavigationPage)
-                    await (Application.Current.MainPage as NavigationPage).PushAsync(new Calendar());
+                if (!(Application.Current.MainPage is NavigationPage)) {
+                    string currentFile = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName();
+                    int currentLine = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileLineNumber();
+                    throw new Exception(string.Format("file {0}, line {1}", currentFile, currentLine));
+                }
+                await Navigation.PushAsync(new RocnikovaPraceDrivka.Tabs.CalendarClassesTabs(user));
             }
             ClearPswd();
 		}
@@ -129,8 +146,41 @@ namespace RocnikovaPraceDrivka.Views.SignForms
             await DisplayAlert("well", "tak to máš asi zatím smůlu", "OK");
 		}
 
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Entry obj;
+            try
+            {
+                obj = (Entry)sender;
+            }
+            catch
+            {
+                return;
+            }
+
+            string s = obj.Text;
+            if (s.Length == 0)
+                return;
+
+            char c = s[s.Length - 1];
+
+            if (!(char.IsLetterOrDigit(c) || (obj == EmailEntry && (c == '@' || c == '.'))))
+            {
+                obj.Text = s.Remove(s.Length - 1);
+                //await DisplayAlert("Invalid character", "Use only letter and numbers", "OK");
+            }
+        }
+
+        private async void IconToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new InfoPage());
+        }
+
         //
 
+        /// <summary>
+        /// called to get info about previous successuful logins
+        /// </summary>
         private void SignFunc()
 		{
             if (Application.Current.Properties.ContainsKey(registeredKey))
@@ -147,6 +197,11 @@ namespace RocnikovaPraceDrivka.Views.SignForms
             }
         }
 
+        /// <summary>
+        /// Verify if given string is email
+        /// </summary>
+        /// <param name="email">string of email form to verify</param>
+        /// <returns>true if email is truly functional email</returns>
         private bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -191,6 +246,9 @@ namespace RocnikovaPraceDrivka.Views.SignForms
             }
         }
 
+        /// <summary>
+        /// function changing numerous names after changing login/register mode
+        /// </summary>
         private void ChangeModeAction()
 		{
             if (register)
@@ -207,35 +265,14 @@ namespace RocnikovaPraceDrivka.Views.SignForms
             }
         }
 
+        /// <summary>
+        /// clears text inside entry forms, handfull after login, to clear password inputs
+        /// </summary>
         private void ClearPswd()
 		{
             PswdEntry.Text = string.Empty;
             PswdVerifyEntry.Text = string.Empty;
 		}
-        
-		private void Entry_TextChanged(object sender, TextChangedEventArgs e)
-		{
-            Entry obj;
-            try
-            {
-                obj = (Entry)sender;
-            }
-            catch
-			{
-                return;
-			}
 
-            string s = obj.Text;
-            if (s.Length == 0)
-                return;
-
-            char c = s[s.Length - 1];
-
-			if (!(char.IsLetterOrDigit(c) || (obj == EmailEntry && (c == '@' || c == '.'))))
-			{
-                obj.Text = s.Remove(s.Length - 1);
-                //await DisplayAlert("Invalid character", "Use only letter and numbers", "OK");
-            }
-		}
 	}
 }

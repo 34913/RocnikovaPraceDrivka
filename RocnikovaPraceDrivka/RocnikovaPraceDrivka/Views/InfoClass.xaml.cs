@@ -7,21 +7,28 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using RocnikovaPraceDrivka.Controls;
+
 namespace RocnikovaPraceDrivka.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Calendar : ContentPage
+	public partial class InfoClass : ContentPage
 	{
-		public List<string> DaysOfWeek { get; set; } = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
-
-
-
-		public Calendar()
+		public InfoClass(Class cls)
 		{
 			InitializeComponent();
 
-			list.ItemsSource = DaysOfWeek;
+			NameLabel.BindingContext = cls;
+			DescLabel.BindingContext = cls;
 		}
 
+		protected override void OnAppearing()
+		{
+
+
+
+
+			base.OnAppearing();
+		}
 	}
 }

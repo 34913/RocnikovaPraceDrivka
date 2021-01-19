@@ -31,18 +31,6 @@ namespace RocnikovaPraceDrivka.Views
 
 			list.ItemsSource = Manager.ClsList;
 
-
-			//MyClassButton[] array = (MyClassButton[])AllStuff.Children.OfType<MyClassButton>();
-
-			MyClassButton[] array = AllStuff.Children.Where(p => p is MyClassButton) as MyClassButton[];
-
-
-
-			//for (int i = 0; i < Manager.ClsList.Count; i++)
-			//{
-			//	array[i].ClassItem = Manager.ClsList[i];
-			//}
-
 			base.OnAppearing();
 		}
 
@@ -58,16 +46,14 @@ namespace RocnikovaPraceDrivka.Views
 			Manager.Add(new Class("8.C", "hajzlíci"));
 		}
 
-		private async void Alert(MyClassButton b)
-		{
-			await DisplayAlert("button", b.Text, "OK");
-		}
-
 		private async void DetailsButton_Clicked(object sender, EventArgs e)
 		{
 			MyClassButton obj = sender as MyClassButton;
 
 			await DisplayAlert(obj.ClassItem.Name, obj.ClassItem.Desc, "OK");
+
+			await Navigation.PushAsync(new InfoClass(obj.ClassItem));
 		}
+
 	}
 }

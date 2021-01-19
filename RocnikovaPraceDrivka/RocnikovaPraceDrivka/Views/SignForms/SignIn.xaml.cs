@@ -109,7 +109,7 @@ namespace RocnikovaPraceDrivka.Views.SignForms
                 if (register)
                     user.Add();
                 else
-					user = User.Load();
+					user.Load();
 
                 register = false;
 

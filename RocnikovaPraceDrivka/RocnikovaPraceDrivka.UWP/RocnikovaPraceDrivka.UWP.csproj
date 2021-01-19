@@ -130,6 +130,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Class.png" />
     <Content Include="InfoIcon1.png" />
     <Content Include="InfoIcon2.png" />
     <Content Include="ja1.jpg" />

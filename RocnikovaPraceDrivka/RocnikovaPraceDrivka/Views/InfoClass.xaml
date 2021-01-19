@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RocnikovaPraceDrivka.Views.InfoClass">
+    <ContentPage.Content >
+		<StackLayout Padding="20">
+			<StackLayout Orientation="Horizontal">
+				<Image Source="Class.png"
+					   WidthRequest="70"/>
+				<StackLayout Orientation="Vertical">
+					<Label x:Name="NameLabel"
+						   Text="{Binding Name}"
+						   FontSize="24"/>
+					<Label x:Name="DescLabel"
+						   Text="{Binding Desc}"
+						   FontSize="18"/>
+				</StackLayout>
+			</StackLayout>
+			
+			
+			
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

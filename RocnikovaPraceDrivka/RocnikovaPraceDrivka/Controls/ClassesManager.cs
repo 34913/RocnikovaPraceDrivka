@@ -42,10 +42,6 @@ namespace RocnikovaPraceDrivka.Controls
 			ClsList.RemoveAt(index);
 		}
 
-
 		//
-
-
-
 	}
 }

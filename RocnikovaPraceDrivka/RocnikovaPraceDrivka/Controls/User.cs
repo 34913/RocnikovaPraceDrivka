@@ -51,10 +51,9 @@ namespace RocnikovaPraceDrivka.Controls
 
 		}
 
-		public static User Load()
+		public void Load()
 		{
 
-			return null;
 		}
 
 		public void Delete()

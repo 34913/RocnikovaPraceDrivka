@@ -19,6 +19,7 @@
 						 HorizontalOptions="Center"
 						 Padding="0,50,0,0">
 				<Label Text="František Holý"
+					   FontSize="22"
 					   HorizontalOptions="Center"/>
 				<Label Text="fandaholy1@gmail.com"
 					   HorizontalOptions="Center"/>

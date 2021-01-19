@@ -18,27 +18,27 @@
 
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
-					<Frame HeightRequest="50">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="100"/>
-								<ColumnDefinition Width="1"/>
-							</Grid.ColumnDefinitions>
+					<Grid HeightRequest="30"
+						  VerticalOptions="FillAndExpand">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="100"/>
+							<ColumnDefinition Width="1"/>
+						</Grid.ColumnDefinitions>
 
-							<Label Text="{Binding .}"
+						<Label Text="{Binding .}"
 								   TextColor="White"
 								   Grid.Column="0"
 								   WidthRequest="50"
 								   VerticalTextAlignment="Center"
 								   HorizontalTextAlignment="Center"/>
 
-							<BoxView WidthRequest="1" 
+						<BoxView WidthRequest="1"
+									 HeightRequest="50"
 									 VerticalOptions="StartAndExpand"
 									 Grid.Column="1"
 									 Color="White"/>
 
-						</Grid>
-					</Frame>
+					</Grid>
 				</DataTemplate>
 			</CollectionView.ItemTemplate>
 

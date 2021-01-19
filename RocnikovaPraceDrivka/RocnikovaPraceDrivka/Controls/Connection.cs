@@ -277,18 +277,17 @@ namespace RocnikovaPraceDrivka.Controls
             var profiles = Connectivity.ConnectionProfiles;
 
             if (current == NetworkAccess.Internet)
-                NetConnect = true;
+                Connected = true;
             else
-                NetConnect = false;
+                Connected = false;
 
             if (profiles.Contains(ConnectionProfile.WiFi))
                 ConnectionType = profiles.FirstOrDefault().ToString();
             //else
             //    ConnectionType = profiles.FirstOrDefault().ToString();
 
-            return NetConnect;
+            return Connected;
         }
-
 
     }
 }

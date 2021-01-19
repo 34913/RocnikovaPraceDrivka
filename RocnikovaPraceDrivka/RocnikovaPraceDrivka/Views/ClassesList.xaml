@@ -8,73 +8,73 @@
 			 NavigationPage.HasBackButton="False"
 			 NavigationPage.BackButtonTitle="False">
 
-	<StackLayout x:Name="AllStuff">
+	<CollectionView x:Name="list"
+					BackgroundColor="Black">
 
-		<CollectionView x:Name="list"
-						BackgroundColor="Black">
-
-			<CollectionView.ItemsLayout>
-				<LinearItemsLayout 
+		<CollectionView.ItemsLayout>
+			<LinearItemsLayout 
 					Orientation="Vertical"
-					ItemSpacing="10"/>
-			</CollectionView.ItemsLayout>
+					ItemSpacing="2"/>
+		</CollectionView.ItemsLayout>
 
-			<CollectionView.Header>
-				<Frame Margin="0,20,0,20" 
-						   Padding="8"
-						   CornerRadius="5"
-						   BackgroundColor="Gray">
-					<Label Text="List of your classes"
-							   TextColor="White"/>
-				</Frame>
-			</CollectionView.Header>
+		<CollectionView.Header>
+			<Frame Margin="0,20,0,20" 
+				   Padding="8"
+				   CornerRadius="5"
+				   HorizontalOptions="Center">
+				<Label Text="List of your classes"
+					   TextColor="White"/>
+			</Frame>
+		</CollectionView.Header>
 
-			<CollectionView.EmptyView>
-				<Frame>
-					<Label Text="No classes created yet"
+		<CollectionView.EmptyView>
+			<Frame>
+				<Label Text="No classes created yet"
 						   HorizontalOptions="Center" 
 						   VerticalOptions="Center"
 						   TextColor="White"/>
-				</Frame>
-			</CollectionView.EmptyView>
+			</Frame>
+		</CollectionView.EmptyView>
 
-			<CollectionView.ItemTemplate>
-				<DataTemplate>
-					<Frame HeightRequest="40"
-						   CornerRadius="5"
-						   BackgroundColor="Gray">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="2*"/>
-								<ColumnDefinition Width="*"/>
-							</Grid.ColumnDefinitions>
+		<CollectionView.ItemTemplate>
+			<DataTemplate>
+				<Frame HeightRequest="40"
+					   CornerRadius="5"
+					   BackgroundColor="Gray">
+					
+					<Grid VerticalOptions="FillAndExpand">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="2*"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
 
-
-							<Label Text="{Binding Name}"
+						<Label Text="{Binding Name}"
 								   TextColor="White"
 								   Grid.Column="0"
 								   VerticalTextAlignment="Center"
 								   HorizontalTextAlignment="Center"/>
 
-							<Label Text="{Binding Desc}"
+						<Label Text="{Binding Desc}"
 								   TextColor="White"
 								   Grid.Column="1"
 								   HorizontalTextAlignment="Center"
 								   VerticalTextAlignment="Center"/>
 
-							<myE:MyClassButton Text="Details"
-											   Grid.Column="2"
-											   Clicked="DetailsButton_Clicked"/>
+						<myE:MyClassButton Text="Details"
+										   Grid.Column="2"
+										   VerticalOptions="FillAndExpand"
+										   WidthRequest="25"
+										   Clicked="DetailsButton_Clicked"
+										   ClassItem="{Binding .}"/>
 
-						</Grid>
-					</Frame>
-				</DataTemplate>
-			</CollectionView.ItemTemplate>
+					</Grid>
+				</Frame>
+			</DataTemplate>
+		</CollectionView.ItemTemplate>
 
 
 
 
-		</CollectionView>
-	</StackLayout>
+	</CollectionView>
 </ContentPage>

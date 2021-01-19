@@ -23,7 +23,7 @@
 				<Frame Margin="0,20,0,20" 
 						   Padding="8"
 						   CornerRadius="5"
-						   BackgroundColor="LightGray">
+						   BackgroundColor="Gray">
 					<Label Text="List of your classes"
 							   TextColor="White"/>
 				</Frame>
@@ -40,9 +40,9 @@
 
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
-					<Frame HeightRequest="50"
+					<Frame HeightRequest="40"
 						   CornerRadius="5"
-						   BackgroundColor="LightGray">
+						   BackgroundColor="Gray">
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
@@ -62,7 +62,6 @@
 								   Grid.Column="1"
 								   HorizontalTextAlignment="Center"
 								   VerticalTextAlignment="Center"/>
-
 
 							<myE:MyClassButton Text="Details"
 											   Grid.Column="2"

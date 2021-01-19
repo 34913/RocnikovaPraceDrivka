@@ -16,40 +16,26 @@
 					ItemSpacing="0"/>
 			</CollectionView.ItemsLayout>
 
-			<CollectionView.Header>
-				<Frame Margin="0,20,0,20" 
-					   BackgroundColor="LightGray">
-					<Label Text="List of your classes"
-							   TextColor="White"/>
-				</Frame>
-			</CollectionView.Header>
-
-			<CollectionView.EmptyView>
-				<Frame>
-					<Label Text="No classes created yet"
-						   HorizontalOptions="Center" 
-						   VerticalOptions="Center"
-						   TextColor="White"/>
-				</Frame>
-			</CollectionView.EmptyView>
-
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
-					<Frame HeightRequest="50"
-						   CornerRadius="5"
-						   BackgroundColor="LightGray">
+					<Frame HeightRequest="50">
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="100"/>
+								<ColumnDefinition Width="1"/>
 							</Grid.ColumnDefinitions>
 
 							<Label Text="{Binding .}"
 								   TextColor="White"
 								   Grid.Column="0"
+								   WidthRequest="50"
 								   VerticalTextAlignment="Center"
 								   HorizontalTextAlignment="Center"/>
 
-							
+							<BoxView WidthRequest="1" 
+									 VerticalOptions="StartAndExpand"
+									 Grid.Column="1"
+									 Color="White"/>
 
 						</Grid>
 					</Frame>

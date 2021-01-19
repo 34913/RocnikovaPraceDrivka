@@ -12,6 +12,8 @@ namespace RocnikovaPraceDrivka
 
 			MainPage = new NavigationPage(new RocnikovaPraceDrivka.Views.SignForms.SignIn());
 
+
+
 			//((NavigationPage)MainPage).BarBackgroundColor = Color.DarkGray;
 		}
 

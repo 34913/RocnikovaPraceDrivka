@@ -26,6 +26,10 @@ namespace RocnikovaPraceDrivka.Controls
 
 		public string Email { get; private set; }
 
+		protected Connection con;
+
+		protected string TableName { get; } = "UsersElektronickaDrivka";
+
 		//
 
 		public User(string name)
@@ -34,11 +38,10 @@ namespace RocnikovaPraceDrivka.Controls
 			Name = name;
 		}
 
-		public User(int id, string email)
+		public User(string name, string email)
 		{
-			Email = name;
 			Name = name;
-			Id = id;
+			Email = email;
 		}
 
 		//
@@ -48,9 +51,10 @@ namespace RocnikovaPraceDrivka.Controls
 
 		}
 
-		public void Load()
+		public static User Load()
 		{
 
+			return null;
 		}
 
 		public void Delete()

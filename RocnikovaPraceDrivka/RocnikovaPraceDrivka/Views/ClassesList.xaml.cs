@@ -21,13 +21,6 @@ namespace RocnikovaPraceDrivka.Views
 		public ClassesList()
 		{
 			InitializeComponent();
-
-			MyClassButton[] array = (MyClassButton[])AllStuff.Children.OfType<MyClassButton>();
-
-			for(int i = 0; i < array.Length; i++)
-			{
-				array[i].ClassItem = Manager.ClsList[i]; 
-			}
 		}
 
 		protected override void OnAppearing()
@@ -37,6 +30,18 @@ namespace RocnikovaPraceDrivka.Views
 			LoadClasses();
 
 			list.ItemsSource = Manager.ClsList;
+
+
+			//MyClassButton[] array = (MyClassButton[])AllStuff.Children.OfType<MyClassButton>();
+
+			MyClassButton[] array = AllStuff.Children.Where(p => p is MyClassButton) as MyClassButton[];
+
+
+
+			//for (int i = 0; i < Manager.ClsList.Count; i++)
+			//{
+			//	array[i].ClassItem = Manager.ClsList[i];
+			//}
 
 			base.OnAppearing();
 		}
@@ -51,6 +56,11 @@ namespace RocnikovaPraceDrivka.Views
 			Manager.Add(new Class("6.C", "hajzlíci"));
 			Manager.Add(new Class("7.C", "hajzlíci"));
 			Manager.Add(new Class("8.C", "hajzlíci"));
+		}
+
+		private async void Alert(MyClassButton b)
+		{
+			await DisplayAlert("button", b.Text, "OK");
 		}
 
 		private async void DetailsButton_Clicked(object sender, EventArgs e)

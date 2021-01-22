@@ -7,4 +7,13 @@
 			NavigationPage.HasBackButton="True"
 			NavigationPage.BackButtonTitle="Back">
 
+	<TabbedPage.ToolbarItems>
+		<ToolbarItem 
+			x:Name="InfoToolbarItem"
+			Clicked="InfoToolbarItem_Clicked"/>
+		<ToolbarItem 
+			x:Name="DayNightToolbarItem"
+			Clicked="DayNightToolbarItem_Clicked"/>
+	</TabbedPage.ToolbarItems>
+
 </TabbedPage>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RocnikovaPraceDrivka.Popup.AddLessonPopup">
+	<ContentPage.Content>
+		<StackLayout Padding="50"
+					 Orientation="Vertical">
+			<Entry x:Name="NameEntry"
+				   Placeholder="Name"
+				   FontSize="20"/>
+			<Label Text="Start of lesson"
+				   FontSize="Small"/>
+			<TimePicker x:Name="StartTimePicker"/>
+
+			<Label Text="End of lesson"
+				   FontSize="Small"/>
+			<TimePicker x:Name="EndTimePicker"/>
+			<Picker x:Name="DayPicker"
+					Title="Day of week"/>
+			
+			<StackLayout VerticalOptions="EndAndExpand"
+						 HorizontalOptions="CenterAndExpand"
+						 Orientation="Horizontal">
+				<Button Text="Cancel"
+						x:Name="CancelButton"/>
+				<Button Text="OK"
+						x:Name="OkButton"/>
+			</StackLayout>
+		</StackLayout>
+    </ContentPage.Content>
+</ContentPage>

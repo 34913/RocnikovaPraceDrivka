@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RocnikovaPraceDrivka.Popup.AddClassPopup">
+    <ContentPage.Content>
+		<StackLayout Padding="50"
+					 Orientation="Vertical">
+			<Entry x:Name="NameEntry"
+				   Placeholder="Name"
+				   FontSize="20"/>
+
+			<Entry x:Name="DescEntry"
+				   Placeholder="Description"
+				   FontSize="20"/>
+
+			<StackLayout VerticalOptions="EndAndExpand"
+						 HorizontalOptions="CenterAndExpand"
+						 Orientation="Horizontal">
+				<Button Text="Cancel"
+						x:Name="CancelButton"/>
+				<Button Text="OK"
+						x:Name="OkButton"/>
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

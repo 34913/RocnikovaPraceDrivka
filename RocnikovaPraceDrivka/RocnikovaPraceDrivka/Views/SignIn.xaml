@@ -1,21 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RocnikovaPraceDrivka.Views.SignForms.SignIn"
+             x:Class="RocnikovaPraceDrivka.Views.SignIn"
 			 NavigationPage.HasNavigationBar="true"
 			 NavigationPage.HasBackButton="false">
 
 	<ContentPage.ToolbarItems>
-		<ToolbarItem IconImageSource="InfoIcon2.png"
+		<ToolbarItem x:Name="InfoToolbarItem"
 					 Clicked="IconToolbarItem_Clicked"/>
+		<ToolbarItem x:Name="DayNightToolbarItem"
+					 Clicked="DayNightToolbarItem_Clicked"/>
 	</ContentPage.ToolbarItems>
 	
-	<StackLayout Padding="10">
+	<StackLayout Padding="10"
+				 x:Name="content">
 
 		<StackLayout WidthRequest="200"
 					 HorizontalOptions="Center"
 					 VerticalOptions="CenterAndExpand">
-			<Image Source="user2.png"
+			<Image x:Name="UserImage"
 				   HorizontalOptions="Center"
 				   WidthRequest="250"/>
 

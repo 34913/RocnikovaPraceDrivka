@@ -7,24 +7,41 @@
 			 NavigationPage.HasNavigationBar="True"
 			 NavigationPage.HasBackButton="True"
 			 NavigationPage.BackButtonTitle="Back">
-	<ContentPage.Content>
-		<StackLayout HorizontalOptions="Center"
-					 VerticalOptions="CenterAndExpand">
 
-			<Image Source="ja1.png"
+	<ContentPage.ToolbarItems>
+		<ToolbarItem 
+			x:Name="DayNightToolbarItem"
+			Clicked="DayNightToolbarItem_Clicked"/>
+	</ContentPage.ToolbarItems>
+
+	<ContentPage.Content>
+		<StackLayout 
+			HorizontalOptions="Center"
+			VerticalOptions="CenterAndExpand"
+			x:Name="content">
+
+			<Image Source="InfoAuthor.png"
 				   WidthRequest="250"
 				   HorizontalOptions="Center"/>
 
-			<StackLayout WidthRequest="250"
-						 HorizontalOptions="Center"
-						 Padding="0,50,0,0">
-				<Label Text="František Holý"
-					   FontSize="22"
-					   HorizontalOptions="Center"/>
-				<Label Text="fandaholy1@gmail.com"
-					   HorizontalOptions="Center"/>
+			<StackLayout 
+				WidthRequest="250"
+				HorizontalOptions="Center"
+				Padding="0,50,0,0">
+				
+				<Label 
+					x:Name="NameLabel"
+					Text="František Holý"
+					FontSize="22"
+					HorizontalOptions="Center"/>
+				<Label 
+					x:Name="EmailLabel"
+					Text="fandaholy1@gmail.com"
+					HorizontalOptions="Center"/>
 
-				<Label Padding="0,30,0,0">
+				<Label 
+					Padding="0,30,0,0"
+					x:Name="AgeLabel">
 					<Label.FormattedText>
 						<FormattedString>
 							<FormattedString.Spans>
@@ -36,9 +53,12 @@
 					</Label.FormattedText>
 				</Label>
 
-				<Label Text="I love developing apps, especially anything about c, c++ and c#"/>
-				<Label Text="This was created as my seminar work, purpose of this work was to understand xamarin.forms."/>
-				<Label Text="I was quite new at the beggining, but i would appreciate any advice anyways"/>
+				<Label 
+					x:Name="extrasLabel">
+					I love developing apps, especially anything about c, c++ and c#
+This was created as my seminar work, purpose of this work was to understand xamarin.forms.
+I was quite new at the beggining, but i would appreciate any advice anyways
+				</Label>
 
 			</StackLayout>
 		</StackLayout>

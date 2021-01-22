@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 
 namespace RocnikovaPraceDrivka.Controls
 {
 	public class Class
 	{
+		public ObservableCollection<Student> StudentsList { get; set; } = new ObservableCollection<Student>();
+
+		public ObservableCollection<Lesson> LessonsList { get; set; } = new ObservableCollection<Lesson>();
+
+		//
+
 		private int year;
 		private char type;
 
@@ -19,7 +27,10 @@ namespace RocnikovaPraceDrivka.Controls
 		{
 			set
 			{
-				string[] array = value.Split('.');
+				string str = value;
+				if (!str.Contains("."))
+					throw new Exception("wrong parse");
+				string[] array = str.Split('.');
 
 				if (!(int.TryParse(array[0], out year) && char.TryParse(array[1], out type)))
 					throw new Exception("wrong parse");
@@ -38,7 +49,6 @@ namespace RocnikovaPraceDrivka.Controls
 		{
 			Name = name;
 			Desc = desc;
-
 		}
 
 		public Class(int year, char type, string desc)
@@ -49,19 +59,6 @@ namespace RocnikovaPraceDrivka.Controls
 		}
 
 		//
-
-
-		/// <summary>
-		/// deletes user from sql table
-		/// </summary>
-		public void Delete()
-		{
-
-		}
-
-
-
-
 
 	}
 }

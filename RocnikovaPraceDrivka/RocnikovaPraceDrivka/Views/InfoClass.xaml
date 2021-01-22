@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RocnikovaPraceDrivka.Views.InfoClass">
-    <ContentPage.Content >
+	<ContentPage.Content >
 		<StackLayout Padding="20">
-			<StackLayout Orientation="Horizontal">
+			<StackLayout Orientation="Horizontal"
+						 Padding="25,0,0,0">
 				<Image Source="Class.png"
 					   WidthRequest="70"/>
 				<StackLayout Orientation="Vertical">
@@ -15,10 +16,145 @@
 						   Text="{Binding Desc}"
 						   FontSize="18"/>
 				</StackLayout>
+				<StackLayout Padding="40,0,0,0"
+							 Orientation="Vertical">
+					<Label>
+						<Label.FormattedText>
+							<FormattedString>
+								<FormattedString.Spans>
+									<Span Text="This class has "/>
+									<Span x:Name="StudentsCountSpan"/>
+									<Span Text=" student"/>
+									<Span x:Name="EndStudentsSpan"/>
+								</FormattedString.Spans>
+							</FormattedString>
+						</Label.FormattedText>
+					</Label>
+					<Label>
+						<Label.FormattedText>
+							<FormattedString>
+								<FormattedString.Spans>
+									<Span x:Name="LessonsWeeklyCountSpan"/>
+									<Span Text=" lesson"/>
+									<Span x:Name="EndHoursSpan"/>
+									<Span Text=" weekly"/>
+								</FormattedString.Spans>
+							</FormattedString>
+						</Label.FormattedText>
+					</Label>
+				</StackLayout>
 			</StackLayout>
-			
-			
-			
+
+			<Grid Padding="0,20,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="40"/>
+				</Grid.RowDefinitions>
+
+				<CollectionView x:Name="Students"
+								Grid.Column="0"
+								Grid.Row="0">
+
+					<CollectionView.ItemsLayout>
+						<LinearItemsLayout Orientation="Vertical"
+										   ItemSpacing="2"/>
+					</CollectionView.ItemsLayout>
+
+					<CollectionView.Header>
+						<Label Text="Students in this class:"
+							   VerticalOptions="Center"
+							   HorizontalOptions="Center"
+							   TextColor="White"/>
+					</CollectionView.Header>
+
+					<CollectionView.EmptyView>
+						<Frame>
+							<Label Text="This class has no students"
+								   HorizontalOptions="Center"
+								   VerticalOptions="Center"
+								   TextColor="White"/>
+						</Frame>
+					</CollectionView.EmptyView>
+
+					<CollectionView.ItemTemplate>
+						<DataTemplate>
+							<Grid HeightRequest="20">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="10"/>
+								</Grid.ColumnDefinitions>
+								<Label Text="{Binding Name}"
+									   Grid.Column="0"/>
+								<Button Text="-"
+										WidthRequest="10"
+										Grid.Column="1"/>
+							</Grid>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+
+				<CollectionView x:Name="Lessons"
+								Grid.Column="1"
+								Grid.Row="0">
+
+					<CollectionView.ItemsLayout>
+						<LinearItemsLayout Orientation="Vertical"
+										   ItemSpacing="2"/>
+					</CollectionView.ItemsLayout>
+
+					<CollectionView.Header>
+						<Label Text="Lessons with this class:"
+							   VerticalOptions="Center"
+							   HorizontalOptions="Center"
+							   TextColor="White"/>
+					</CollectionView.Header>
+
+					<CollectionView.EmptyView>
+						<Frame>
+							<Label Text="This class has no lessons"
+								   HorizontalOptions="Center"
+								   VerticalOptions="Center"
+								   TextColor="White"/>
+						</Frame>
+					</CollectionView.EmptyView>
+
+					<CollectionView.ItemTemplate>
+						<DataTemplate>
+							<Grid HeightRequest="20">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="10"/>
+								</Grid.ColumnDefinitions>
+								<Label Text="{Binding Name}"
+									   Grid.Column="0"/>
+								<Button Text="-"
+										WidthRequest="10"
+										Grid.Column="1"/>
+							</Grid>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+
+				<Button Text="Add student"
+						Clicked="AddStudentButton_Clicked"
+						HeightRequest="40"
+						Grid.Column="0"
+						Grid.Row="1"
+						HorizontalOptions="Center"/>
+				<Button Text="Add lesson"
+						Clicked="AddLessonButton_Clicked"
+						HeightRequest="40"
+						Grid.Column="1"
+						Grid.Row="1"
+						HorizontalOptions="Center"/>
+
+			</Grid>
+
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

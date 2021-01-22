@@ -10,11 +10,7 @@ namespace RocnikovaPraceDrivka
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage(new RocnikovaPraceDrivka.Views.SignForms.SignIn());
-
-
-
-			//((NavigationPage)MainPage).BarBackgroundColor = Color.DarkGray;
+			MainPage = new NavigationPage(new Views.SignIn());
 		}
 
 		protected override void OnStart()

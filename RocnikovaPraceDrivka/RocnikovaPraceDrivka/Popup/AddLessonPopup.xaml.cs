@@ -7,26 +7,18 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using RocnikovaPraceDrivka.Controls;
 using RocnikovaPraceDrivka.Handles;
 
-namespace RocnikovaPraceDrivka.Views
+namespace RocnikovaPraceDrivka.Popup
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Calendar : ContentPage
+	public partial class AddLessonPopup : ContentPage
 	{
-		private User user;
-
-		public Calendar(User user)
+		public AddLessonPopup()
 		{
 			InitializeComponent();
-			this.user = user;
-			list.ItemsSource = DOW.Names;
-		
-			
-		
-		
-		}
 
+			DayPicker.ItemsSource = DOW.Names;
+		}
 	}
 }

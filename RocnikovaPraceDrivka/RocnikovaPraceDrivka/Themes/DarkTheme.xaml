@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RocnikovaPraceDrivka.Themes.DarkTheme">
+
+	<Color x:Key="background">#000000</Color>
+	<Color x:Key="mainLabel">#FFFFFF</Color>
+	<Color x:Key="navigation">#111111</Color>
+	<Color x:Key="navigationText">#FFFFFF</Color>
+
+</ResourceDictionary>

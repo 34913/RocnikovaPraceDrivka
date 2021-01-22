@@ -27,7 +27,49 @@ namespace RocnikovaPraceDrivka.Views
 
 			AgeSpan.Text = age.ToString();
 
+			ChangeLightMode();
+
 			base.OnAppearing();
+		}
+
+		private void DayNightToolbarItem_Clicked(object sender, EventArgs e)
+		{
+			if (Handles.DayNightHandle.Day)
+				Handles.DayNightHandle.Night = true;
+			else
+				Handles.DayNightHandle.Day = true;
+			ChangeLightMode();
+		}
+
+		private void ChangeLightMode()
+		{
+			if (Handles.DayNightHandle.Day)
+			{
+				
+				DayNightToolbarItem.IconImageSource = "Day.png";
+
+				//
+
+				var navigationPage = Application.Current.MainPage as NavigationPage;
+				navigationPage.BarBackgroundColor = Color.White;
+
+				content.BackgroundColor = Color.White;
+			}
+			else
+			{
+				NameLabel.TextColor = Color.White;
+				EmailLabel.TextColor = Color.White;
+				AgeLabel.TextColor = Color.White;
+				extrasLabel.TextColor = Color.White;
+				DayNightToolbarItem.IconImageSource = "Night.png";
+
+				//
+
+				var navigationPage = Application.Current.MainPage as NavigationPage;
+				navigationPage.BarBackgroundColor = Color.Black;
+
+				content.BackgroundColor = Color.Black;
+			}
 		}
 	}
 }

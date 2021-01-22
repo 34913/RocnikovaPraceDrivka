@@ -3,57 +3,112 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using RocnikovaPraceDrivka.MyElements;
-
 using RocnikovaPraceDrivka.Controls;
+using RocnikovaPraceDrivka.Popup;
 
 namespace RocnikovaPraceDrivka.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ClassesList : ContentPage
 	{
-		private ClassesManager Manager { get; set; }
+		private User user;
 
-		public ClassesList()
+		private ClassesManager manager;
+
+		//
+
+		public ClassesList(User user)
 		{
 			InitializeComponent();
+
+			this.user = user;
+
+			manager = new ClassesManager();
 		}
 
 		protected override void OnAppearing()
 		{
-			Manager = new ClassesManager();
-
-			LoadClasses();
-
-			list.ItemsSource = Manager.ClsList;
+			list.ItemsSource = user.Classes;
+			ClassesCountSpan.Text = user.Classes.Count.ToString();
 
 			base.OnAppearing();
 		}
 
-		private void LoadClasses()
-		{
-			Manager.Add(new Class("1.C", "hajzlíci"));
-			Manager.Add(new Class("2.C", "hajzlíci"));
-			Manager.Add(new Class("3.C", "hajzlíci"));
-			Manager.Add(new Class("4.C", "hajzlíci"));
-			Manager.Add(new Class("5.C", "hajzlíci"));
-			Manager.Add(new Class("6.C", "hajzlíci"));
-			Manager.Add(new Class("7.C", "hajzlíci"));
-			Manager.Add(new Class("8.C", "hajzlíci"));
-		}
+		//
 
 		private async void DetailsButton_Clicked(object sender, EventArgs e)
 		{
 			MyClassButton obj = sender as MyClassButton;
 
-			await DisplayAlert(obj.ClassItem.Name, obj.ClassItem.Desc, "OK");
-
 			await Navigation.PushAsync(new InfoClass(obj.ClassItem));
 		}
 
+		private async void AddButton_Clicked(object sender, EventArgs e)
+		{
+			ContentPage detailsPage = new ContentPage
+			{
+				Padding = new Thickness(80, 80, 80, 80)
+			};
+
+			AddClassPopup l = new AddClassPopup();
+			detailsPage.Content = l.Content;
+			l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
+			{
+				Navigation.PopModalAsync();
+			});
+
+			l.FindByName<Button>("OkButton").Clicked += ((o2, e2) =>
+			{
+				AddClass(l);
+			});
+
+			l.FindByName<Entry>("NameEntry").Completed += ((o2, e2) =>
+			{
+				AddClass(l);
+			});
+
+			l.FindByName<Entry>("DescEntry").Completed += ((o2, e2) =>
+			{
+				AddClass(l);
+			});
+
+			await Navigation.PushModalAsync(detailsPage, false);
+		}
+
+		//
+
+		private async void AddClass(ContentPage l)
+		{
+			Entry nameEntry = l.FindByName<Entry>("NameEntry");
+			Entry descEntry = l.FindByName<Entry>("DescEntry");
+
+			if (string.IsNullOrWhiteSpace(descEntry.Text))
+				descEntry.Text = string.Empty;
+
+			string str = nameEntry.Text.ToUpper();
+
+			if (string.IsNullOrWhiteSpace(nameEntry.Text))
+				await DisplayAlert("Error", "Enter name", "OK");
+			else
+			{
+				try
+				{
+					user.Classes.Add(new Class(nameEntry.Text, descEntry.Text));
+				}
+				catch(Exception exc)
+				{
+					await DisplayAlert("Error", "Wrong format, try something like 1.C", "OK");
+					return;
+				}
+
+				await Navigation.PopModalAsync();
+			}
+		}
 	}
 }

@@ -2,44 +2,56 @@
 using System.Collections.Generic;
 using System.Text;
 
+using RocnikovaPraceDrivka.Interfaces;
+
 namespace RocnikovaPraceDrivka.Controls
 {
-	public class ClassesManager
-	{
-		public List<Class> ClsList { get; private set; }
 
-		//
+	public class ClassesManager : Manager<Class>
+	{
 
 		public ClassesManager()
+			: base("ClassesTable")
 		{
-			ClsList = new List<Class>();
+
 		}
 
 		//
 		
-		public void Add(Class cls)
+		public override void Add(Class item)
 		{
-			ClsList.Add(cls);
+			throw new NotImplementedException();
 		}
 
-		public void Update(Class cls, int index)
+		public override Class Select()
 		{
-			ClsList[index] = cls;
+			throw new NotImplementedException();
 		}
 
-		public void Update(Class cls, Class last)
+		public List<Class> SelectAll()
 		{
-			ClsList[ClsList.IndexOf(last)] = cls;
+			List<Class> list = new List<Class>();
+
+			list.Add(new Class("1.C", "hajzlíci"));
+			list.Add(new Class("2.C", "hajzlíci"));
+			list.Add(new Class("3.C", "hajzlíci"));
+			list.Add(new Class("4.C", "hajzlíci"));
+			list.Add(new Class("5.C", "hajzlíci"));
+			list.Add(new Class("6.C", "hajzlíci"));
+			list.Add(new Class("7.C", "hajzlíci"));
+			list.Add(new Class("8.C", "hajzlíci"));
+
+			return list;
 		}
 
-		public void Delete(Class cls)
+		public override void Delete(Class item)
 		{
-			ClsList.RemoveAt(ClsList.IndexOf(cls));
+			throw new NotImplementedException();
 		}
 
-		public void Delete(int index)
+		public override void Update(Class item)
 		{
-			ClsList.RemoveAt(index);
+			throw new NotImplementedException();
 		}
 
 		//

@@ -9,8 +9,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using RocnikovaPraceDrivka.Controls;
+using RocnikovaPraceDrivka.Interfaces;
 
-namespace RocnikovaPraceDrivka.Views.SignForms
+namespace RocnikovaPraceDrivka.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SignIn : ContentPage
@@ -45,6 +46,8 @@ namespace RocnikovaPraceDrivka.Views.SignForms
             SignFunc();
 
             ChangeModeAction();
+
+            ChangeLightMode();
 
             base.OnAppearing();
 		}
@@ -109,7 +112,10 @@ namespace RocnikovaPraceDrivka.Views.SignForms
                 if (register)
                     user.Add();
                 else
-					user.Load();
+                {
+                    user = user.Select();
+                    user.Classes = new System.Collections.ObjectModel.ObservableCollection<Class>(user.Manager.SelectAll());
+                }
 
                 register = false;
 
@@ -128,7 +134,7 @@ namespace RocnikovaPraceDrivka.Views.SignForms
                     int currentLine = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileLineNumber();
                     throw new Exception(string.Format("file {0}, line {1}", currentFile, currentLine));
                 }
-                await Navigation.PushAsync(new RocnikovaPraceDrivka.Tabs.CalendarClassesTabs(user));
+                await Navigation.PushAsync(new Tabs.CalendarClassesTabs(user));
             }
             ClearPswd();
 		}
@@ -185,7 +191,7 @@ namespace RocnikovaPraceDrivka.Views.SignForms
 		{
             if (Application.Current.Properties.ContainsKey(registeredKey))
             {
-                register = ((int)Application.Current.Properties[registeredKey] == 1) ? true : false;
+                register = ((int)Application.Current.Properties[registeredKey] == 1);
 
                 if (!register)
                     EmailEntry.Text = (string)Application.Current.Properties[loginNameKey];
@@ -273,6 +279,41 @@ namespace RocnikovaPraceDrivka.Views.SignForms
             PswdEntry.Text = string.Empty;
             PswdVerifyEntry.Text = string.Empty;
 		}
+
+		private void DayNightToolbarItem_Clicked(object sender, EventArgs e)
+		{
+            if (Handles.DayNightHandle.Day)
+                Handles.DayNightHandle.Night = true;
+            else
+                Handles.DayNightHandle.Day = true;
+            ChangeLightMode();
+		}
+
+        private void ChangeLightMode()
+		{
+            if (Handles.DayNightHandle.Day)
+            {
+                UserImage.Source = "UserDay.png";
+                InfoToolbarItem.IconImageSource = "InfoDay.png";
+                DayNightToolbarItem.IconImageSource = "Day.png";
+
+                var navigationPage = Application.Current.MainPage as NavigationPage;
+                navigationPage.BarBackgroundColor = Color.White;
+
+                content.BackgroundColor = Color.White;
+            }
+            else
+            {
+                UserImage.Source = "UserNight.png";
+                InfoToolbarItem.IconImageSource = "InfoNight.png";
+                DayNightToolbarItem.IconImageSource = "Night.png";
+
+                var navigationPage = Application.Current.MainPage as NavigationPage;
+                navigationPage.BarBackgroundColor = Color.Black;
+
+                content.BackgroundColor = Color.Black;
+            }
+        }
 
 	}
 }

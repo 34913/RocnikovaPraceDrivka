@@ -130,16 +130,22 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="Class.png" />
-    <Content Include="InfoIcon1.png" />
-    <Content Include="InfoIcon2.png" />
-    <Content Include="ja1.jpg" />
-    <Content Include="ja1.png" />
-    <Content Include="neco.gif" />
+    <Content Include="ClassDay.png" />
+    <Content Include="ClassNight.png" />
+    <Content Include="Day.png" />
+    <Content Include="InfoAuthor.png" />
+    <Content Include="InfoDay.png" />
+    <Content Include="InfoNight.png" />
+    <Content Include="LessonDay.png" />
+    <Content Include="LessonNight.png" />
+    <Content Include="ModeDay.png" />
+    <Content Include="ModeNight.png" />
+    <Content Include="Night.png" />
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="user1.png" />
-    <Content Include="user2.png" />
-    <Content Include="xd.png" />
+    <Content Include="StudentDay.png" />
+    <Content Include="StudentNight.png" />
+    <Content Include="UserDay.png" />
+    <Content Include="UserNight.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -152,6 +158,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>2.0.0.10</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading">
       <Version>2.4.11.982</Version>
     </PackageReference>

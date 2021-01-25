@@ -6,10 +6,11 @@
 			 Title="About author"
 			 NavigationPage.HasNavigationBar="True"
 			 NavigationPage.HasBackButton="True"
-			 NavigationPage.BackButtonTitle="Back">
+			 NavigationPage.BackButtonTitle="Back"
+			 BackgroundColor="{DynamicResource Background}">
 
 	<ContentPage.ToolbarItems>
-		<ToolbarItem 
+		<ToolbarItem
 			x:Name="DayNightToolbarItem"
 			Clicked="DayNightToolbarItem_Clicked"/>
 	</ContentPage.ToolbarItems>
@@ -30,18 +31,18 @@
 				Padding="0,50,0,0">
 				
 				<Label 
-					x:Name="NameLabel"
+					TextColor="{DynamicResource Label}"
 					Text="František Holý"
 					FontSize="22"
 					HorizontalOptions="Center"/>
 				<Label 
-					x:Name="EmailLabel"
+					TextColor="{DynamicResource Label}"
 					Text="fandaholy1@gmail.com"
 					HorizontalOptions="Center"/>
 
 				<Label 
 					Padding="0,30,0,0"
-					x:Name="AgeLabel">
+					TextColor="{DynamicResource Label}">
 					<Label.FormattedText>
 						<FormattedString>
 							<FormattedString.Spans>
@@ -54,7 +55,7 @@
 				</Label>
 
 				<Label 
-					x:Name="extrasLabel">
+					TextColor="{DynamicResource Label}">
 					I love developing apps, especially anything about c, c++ and c#
 This was created as my seminar work, purpose of this work was to understand xamarin.forms.
 I was quite new at the beggining, but i would appreciate any advice anyways

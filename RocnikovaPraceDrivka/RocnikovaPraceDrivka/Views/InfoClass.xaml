@@ -1,24 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RocnikovaPraceDrivka.Views.InfoClass">
+             x:Class="RocnikovaPraceDrivka.Views.InfoClass"
+			 BackgroundColor="{DynamicResource Background}">
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem x:Name="DayNightToolbarItem"
+					 Clicked="DayNightToolbarItem_Clicked"/>
+	</ContentPage.ToolbarItems>
+
 	<ContentPage.Content >
-		<StackLayout Padding="20">
+		<StackLayout 
+			Padding="20"
+			x:Name="content">
+			
 			<StackLayout Orientation="Horizontal"
 						 Padding="25,0,0,0">
-				<Image Source="Class.png"
-					   WidthRequest="70"/>
+				<Image 
+					x:Name="ClassImage"
+					WidthRequest="70"/>
 				<StackLayout Orientation="Vertical">
-					<Label x:Name="NameLabel"
-						   Text="{Binding Name}"
-						   FontSize="24"/>
-					<Label x:Name="DescLabel"
-						   Text="{Binding Desc}"
-						   FontSize="18"/>
+					<Label 
+						x:Name="NameLabel"
+						Text="{Binding Name}"
+						TextColor="{DynamicResource Label}"
+						FontSize="24"/>
+					<Label 
+						x:Name="DescLabel"
+						Text="{Binding Desc}"
+						TextColor="{DynamicResource Label}"
+						FontSize="18"/>
 				</StackLayout>
 				<StackLayout Padding="40,0,0,0"
 							 Orientation="Vertical">
-					<Label>
+					<Label
+						TextColor="{DynamicResource Label}">
 						<Label.FormattedText>
 							<FormattedString>
 								<FormattedString.Spans>
@@ -30,7 +46,8 @@
 							</FormattedString>
 						</Label.FormattedText>
 					</Label>
-					<Label>
+					<Label
+						TextColor="{DynamicResource Label}">
 						<Label.FormattedText>
 							<FormattedString>
 								<FormattedString.Spans>
@@ -56,28 +73,32 @@
 					<RowDefinition Height="40"/>
 				</Grid.RowDefinitions>
 
-				<CollectionView x:Name="Students"
-								Grid.Column="0"
-								Grid.Row="0">
+				<CollectionView 
+					x:Name="Students"
+					Grid.Column="0"
+					Grid.Row="0">
 
 					<CollectionView.ItemsLayout>
-						<LinearItemsLayout Orientation="Vertical"
-										   ItemSpacing="2"/>
+						<LinearItemsLayout 
+							Orientation="Vertical"
+							ItemSpacing="2"/>
 					</CollectionView.ItemsLayout>
 
 					<CollectionView.Header>
-						<Label Text="Students in this class:"
-							   VerticalOptions="Center"
-							   HorizontalOptions="Center"
-							   TextColor="White"/>
+						<Label 
+							Text="Students in this class:"
+							VerticalOptions="Center"
+							HorizontalOptions="Center"
+							TextColor="{DynamicResource Label}"/>
 					</CollectionView.Header>
 
 					<CollectionView.EmptyView>
 						<Frame>
-							<Label Text="This class has no students"
-								   HorizontalOptions="Center"
-								   VerticalOptions="Center"
-								   TextColor="White"/>
+							<Label 
+								Text="This class has no students"
+								HorizontalOptions="Center"
+								VerticalOptions="Center"
+								TextColor="{DynamicResource Label}"/>
 						</Frame>
 					</CollectionView.EmptyView>
 
@@ -89,7 +110,8 @@
 									<ColumnDefinition Width="10"/>
 								</Grid.ColumnDefinitions>
 								<Label Text="{Binding Name}"
-									   Grid.Column="0"/>
+									   Grid.Column="0"
+									   TextColor="{DynamicResource Label}"/>
 								<Button Text="-"
 										WidthRequest="10"
 										Grid.Column="1"/>
@@ -98,28 +120,32 @@
 					</CollectionView.ItemTemplate>
 				</CollectionView>
 
-				<CollectionView x:Name="Lessons"
-								Grid.Column="1"
-								Grid.Row="0">
+				<CollectionView 
+					x:Name="Lessons"
+					Grid.Column="1"
+					Grid.Row="0">
 
 					<CollectionView.ItemsLayout>
-						<LinearItemsLayout Orientation="Vertical"
-										   ItemSpacing="2"/>
+						<LinearItemsLayout 
+							Orientation="Vertical"
+							ItemSpacing="2"/>
 					</CollectionView.ItemsLayout>
 
 					<CollectionView.Header>
-						<Label Text="Lessons with this class:"
-							   VerticalOptions="Center"
-							   HorizontalOptions="Center"
-							   TextColor="White"/>
+						<Label 
+							Text="Lessons with this class:"
+							VerticalOptions="Center"
+							HorizontalOptions="Center"
+							TextColor="{DynamicResource Label}"/>
 					</CollectionView.Header>
 
 					<CollectionView.EmptyView>
 						<Frame>
-							<Label Text="This class has no lessons"
-								   HorizontalOptions="Center"
-								   VerticalOptions="Center"
-								   TextColor="White"/>
+							<Label 
+								Text="This class has no lessons"
+								HorizontalOptions="Center"
+								VerticalOptions="Center"
+								TextColor="{DynamicResource Label}"/>
 						</Frame>
 					</CollectionView.EmptyView>
 
@@ -131,7 +157,8 @@
 									<ColumnDefinition Width="10"/>
 								</Grid.ColumnDefinitions>
 								<Label Text="{Binding Name}"
-									   Grid.Column="0"/>
+									   Grid.Column="0"
+									   TextColor="{DynamicResource Label}"/>
 								<Button Text="-"
 										WidthRequest="10"
 										Grid.Column="1"/>

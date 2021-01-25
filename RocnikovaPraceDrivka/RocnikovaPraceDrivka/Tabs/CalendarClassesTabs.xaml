@@ -5,7 +5,8 @@
 			x:Class="RocnikovaPraceDrivka.Tabs.CalendarClassesTabs"
 			NavigationPage.HasNavigationBar="True"
 			NavigationPage.HasBackButton="True"
-			NavigationPage.BackButtonTitle="Back">
+			NavigationPage.BackButtonTitle="Back"
+			BackgroundColor="{DynamicResource Background}">
 
 	<TabbedPage.ToolbarItems>
 		<ToolbarItem 

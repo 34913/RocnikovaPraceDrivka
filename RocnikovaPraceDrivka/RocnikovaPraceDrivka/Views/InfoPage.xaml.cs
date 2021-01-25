@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using RocnikovaPraceDrivka.Handles;
+
 namespace RocnikovaPraceDrivka.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
@@ -16,6 +18,8 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			InitializeComponent();
 		}
+
+		//
 
 		protected override void OnAppearing()
 		{ 
@@ -29,46 +33,38 @@ namespace RocnikovaPraceDrivka.Views
 
 			ChangeLightMode();
 
+			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
+
 			base.OnAppearing();
+		}
+
+		protected override void OnDisappearing()
+		{
+			DayNightHandle.DayNight.PropertyChanged -= DayNight_PropertyChanged;
+
+			base.OnDisappearing();
+		}
+
+		//
+		private void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			ChangeLightMode();
 		}
 
 		private void DayNightToolbarItem_Clicked(object sender, EventArgs e)
 		{
-			if (Handles.DayNightHandle.Day)
-				Handles.DayNightHandle.Night = true;
-			else
-				Handles.DayNightHandle.Day = true;
-			ChangeLightMode();
+			DayNightHandle.DayNight.Swap();
 		}
 
 		private void ChangeLightMode()
 		{
-			if (Handles.DayNightHandle.Day)
+			if (DayNightHandle.DayNight.Day)
 			{
-				
 				DayNightToolbarItem.IconImageSource = "Day.png";
-
-				//
-
-				var navigationPage = Application.Current.MainPage as NavigationPage;
-				navigationPage.BarBackgroundColor = Color.White;
-
-				content.BackgroundColor = Color.White;
 			}
 			else
 			{
-				NameLabel.TextColor = Color.White;
-				EmailLabel.TextColor = Color.White;
-				AgeLabel.TextColor = Color.White;
-				extrasLabel.TextColor = Color.White;
 				DayNightToolbarItem.IconImageSource = "Night.png";
-
-				//
-
-				var navigationPage = Application.Current.MainPage as NavigationPage;
-				navigationPage.BarBackgroundColor = Color.Black;
-
-				content.BackgroundColor = Color.Black;
 			}
 		}
 	}

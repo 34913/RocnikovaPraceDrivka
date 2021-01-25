@@ -42,9 +42,10 @@
 			<StackLayout WidthRequest="140"
 							 HorizontalOptions="Center"
 							 VerticalOptions="Center">
-				<Button Clicked="SubmitButton_Clicked"
-							Text="Submit"
-							HeightRequest="40"/>
+				<Button 
+					Clicked="SubmitButton_Clicked"
+					Text="Submit"
+					HeightRequest="40"/>
 				<Button x:Name="ChangeSignButton"
 							Text="Register"
 							Clicked="ChangeSignButton_Clicked"

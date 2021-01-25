@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using Xamarin.Forms;
+using System.Runtime.CompilerServices;
 
 namespace RocnikovaPraceDrivka.Handles
 {
-	public static class DayNightHandle
+	public class DayNightHandle : INotifyPropertyChanged
 	{
 		public enum ListModes
 		{
@@ -13,26 +15,38 @@ namespace RocnikovaPraceDrivka.Handles
 			night = 1
 		};
 
-		private static ListModes state = ListModes.day;
+		private ListModes state = ListModes.day;
 
-		private static string dayNightKeyHolder = "DayNightKey";
+		private string dayNightKeyHolder = "DayNightKey";
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 
 		//
 
-		public static ListModes State
+		protected ListModes State
 		{
 			get => state;
 			set
 			{
-				state = value;
-				int val = (int)state;
-				if (Application.Current.Properties.ContainsKey(dayNightKeyHolder))
-					Application.Current.Properties.Remove(dayNightKeyHolder);
-				Application.Current.Properties.Add(dayNightKeyHolder, val);
+				if (value != state)
+				{
+					state = value;
+					int val = (int)state;
+					if (Application.Current.Properties.ContainsKey(dayNightKeyHolder))
+						Application.Current.Properties.Remove(dayNightKeyHolder);
+					Application.Current.Properties.Add(dayNightKeyHolder, val);
+
+					NotifyPropertyChanged();
+				}
 			}
 		}
 
-		public static bool Day
+		public bool Day
 		{
 			get
 			{
@@ -49,24 +63,19 @@ namespace RocnikovaPraceDrivka.Handles
 			}
 		}
 
-		public static bool Night
+		public bool Night
 		{
 			get
 			{
-				if (State == ListModes.night)
-					return true;
-				return false;
+				return !Day;
 			}
 			set
 			{
-				if (value == true)
-					State = ListModes.night;
-				else
-					State = ListModes.day;
+				Day = !value;
 			}
 		}
 
-		public static string ModeName
+		public string ModeName
 		{
 			get
 			{
@@ -76,9 +85,14 @@ namespace RocnikovaPraceDrivka.Handles
 			}
 		}
 
+		public  void Swap()
+		{
+			Day = !Day;
+		}
+
 		//
 
-		static DayNightHandle()
+		public DayNightHandle()
 		{
 			if (Application.Current.Properties.ContainsKey(dayNightKeyHolder))
 				state = (ListModes)Application.Current.Properties[dayNightKeyHolder];
@@ -86,5 +100,8 @@ namespace RocnikovaPraceDrivka.Handles
 				State = ListModes.day;
 		}
 
+
+		public static DayNightHandle DayNight = new DayNightHandle();
 	}
+
 }

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using RocnikovaPraceDrivka.Handles;
+
 namespace RocnikovaPraceDrivka.Tabs
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
@@ -25,6 +27,30 @@ namespace RocnikovaPraceDrivka.Tabs
 
 		}
 
+		//
+		protected override void OnAppearing()
+		{
+			ChangeLightMode();
+
+			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
+
+			base.OnAppearing();
+		}
+
+		protected override void OnDisappearing()
+		{
+			DayNightHandle.DayNight.PropertyChanged -= DayNight_PropertyChanged;
+
+			base.OnDisappearing();
+		}
+
+		//
+
+		private void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			ChangeLightMode();
+		}
+
 		private void InfoToolbarItem_Clicked(object sender, EventArgs e)
 		{
 
@@ -32,27 +58,25 @@ namespace RocnikovaPraceDrivka.Tabs
 
 		private void DayNightToolbarItem_Clicked(object sender, EventArgs e)
 		{
-			if (Handles.DayNightHandle.Day)
-				Handles.DayNightHandle.Night = true;
-			else
-				Handles.DayNightHandle.Day = true;
-			ChangeLightMode();
+			DayNightHandle.DayNight.Swap();
 		}
+
+
 
 		private void ChangeLightMode()
 		{
-			if (Handles.DayNightHandle.Day)
+			if (DayNightHandle.DayNight.Day)
 			{
-				var navigationPage = Application.Current.MainPage as NavigationPage;
-				navigationPage.BarBackgroundColor = Color.White;
+				InfoToolbarItem.IconImageSource = "InfoDay.png";
+				DayNightToolbarItem.IconImageSource = "Day.png";
 
 				BarBackgroundColor = Color.White;
 				BarTextColor = Color.Black;
 			}
 			else
 			{
-				var navigationPage = Application.Current.MainPage as NavigationPage;
-				navigationPage.BarBackgroundColor = Color.Black;
+				InfoToolbarItem.IconImageSource = "InfoNight.png";
+				DayNightToolbarItem.IconImageSource = "Night.png";
 
 				BarBackgroundColor = Color.Black;
 				BarTextColor = Color.White;

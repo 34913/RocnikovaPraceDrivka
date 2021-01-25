@@ -15,6 +15,7 @@
 			<Label Text="End of lesson"
 				   FontSize="Small"/>
 			<TimePicker x:Name="EndTimePicker"/>
+
 			<Picker x:Name="DayPicker"
 					Title="Day of week"/>
 			

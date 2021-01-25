@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RocnikovaPraceDrivka.Themes.LightTheme">
 
-	<Color x:Key="background">#FFFFFF</Color>
-	<Color x:Key="mainLabel">#000000</Color>
-	<Color x:Key="navigationBackground">#777777</Color>
-	<Color x:Key="navigationText">#000000</Color>
-	
+	<Color x:Key="Background">#FFFFFF</Color>
+	<Color x:Key="Label">#000000</Color>
+	<Color x:Key="Navigation">#777777</Color>
+	<Color x:Key="NavigationText">#000000</Color>
+	<Color x:Key="ButtonText">#000000</Color>
+
 </ResourceDictionary>

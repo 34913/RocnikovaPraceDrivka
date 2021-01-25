@@ -9,7 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using RocnikovaPraceDrivka.Controls;
-using RocnikovaPraceDrivka.Interfaces;
+using RocnikovaPraceDrivka.Handles;
 
 namespace RocnikovaPraceDrivka.Views
 {
@@ -49,14 +49,29 @@ namespace RocnikovaPraceDrivka.Views
 
             ChangeLightMode();
 
+			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
+
             base.OnAppearing();
+		}
+
+
+		protected override void OnDisappearing()
+		{
+            DayNightHandle.DayNight.PropertyChanged -= DayNight_PropertyChanged;
+
+            base.OnDisappearing();
 		}
 
         //
 
         // systems calling
 
-		private async void SubmitButton_Clicked(object sender, EventArgs e)
+        private void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ChangeLightMode();
+        }
+
+        private async void SubmitButton_Clicked(object sender, EventArgs e)
 		{
 			if (string.IsNullOrWhiteSpace(EmailEntry.Text) 
                 || string.IsNullOrWhiteSpace(PswdEntry.Text) 
@@ -282,16 +297,12 @@ namespace RocnikovaPraceDrivka.Views
 
 		private void DayNightToolbarItem_Clicked(object sender, EventArgs e)
 		{
-            if (Handles.DayNightHandle.Day)
-                Handles.DayNightHandle.Night = true;
-            else
-                Handles.DayNightHandle.Day = true;
-            ChangeLightMode();
+            DayNightHandle.DayNight.Swap();
 		}
 
         private void ChangeLightMode()
 		{
-            if (Handles.DayNightHandle.Day)
+            if (DayNightHandle.DayNight.Day)
             {
                 UserImage.Source = "UserDay.png";
                 InfoToolbarItem.IconImageSource = "InfoDay.png";

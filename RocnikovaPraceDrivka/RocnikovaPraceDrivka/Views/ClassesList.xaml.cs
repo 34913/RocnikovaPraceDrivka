@@ -11,6 +11,7 @@ using Xamarin.Forms.Xaml;
 using RocnikovaPraceDrivka.MyElements;
 using RocnikovaPraceDrivka.Controls;
 using RocnikovaPraceDrivka.Popup;
+using RocnikovaPraceDrivka.Handles;
 
 namespace RocnikovaPraceDrivka.Views
 {
@@ -37,10 +38,26 @@ namespace RocnikovaPraceDrivka.Views
 			list.ItemsSource = user.Classes;
 			ClassesCountSpan.Text = user.Classes.Count.ToString();
 
+			ChangeLightMode();
+
+			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
+
 			base.OnAppearing();
 		}
 
+		protected override void OnDisappearing()
+		{
+			DayNightHandle.DayNight.PropertyChanged -= DayNight_PropertyChanged;
+
+			base.OnDisappearing();
+		}
+
 		//
+
+		private void DayNight_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			ChangeLightMode();
+		}
 
 		private async void DetailsButton_Clicked(object sender, EventArgs e)
 		{
@@ -53,11 +70,13 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			ContentPage detailsPage = new ContentPage
 			{
-				Padding = new Thickness(80, 80, 80, 80)
+				Padding = new Thickness(80, 80, 80, 80),
+				BackgroundColor = Color.Transparent
 			};
 
 			AddClassPopup l = new AddClassPopup();
 			detailsPage.Content = l.Content;
+
 			l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
 			{
 				Navigation.PopModalAsync();
@@ -110,5 +129,18 @@ namespace RocnikovaPraceDrivka.Views
 				await Navigation.PopModalAsync();
 			}
 		}
+
+		private void ChangeLightMode()
+		{
+			if (DayNightHandle.DayNight.Day)
+			{
+
+			}
+			else
+			{
+			
+			}
+		}
+
 	}
 }

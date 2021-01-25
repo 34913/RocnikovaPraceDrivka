@@ -22,6 +22,16 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			InitializeComponent();
 			this.cls = cls;
+
+		}
+
+		~InfoClass()  // finalizer
+		{
+		}
+
+		private void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			ChangeLightMode();
 		}
 
 		protected override void OnAppearing()
@@ -35,7 +45,18 @@ namespace RocnikovaPraceDrivka.Views
 			Students.ItemsSource = cls.StudentsList;
 			Lessons.ItemsSource = cls.LessonsList;
 
+			ChangeLightMode();
+
+			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
+
 			base.OnAppearing();
+		}
+
+		protected override void OnDisappearing()
+		{
+			DayNightHandle.DayNight.PropertyChanged -= DayNight_PropertyChanged;
+
+			base.OnDisappearing();
 		}
 
 		private async void AddLessonButton_Clicked(object sender, EventArgs e)
@@ -142,7 +163,27 @@ namespace RocnikovaPraceDrivka.Views
 
 		//
 
+		private void DayNightToolbarItem_Clicked(object sender, EventArgs e)
+		{
+			DayNightHandle.DayNight.Swap();
+		}
 
+		private void ChangeLightMode()
+		{
+			if (DayNightHandle.DayNight.Day)
+			{
+				DayNightToolbarItem.IconImageSource = "Day.png";
+				ClassImage.Source = "ClassDay.png";
+
+			}
+			else
+			{
+				DayNightToolbarItem.IconImageSource = "Night.png";
+				ClassImage.Source = "ClassNight.png";
+
+
+			}
+		}
 
 	}
 }

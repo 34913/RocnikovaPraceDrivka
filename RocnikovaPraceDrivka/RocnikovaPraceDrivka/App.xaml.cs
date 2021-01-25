@@ -6,12 +6,21 @@ namespace RocnikovaPraceDrivka
 {
 	public partial class App : Application
 	{
+
+
 		public App()
 		{
 			InitializeComponent();
 
+			Handles.DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
+
 			MainPage = new NavigationPage(new Views.SignIn());
+
+			if (Handles.DayNightHandle.DayNight.Day)
+				SwapTheme();
 		}
+
+
 
 		protected override void OnStart()
 		{
@@ -23,8 +32,33 @@ namespace RocnikovaPraceDrivka
 
 		protected override void OnResume()
 		{
-		//	Shell.Current.Navigation.PopToRootAsync();
-		//	MainPage = new Views.SignForms.SignIn();
+		}
+
+		// 
+
+		private static void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			SwapTheme();
+		}
+
+		public static void SwapTheme()
+		{
+			var navigationPage = Application.Current.MainPage as NavigationPage;
+			if (Handles.DayNightHandle.DayNight.Day)
+			{
+				navigationPage.BarBackgroundColor = Color.White;
+				navigationPage.BarTextColor = Color.Black;
+			}
+			else
+			{
+				navigationPage.BarBackgroundColor = Color.Black;
+				navigationPage.BarTextColor = Color.White;
+			}
+
+			if (App.Current.Resources is Themes.LightTheme)
+				App.Current.Resources = new Themes.DarkTheme(); // needs using DarkMode.Styles;
+			else
+				App.Current.Resources = new Themes.LightTheme();
 		}
 	}
 }

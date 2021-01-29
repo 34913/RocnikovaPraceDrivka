@@ -4,13 +4,15 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 
+using RocnikovaPraceDrivka.Managers;
+
 namespace RocnikovaPraceDrivka.Controls
 {
 	public class Class
 	{
-		public ObservableCollection<Student> StudentsList { get; set; } = new ObservableCollection<Student>();
+		public StudentsManager Students { get; } = new StudentsManager();
 
-		public ObservableCollection<Lesson> LessonsList { get; set; } = new ObservableCollection<Lesson>();
+		public LessonsManager Lessons { get; } = new LessonsManager();
 
 		//
 

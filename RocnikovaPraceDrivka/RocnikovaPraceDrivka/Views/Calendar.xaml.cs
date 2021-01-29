@@ -17,7 +17,7 @@ namespace RocnikovaPraceDrivka.Views
 	{
 		private User user;
 
-		List<Lesson> weekly = new List<Lesson>();
+		//List<Lesson> weekly = new List<Lesson>();
 
 		//
 
@@ -25,116 +25,256 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			InitializeComponent();
 			this.user = user;
-			list.ItemsSource = DOW.Names;
 		}
+
+		//
 
 		protected override void OnAppearing()
 		{
 			LoadGridTable();
 
+			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
+
 			base.OnAppearing();
+		}
+
+		protected override void OnDisappearing()
+		{
+			DayNightHandle.DayNight.PropertyChanged -= DayNight_PropertyChanged;
+
+			ListLessons.Children.Clear();
+
+			base.OnDisappearing();
+		}
+
+		//
+
+		private void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			ChangeLightMode();
 		}
 
 		//
 
 		private void LoadGridTable()
 		{
-			foreach (Class cls in user.Classes)
+			double multiplier = 2;
+			
+			Grid zapati = new Grid();
+
+			zapati.RowDefinitions.Add(new RowDefinition()
 			{
-				foreach (Lesson l in cls.LessonsList)
-					weekly.Add(l);
+				Height = GridLength.Auto,
+			});
+			zapati.ColumnDefinitions.Add(new ColumnDefinition
+			{
+				Width = new GridLength(90, GridUnitType.Absolute),
+			});
+
+			for (int i = 7; i < 21; i++)
+			{
+				zapati.ColumnDefinitions.Add(new ColumnDefinition
+				{
+					Width = new GridLength(60 * multiplier, GridUnitType.Absolute)
+				});
+
+				Label label = new Label
+				{
+					Text = i.ToString() + ":00"
+				};
+				zapati.Children.Add(label);
+
+				Grid.SetColumn(label, zapati.ColumnDefinitions.Count - 1);
+				Grid.SetRow(label, 0);
 			}
 
-			weekly.Sort(new Comparer.LessonComparer());
+			//
 
-			int index = 0;
-			int day = 0;
-			int min = (int)new TimeSpan(7, 0, 0).TotalMinutes;
-			int actualMin = min;
+			Grid mainGrid = new Grid()
+			{
+				VerticalOptions = LayoutOptions.FillAndExpand,
+			};
+			mainGrid.ColumnDefinitions.Add(new ColumnDefinition
+			{
+				Width = GridLength.Auto,
+			});
+			mainGrid.RowDefinitions.Add(new RowDefinition
+			{
+				Height = GridLength.Auto,
+			});
 
-			//int used = 0;
-			//List<int> dayEndingList = new List<int>();
-			//for (int i = 0; i < DOW.Names.Count; i++)
-			//	dayEndingList.Add(min);
+			mainGrid.Children.Add(zapati);
+			Grid.SetColumn(zapati, 0);
+			Grid.SetRow(zapati, mainGrid.RowDefinitions.Count - 1);
+
+			//
 
 			List<Grid> gridList = new List<Grid>();
-			for (int i = 0; i < DOW.Names.Count; i++)
-				gridList.Add(new Grid());
 
-			List<int> endingList = new List<int>();
-
-
-			while (index != weekly.Count)
-			{
-
-				if (day == DOW.Names.Count)
-					throw new Exception();
-
-				if (endingList.Count == 0)
+			foreach (string s in DOW.Names) {
+				Grid grid = new Grid
 				{
-					if (weekly[index].Start.Day == day)
+					VerticalOptions = LayoutOptions.FillAndExpand,
+					HorizontalOptions = LayoutOptions.FillAndExpand,
+				};
+
+				grid.RowDefinitions.Add(new RowDefinition
+				{
+					Height = GridLength.Auto,
+				});
+				grid.ColumnDefinitions.Add(new ColumnDefinition
+				{
+					Width = new GridLength(90, GridUnitType.Absolute)
+				});
+
+				Label label = new Label
+				{
+					Text = s,
+				};
+				grid.Children.Add(label);
+
+				Grid.SetColumn(label, 0);
+				Grid.SetRow(label, 0);
+
+				gridList.Add(grid);
+			}
+
+			//
+
+			List<Lesson> lessonsList = new List<Lesson>();
+			foreach (Class cls in user.Classes.List)
+			{
+				foreach (Lesson l in cls.Lessons.List)
+					lessonsList.Add(l);
+			}
+
+			lessonsList.Sort(new Comparer.LessonComparer());
+
+			//
+
+			int dayIndex = 0;
+			int lessonsIndex = 0;
+			TimeSpan lastEnd = new TimeSpan(7, 0, 0);
+
+			while (lessonsIndex < lessonsList.Count)
+			{
+				Grid grid = gridList[dayIndex];
+				Lesson lesson = lessonsList[lessonsIndex];
+				TimeSpan startShort = lesson.Start - new TimeSpan(dayIndex, 0, 0, 0);
+				TimeSpan endShort = lesson.End - new TimeSpan(dayIndex, 0, 0, 0);
+				Frame f;
+				Label l;
+
+				if (lesson.Start.Days == dayIndex)
+				{
+					TimeSpan difference = startShort - lastEnd;
+
+					if (startShort.TotalMinutes != 0)
 					{
-						int minutes = (int)weekly[index].Start.TimeOfDay.TotalMinutes - actualMin;
+						f = new Frame
+						{
+							Padding = 0,
+							Margin = 0,
+							BorderColor = Color.White,
+							HasShadow = false,
+						};
+						grid.Children.Add(f);
 
-						// add lesson break in day grid
-						// in this they have free period
-
-						actualMin += minutes;
-						endingList.Add((int)weekly[index].End.TimeOfDay.TotalMinutes - actualMin);
-
-						index++;
+						grid.ColumnDefinitions.Add(new ColumnDefinition
+						{
+							Width = new GridLength((difference.TotalMinutes - 1) * multiplier, GridUnitType.Absolute)
+						});
+						Grid.SetColumn(f, grid.Children.Count - 1);
+						Grid.SetRow(f, 0);
 					}
-					else
+
+					StackLayout s = new StackLayout();
+					s.Children.Add(new Label
 					{
-						day++;
-						actualMin = min;
-					}
+						Text = lesson.Name,
+						VerticalOptions = LayoutOptions.Center,
+						HorizontalOptions = LayoutOptions.Center,
+					});
+					s.Children.Add(new Label
+					{
+						
+					});
+
+
+
+					f = new Frame
+					{
+						//WidthRequest = 200,
+						//HeightRequest = 200,
+						BorderColor = Color.White,
+						Content = s,
+						Margin = 0,
+						Padding = 3,
+						HasShadow = false,
+					};
+					grid.Children.Add(f);
+
+					grid.ColumnDefinitions.Add(new ColumnDefinition
+					{
+						Width = new GridLength(lesson.LengthMinutes * multiplier, GridUnitType.Absolute)
+					});
+					Grid.SetColumn(f, grid.Children.Count - 1);
+					Grid.SetRow(f, 0);
+
+					//
+
+					lastEnd = endShort;
+
+					lessonsIndex++;
 				}
 				else
 				{
-					int i = 0, a = 0;
-					int minutes = endingList[0];
-
-					if (endingList.Count > 1)
-					{
-						for (i = 1; i < endingList.Count; i++)
-							if (endingList[i] < minutes)
-								minutes = endingList[i];
-					}
-
-					if (weekly[index].Start.Day == day)
-					{
-						a = (int)weekly[index].Start.TimeOfDay.TotalMinutes - actualMin;
-						if (a < minutes)
-						{
-							minutes = a;
-
-							// add lesson in day grid
-							// in this they have lesson inside lesson
-
-							actualMin += minutes;
-							endingList.Add((int)weekly[index].End.TimeOfDay.TotalMinutes - actualMin);
-
-							index++;
-
-							continue;
-						}
-					}
-
-					index++;
-					endingList.Remove(minutes);
-					actualMin += minutes;
-
-					// add lesson in day grid
-					// in this time they have lesson
-
+					dayIndex++;
+					lastEnd = new TimeSpan(7, 0, 0);
 				}
 			}
+
+			//
+
+			foreach(Grid grid in gridList)
+			{
+				mainGrid.RowDefinitions.Add(new RowDefinition
+				{
+					Height = new GridLength(1, GridUnitType.Star),
+				});
+				mainGrid.Children.Add(grid);
+
+				Grid.SetColumn(grid, 0);
+				Grid.SetRow(grid, mainGrid.RowDefinitions.Count - 1);
+			}
+
+			ListLessons.Children.Add(mainGrid);
 		}
 
-		//
+		private void AddElementGrid(int minutes, List<Grid> list, int day, string label)
+		{
+			ColumnDefinition column = new ColumnDefinition
+			{
+				Width = new GridLength(minutes)
+			};
 
+			list[day].ColumnDefinitions.Add(column);
 
+			Label popis = new Label
+			{
+				Text = label
+			};
+
+			list[day].Children.Add(popis);
+
+			Grid.SetColumn(popis, list[day].ColumnDefinitions.Count - 1);
+		}
+
+		
+		private void ChangeLightMode()
+		{
+
+		}
 
 	}
 }

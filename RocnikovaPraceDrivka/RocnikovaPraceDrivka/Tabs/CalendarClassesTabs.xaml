@@ -6,7 +6,9 @@
 			NavigationPage.HasNavigationBar="True"
 			NavigationPage.HasBackButton="True"
 			NavigationPage.BackButtonTitle="Back"
-			BackgroundColor="{DynamicResource Background}">
+			BarTextColor="{DynamicResource Label}"
+			BackgroundColor="{DynamicResource Background}"
+			BarBackgroundColor="{DynamicResource Background}">
 
 	<TabbedPage.ToolbarItems>
 		<ToolbarItem 

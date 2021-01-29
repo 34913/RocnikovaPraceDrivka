@@ -8,5 +8,8 @@
 	<Color x:Key="Navigation">#777777</Color>
 	<Color x:Key="NavigationText">#000000</Color>
 	<Color x:Key="ButtonText">#000000</Color>
+	<Color x:Key="Border">#000000</Color>
+
+	<Color x:Key="ButtonBackground">#444444</Color>
 
 </ResourceDictionary>

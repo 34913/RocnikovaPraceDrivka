@@ -10,6 +10,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using RocnikovaPraceDrivka.Handles;
+using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 
 namespace RocnikovaPraceDrivka.Tabs
 {
@@ -25,6 +27,7 @@ namespace RocnikovaPraceDrivka.Tabs
 			Children.Add(new Calendar(user));
 			Children.Add(new ClassesList(user));
 
+			CurrentPageChanged += CurrentPageHasChanged;
 		}
 
 		//
@@ -61,7 +64,13 @@ namespace RocnikovaPraceDrivka.Tabs
 			DayNightHandle.DayNight.Swap();
 		}
 
+		private void CurrentPageHasChanged(object sender, EventArgs e)
+		{
+			TabbedPage tabbedPage = (TabbedPage)sender;
+			Title = tabbedPage.CurrentPage.Title;
+		}
 
+		//
 
 		private void ChangeLightMode()
 		{
@@ -69,17 +78,11 @@ namespace RocnikovaPraceDrivka.Tabs
 			{
 				InfoToolbarItem.IconImageSource = "InfoDay.png";
 				DayNightToolbarItem.IconImageSource = "Day.png";
-
-				BarBackgroundColor = Color.White;
-				BarTextColor = Color.Black;
 			}
 			else
 			{
 				InfoToolbarItem.IconImageSource = "InfoNight.png";
 				DayNightToolbarItem.IconImageSource = "Night.png";
-
-				BarBackgroundColor = Color.Black;
-				BarTextColor = Color.White;
 			}
 		}
 	}

@@ -10,6 +10,7 @@ namespace RocnikovaPraceDrivka.MyElements
 {
 	public class MyClassButton: Button
 	{
+
         public Class ClassItem
         {
             get
@@ -23,6 +24,14 @@ namespace RocnikovaPraceDrivka.MyElements
         }
 
         public static readonly BindableProperty ClassItemProperty = BindableProperty.Create(nameof(ClassItem), typeof(Class), typeof(MyClassButton));
-        
+
+        //
+
+        public MyClassButton()
+            : base()
+		{
+
+		}
+
 	}
 }

@@ -20,8 +20,6 @@ namespace RocnikovaPraceDrivka.Views
 	{
 		private User user;
 
-		private ClassesManager manager;
-
 		//
 
 		public ClassesList(User user)
@@ -29,14 +27,18 @@ namespace RocnikovaPraceDrivka.Views
 			InitializeComponent();
 
 			this.user = user;
-
-			manager = new ClassesManager();
 		}
 
 		protected override void OnAppearing()
 		{
-			list.ItemsSource = user.Classes;
-			ClassesCountSpan.Text = user.Classes.Count.ToString();
+			list.ItemsSource = user.Classes.List;
+			ClassesCountSpan.Text = user.Classes.List.Count.ToString();
+
+			if (user.Classes.List.Count != 1)
+				endingClassesSpan.Text = "es";
+			else
+
+				endingClassesSpan.Text = string.Empty;
 
 			ChangeLightMode();
 
@@ -110,14 +112,13 @@ namespace RocnikovaPraceDrivka.Views
 			if (string.IsNullOrWhiteSpace(descEntry.Text))
 				descEntry.Text = string.Empty;
 
-			string str = nameEntry.Text.ToUpper();
-
 			if (string.IsNullOrWhiteSpace(nameEntry.Text))
 				await DisplayAlert("Error", "Enter name", "OK");
 			else
 			{
 				try
 				{
+					string str = nameEntry.Text.ToUpper();
 					user.Classes.Add(new Class(nameEntry.Text, descEntry.Text));
 				}
 				catch(Exception exc)
@@ -134,7 +135,7 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			if (DayNightHandle.DayNight.Day)
 			{
-
+				
 			}
 			else
 			{

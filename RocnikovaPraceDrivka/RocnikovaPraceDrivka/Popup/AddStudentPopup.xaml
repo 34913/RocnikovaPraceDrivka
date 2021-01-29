@@ -2,20 +2,51 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RocnikovaPraceDrivka.Popup.AddStudentPopup">
-    <ContentPage.Content>
-		<StackLayout Padding="50">
-			<Entry x:Name="NameEntry"
-				   FontSize="20"
-				   Placeholder="Name"/>
-			
-			<StackLayout VerticalOptions="EndAndExpand"
+    
+	<ContentPage.Content>
+
+		<ScrollView>
+			<StackLayout 
+				BackgroundColor="{DynamicResource Border}"
+				Padding="1">
+
+				<StackLayout 
+					BackgroundColor="{DynamicResource Background}"
+					Orientation="Vertical"
+					HorizontalOptions="Fill"
+					VerticalOptions="FillAndExpand"
+					Padding="50,60">
+
+					<StackLayout
+						Padding="0,0,0,20">
+						<Image 
+							x:Name="StudentImage"
+							WidthRequest="100"/>
+					</StackLayout>
+
+					<Entry 
+						x:Name="NameEntry"
+						FontSize="20"
+						Placeholder="Name"
+						BackgroundColor="{DynamicResource Background}"
+						TextColor="{DynamicResource Label}"
+						PlaceholderColor="{DynamicResource Label}"/>
+
+					<StackLayout 
+						VerticalOptions="EndAndExpand"
 						 HorizontalOptions="CenterAndExpand"
 						 Orientation="Horizontal">
-				<Button Text="Cancel"
-						x:Name="CancelButton"/>
-				<Button Text="OK"
-						x:Name="OkButton"/>
+						
+						<Button 
+							Text="Cancel"
+							x:Name="CancelButton"/>
+						<Button 
+							Text="OK"
+							x:Name="OkButton"/>
+						
+					</StackLayout>
+				</StackLayout>
 			</StackLayout>
-		</StackLayout>
-    </ContentPage.Content>
+		</ScrollView>
+	</ContentPage.Content>
 </ContentPage>

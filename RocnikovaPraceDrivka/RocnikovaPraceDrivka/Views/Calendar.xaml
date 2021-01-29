@@ -6,49 +6,17 @@
 			 Title="Calendar"
 			 NavigationPage.HasNavigationBar="false"
 			 BackgroundColor="{DynamicResource Background}">
-	
-	<ScrollView Orientation="Horizontal">
-		<CollectionView x:Name="list">
 
-			<CollectionView.ItemsLayout>
-				<LinearItemsLayout 
-					Orientation="Vertical"
-					ItemSpacing="0"/>
-			</CollectionView.ItemsLayout>
+	<ScrollView 
+		Orientation="Horizontal"
+		VerticalOptions="FillAndExpand">
 
-			<CollectionView.ItemTemplate>
-				<DataTemplate>
-					<Grid HeightRequest="30"
-						  VerticalOptions="FillAndExpand">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="100"/>
-							<ColumnDefinition Width="1"/>
-						</Grid.ColumnDefinitions>
-
-						<Label 
-							Text="{Binding .}"
-							Grid.Column="0"
-							TextColor="{DynamicResource Label}"
-							WidthRequest="50"
-							VerticalTextAlignment="Center"
-							HorizontalTextAlignment="Center"/>
-
-						<BoxView 
-							WidthRequest="1"
-							HeightRequest="50"
-							VerticalOptions="StartAndExpand"
-							Grid.Column="1"/>
-
-
-
-					</Grid>
-				</DataTemplate>
-			</CollectionView.ItemTemplate>
-
-
-
-
-		</CollectionView>
+		<StackLayout
+			x:Name="ListLessons"
+			Orientation="Vertical"
+			VerticalOptions="FillAndExpand"
+			HorizontalOptions="FillAndExpand">
+		</StackLayout>
 
 	</ScrollView>
 

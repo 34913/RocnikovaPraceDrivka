@@ -125,11 +125,33 @@ namespace RocnikovaPraceDrivka.Views
                 User user = new User(EmailEntry.Text);
 
                 if (register)
-                    user.Add();
+                {
+                    try
+                    {
+                        user.Add();
+                    }
+                    catch (Exception exc)
+                    {
+                        throw exc;
+                    }
+                }
                 else
                 {
-                    user = user.Select();
-                    user.Classes = new System.Collections.ObjectModel.ObservableCollection<Class>(user.Manager.SelectAll());
+                    try
+                    {
+                        user.Select();
+                        user.Classes.Select();
+
+                        foreach(Class cls in user.Classes.List)
+						{
+                            cls.Students.Select();
+                            cls.Lessons.Select();
+						}
+                    }
+                    catch (Exception exc)
+                    {
+                        throw exc;
+                    }
                 }
 
                 register = false;
@@ -307,22 +329,12 @@ namespace RocnikovaPraceDrivka.Views
                 UserImage.Source = "UserDay.png";
                 InfoToolbarItem.IconImageSource = "InfoDay.png";
                 DayNightToolbarItem.IconImageSource = "Day.png";
-
-                var navigationPage = Application.Current.MainPage as NavigationPage;
-                navigationPage.BarBackgroundColor = Color.White;
-
-                content.BackgroundColor = Color.White;
             }
             else
             {
-                UserImage.Source = "UserNight.png";
+                UserImage.Source = "UserNight2.png";
                 InfoToolbarItem.IconImageSource = "InfoNight.png";
                 DayNightToolbarItem.IconImageSource = "Night.png";
-
-                var navigationPage = Application.Current.MainPage as NavigationPage;
-                navigationPage.BarBackgroundColor = Color.Black;
-
-                content.BackgroundColor = Color.Black;
             }
         }
 

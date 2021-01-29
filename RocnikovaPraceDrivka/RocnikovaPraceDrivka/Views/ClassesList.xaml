@@ -39,7 +39,9 @@
 									<Span 
 										x:Name="ClassesCountSpan"/>
 									<Span
-										Text=" classes"/>
+										Text=" class"/>
+									<Span 
+										x:Name="endingClassesSpan"/>
 								</FormattedString.Spans>
 							</FormattedString>
 						</Label.FormattedText>

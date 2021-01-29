@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RocnikovaPraceDrivka.Views.SignIn"
 			 NavigationPage.HasNavigationBar="true"
-			 NavigationPage.HasBackButton="false">
+			 NavigationPage.HasBackButton="false"
+			 BackgroundColor="{DynamicResource Background}">
 
 	<ContentPage.ToolbarItems>
 		<ToolbarItem x:Name="InfoToolbarItem"
@@ -45,13 +46,24 @@
 				<Button 
 					Clicked="SubmitButton_Clicked"
 					Text="Submit"
+					BackgroundColor="{DynamicResource ButtonBackground}"
+					BorderColor="{DynamicResource Border}"
+					TextColor="{DynamicResource ButtonText}"
 					HeightRequest="40"/>
+				
 				<Button x:Name="ChangeSignButton"
-							Text="Register"
-							Clicked="ChangeSignButton_Clicked"
-							HeightRequest="40"/>
+						Text="Register"
+						BackgroundColor="{DynamicResource ButtonBackground}"
+						BorderColor="{DynamicResource Border}"
+						TextColor="{DynamicResource ButtonText}"
+						Clicked="ChangeSignButton_Clicked"
+						HeightRequest="40"/>
+				
 				<Button Clicked="LostAccButton_Clicked"
 						Text="Lost Account"
+						BackgroundColor="{DynamicResource ButtonBackground}"
+						BorderColor="{DynamicResource Border}"
+						TextColor="{DynamicResource ButtonText}"
 						HeightRequest="40"/>
 			</StackLayout>
 

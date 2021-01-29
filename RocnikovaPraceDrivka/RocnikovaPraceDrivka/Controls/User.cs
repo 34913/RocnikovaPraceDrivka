@@ -4,17 +4,23 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 
-using RocnikovaPraceDrivka.Interfaces;
+using RocnikovaPraceDrivka.Managers;
 
 namespace RocnikovaPraceDrivka.Controls
 {
-	public class User: Manager<User>
+	public class User
 	{
 		protected string name;
 
-		public ObservableCollection<Class> Classes { get; set; } = new ObservableCollection<Class>();
+		protected int id;
 
-		public ClassesManager Manager { get; } = new ClassesManager();
+		string pswd;
+
+
+
+		//
+
+		public ClassesManager Classes { get; } = new ClassesManager();
 
 		//
 
@@ -37,14 +43,12 @@ namespace RocnikovaPraceDrivka.Controls
 		//
 
 		public User(string email)
-			: base("UsersTable")
 		{
 			Email = email;
 			Name = email;
 		}
 
 		public User(string name, string email)
-			: base("UsersTable")
 		{
 			Name = name;
 			Email = email;
@@ -52,35 +56,25 @@ namespace RocnikovaPraceDrivka.Controls
 
 		//
 
-		public override void Add(User item)
+		public void Select()
 		{
-			return;
+
 		}
 
 		public void Add()
 		{
-			Add(this);
+
 		}
 
-		public override User Select()
+		public void Delete()
 		{
-			return this;
+
 		}
 
-		public override void Delete(User item)
+		public void Update()
 		{
-			return;
+
 		}
-
-		public override void Update(User item)
-		{
-			return;
-		}
-
-		//
-
-
-
 
 	}
 }

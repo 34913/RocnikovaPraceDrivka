@@ -146,6 +146,7 @@
     <Content Include="StudentNight.png" />
     <Content Include="UserDay.png" />
     <Content Include="UserNight.png" />
+    <Content Include="UserNight2.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

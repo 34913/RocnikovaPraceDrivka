@@ -8,15 +8,33 @@ namespace RocnikovaPraceDrivka.Controls
 	{
 		protected string name;
 
+		protected int draw;
+
 		//
 
-		public virtual string Name { get => name; set => name = value; }
+		public string Name { get => name; set => name = value; }
+
+		public int Draw { get => draw; }
 
 		//
 
 		public Student(string name)
 		{
 			Name = name;
+			NullDraw();
 		}
+
+		//
+
+		public void Drawen()
+		{
+			draw++;
+		}
+
+		public void NullDraw()
+		{
+			draw = 0;
+		}
+
 	}
 }

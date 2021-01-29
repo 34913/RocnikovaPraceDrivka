@@ -17,6 +17,8 @@ namespace RocnikovaPraceDrivka.Popup
 		public AddClassPopup()
 		{
 			InitializeComponent();
+
+			ChangeLightMode();
 		}
 
 		//

@@ -18,6 +18,8 @@ namespace RocnikovaPraceDrivka
 
 			if (Handles.DayNightHandle.DayNight.Day)
 				SwapTheme();
+			else
+				NaviBarTheme();
 		}
 
 
@@ -43,6 +45,16 @@ namespace RocnikovaPraceDrivka
 
 		public static void SwapTheme()
 		{
+			if (App.Current.Resources is Themes.LightTheme)
+				App.Current.Resources = new Themes.DarkTheme(); // needs using DarkMode.Styles;
+			else
+				App.Current.Resources = new Themes.LightTheme();
+
+			NaviBarTheme();
+		}
+
+		public static void NaviBarTheme()
+		{
 			var navigationPage = Application.Current.MainPage as NavigationPage;
 			if (Handles.DayNightHandle.DayNight.Day)
 			{
@@ -54,11 +66,6 @@ namespace RocnikovaPraceDrivka
 				navigationPage.BarBackgroundColor = Color.Black;
 				navigationPage.BarTextColor = Color.White;
 			}
-
-			if (App.Current.Resources is Themes.LightTheme)
-				App.Current.Resources = new Themes.DarkTheme(); // needs using DarkMode.Styles;
-			else
-				App.Current.Resources = new Themes.LightTheme();
 		}
 	}
 }

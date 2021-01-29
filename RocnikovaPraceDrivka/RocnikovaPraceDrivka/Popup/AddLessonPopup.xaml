@@ -2,31 +2,77 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RocnikovaPraceDrivka.Popup.AddLessonPopup">
+	
 	<ContentPage.Content>
-		<StackLayout Padding="50"
-					 Orientation="Vertical">
-			<Entry x:Name="NameEntry"
-				   Placeholder="Name"
-				   FontSize="20"/>
-			<Label Text="Start of lesson"
-				   FontSize="Small"/>
-			<TimePicker x:Name="StartTimePicker"/>
+		<ScrollView>
+			<StackLayout 
+			BackgroundColor="{DynamicResource Border}"
+			Padding="1">
 
-			<Label Text="End of lesson"
-				   FontSize="Small"/>
-			<TimePicker x:Name="EndTimePicker"/>
+				<StackLayout 
+				BackgroundColor="{DynamicResource Background}"
+				Orientation="Vertical"
+				HorizontalOptions="Fill"
+				VerticalOptions="FillAndExpand"
+				Padding="50,60">
 
-			<Picker x:Name="DayPicker"
-					Title="Day of week"/>
-			
-			<StackLayout VerticalOptions="EndAndExpand"
-						 HorizontalOptions="CenterAndExpand"
-						 Orientation="Horizontal">
-				<Button Text="Cancel"
+					<StackLayout
+						Padding="0,0,0,20">
+						<Image
+							x:Name="LessonImage"
+							WidthRequest="100"/>
+					</StackLayout>
+
+					<Entry 
+					x:Name="NameEntry"
+					Placeholder="Name"
+					BackgroundColor="{DynamicResource Background}"
+					TextColor="{DynamicResource Label}"
+					PlaceholderColor="{DynamicResource Label}"
+					FontSize="20"/>
+
+					<Label 
+					Text="Start of lesson"
+					TextColor="{DynamicResource Label}"
+					FontSize="Small"/>
+
+					<TimePicker 
+					x:Name="StartTimePicker"
+					BackgroundColor="{DynamicResource Background}"
+					TextColor="{DynamicResource Label}"/>
+
+					<Label 
+					Text="End of lesson"
+					TextColor="{DynamicResource Label}"
+					FontSize="Small"/>
+
+					<TimePicker
+						x:Name="EndTimePicker"
+						BackgroundColor="{DynamicResource Background}"
+						TextColor="{DynamicResource Label}"/>
+
+					<Picker 
+					x:Name="DayPicker"
+					Title="Day of week"
+					BackgroundColor="{DynamicResource Background}"
+					TextColor="{DynamicResource Label}"
+					TitleColor="{DynamicResource Label}"/>
+
+					<StackLayout 
+					VerticalOptions="EndAndExpand"
+					HorizontalOptions="CenterAndExpand"
+					Orientation="Horizontal">
+
+						<Button 
+						Text="Cancel"
 						x:Name="CancelButton"/>
-				<Button Text="OK"
+						<Button 
+						Text="OK"
 						x:Name="OkButton"/>
+					</StackLayout>
+
+				</StackLayout>
 			</StackLayout>
-		</StackLayout>
-    </ContentPage.Content>
+		</ScrollView>
+	</ContentPage.Content>
 </ContentPage>

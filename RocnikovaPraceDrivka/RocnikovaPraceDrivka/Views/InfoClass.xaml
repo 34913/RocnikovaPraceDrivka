@@ -87,8 +87,7 @@
 				<CollectionView
 					x:Name="Students"
 					Grid.Column="0"
-					Grid.Row="0"
-					SelectionMode="Single">
+					Grid.Row="0">
 
 					<CollectionView.ItemsLayout>
 						<LinearItemsLayout 
@@ -116,11 +115,21 @@
 
 					<CollectionView.ItemTemplate>
 						<DataTemplate>
-							<Label 
-								Text="{Binding Name}"
-								HorizontalTextAlignment="Center"
-								TextColor="{DynamicResource Label}"/>
-						
+							<Frame
+								Padding="0"
+								Margin="0"
+								HasShadow="false">
+								<Frame.GestureRecognizers>
+									<TapGestureRecognizer
+										Tapped="TapStudents_Tapped"
+										NumberOfTapsRequired="1"/>
+								</Frame.GestureRecognizers>
+
+								<Label 
+									Text="{Binding Name}"
+									HorizontalTextAlignment="Center"
+									TextColor="{DynamicResource Label}"/>
+							</Frame>
 						</DataTemplate>
 					</CollectionView.ItemTemplate>
 				</CollectionView>
@@ -128,8 +137,7 @@
 				<CollectionView 
 					x:Name="Lessons"
 					Grid.Column="2"
-					Grid.Row="0"
-					SelectionMode="Single">
+					Grid.Row="0">
 
 					<CollectionView.ItemsLayout>
 						<LinearItemsLayout 
@@ -157,44 +165,58 @@
 
 					<CollectionView.ItemTemplate>
 						<DataTemplate>
-							<Grid HeightRequest="20">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="*"/>
-								</Grid.ColumnDefinitions>
-								<Label Text="{Binding Name}"
-									   HorizontalTextAlignment="Start"
-									   Grid.Column="0"
-									   TextColor="{DynamicResource Label}"/>
-								<Label Text="{Binding ShortDay}"
-									   HorizontalTextAlignment="Center"
-									   Grid.Column="1"
-									   TextColor="{DynamicResource Label}"/>
-								<Label Grid.Column="2"
-									   HorizontalTextAlignment="End"
-									   TextColor="{DynamicResource Label}">
-									<Label.FormattedText>
-										<FormattedString>
-											<FormattedString.Spans>
-												<Span>
-													<MultiBinding StringFormat="{}{0:00}:{1:00;00}">
-														<Binding Path="Start.Hours" />
-														<Binding Path="Start.Minutes" />
-													</MultiBinding>
-												</Span>
-												<Span Text="-"/>
-												<Span>
-													<MultiBinding StringFormat="{}{0:00}:{1:00;00}">
-														<Binding Path="End.Hours" />
-														<Binding Path="End.Minutes" />
-													</MultiBinding>
-												</Span>
-											</FormattedString.Spans>
-										</FormattedString>
-									</Label.FormattedText>
-								</Label>
-							</Grid>
+							<Frame
+								Padding="0"
+								Margin="0"
+								HasShadow="False">
+								<Frame.GestureRecognizers>
+									<TapGestureRecognizer
+										Tapped="TapLessons_Tapped"
+										NumberOfTapsRequired="1"/>
+								</Frame.GestureRecognizers>
+								<Grid 
+									HeightRequest="20">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="*"/>
+									</Grid.ColumnDefinitions>
+									<Label 
+										Text="{Binding Name}"
+										HorizontalTextAlignment="Start"
+										Grid.Column="0"
+										TextColor="{DynamicResource Label}"/>
+									<Label 
+										Text="{Binding ShortDay}"
+										HorizontalTextAlignment="Center"
+										Grid.Column="1"
+										TextColor="{DynamicResource Label}"/>
+									<Label 
+										Grid.Column="2"
+										HorizontalTextAlignment="End"
+										TextColor="{DynamicResource Label}">
+										<Label.FormattedText>
+											<FormattedString>
+												<FormattedString.Spans>
+													<Span>
+														<MultiBinding StringFormat="{}{0:00}:{1:00;00}">
+															<Binding Path="Start.Hours" />
+															<Binding Path="Start.Minutes" />
+														</MultiBinding>
+													</Span>
+													<Span Text="-"/>
+													<Span>
+														<MultiBinding StringFormat="{}{0:00}:{1:00;00}">
+															<Binding Path="End.Hours" />
+															<Binding Path="End.Minutes" />
+														</MultiBinding>
+													</Span>
+												</FormattedString.Spans>
+											</FormattedString>
+										</Label.FormattedText>
+									</Label>
+								</Grid>
+							</Frame>
 						</DataTemplate>
 					</CollectionView.ItemTemplate>
 				</CollectionView>

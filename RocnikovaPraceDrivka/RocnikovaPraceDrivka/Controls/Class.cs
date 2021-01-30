@@ -10,9 +10,9 @@ namespace RocnikovaPraceDrivka.Controls
 {
 	public class Class
 	{
-		public StudentsManager Students { get; } = new StudentsManager();
+		public StudentsManager Students { get; set; } = new StudentsManager();
 
-		public LessonsManager Lessons { get; } = new LessonsManager();
+		public LessonsManager Lessons { get; set; } = new LessonsManager();
 
 		//
 

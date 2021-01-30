@@ -25,6 +25,16 @@ namespace RocnikovaPraceDrivka.Managers
 
 		}
 
+		public override void Update(int index, Class newItem)
+		{
+			List.Insert(index, newItem);
+
+			List[index].Lessons = List[index + 1].Lessons;
+			List[index].Students = List[index + 1].Students;
+
+			List.RemoveAt(index + 1);
+		}
+
 		//
 	}
 }

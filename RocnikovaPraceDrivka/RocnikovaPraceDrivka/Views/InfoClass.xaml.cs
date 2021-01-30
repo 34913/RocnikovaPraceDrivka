@@ -37,32 +37,11 @@ namespace RocnikovaPraceDrivka.Views
 			NameLabel.BindingContext = cls;
 			DescLabel.BindingContext = cls;
 
-			StudentsCountSpan.Text = cls.Students.List.Count.ToString();
-			LessonsWeeklyCountSpan.Text = cls.Lessons.List.Count.ToString();
-
-			if (cls.Students.List.Count != 1)
-				EndStudentsSpan.Text = "s";
-			else
-				EndStudentsSpan.Text = string.Empty;
-
-			if (cls.Lessons.List.Count != 1)
-				EndHoursSpan.Text = "s";
-			else
-				EndHoursSpan.Text = string.Empty;
+			RaloadCountLabel();
 
 			Students.ItemsSource = cls.Students.List;
 			Lessons.ItemsSource = cls.Lessons.List;
-
-			if (cls.Students.List.Count == 0)
-				EditStudentsButton.IsVisible = false;
-			else
-				EditStudentsButton.IsVisible = true;
-
-			if (cls.Lessons.List.Count == 0)
-				EditLessonsButton.IsVisible = false;
-			else
-				EditLessonsButton.IsVisible = true;
-
+			
 			Students.SelectionMode = SelectionMode.Single;
 			Lessons.SelectionMode = SelectionMode.Single;
 
@@ -82,6 +61,8 @@ namespace RocnikovaPraceDrivka.Views
 
 		private async void AddLessonButton_Clicked(object sender, EventArgs e)
 		{
+			Lessons.SelectionMode = SelectionMode.Single;
+
 			ContentPage detailsPage = new ContentPage
 			{
 				Padding = new Thickness(80, 80, 80, 80),
@@ -103,7 +84,7 @@ namespace RocnikovaPraceDrivka.Views
 				}
 				catch (Exception exc)
 				{
-					await DisplayAlert("Error", exc.ToString(), "OK");
+					await DisplayAlert("Error", exc.Message, "OK");
 				}
 				finally
 				{
@@ -119,7 +100,7 @@ namespace RocnikovaPraceDrivka.Views
 				}
 				catch(Exception exc)
 				{
-					await DisplayAlert("Error", exc.ToString(), "OK");
+					await DisplayAlert("Error", exc.Message, "OK");
 				}
 				finally
 				{
@@ -132,6 +113,8 @@ namespace RocnikovaPraceDrivka.Views
 
 		private async void AddStudentButton_Clicked(object sender, EventArgs e)
 		{
+			Students.SelectionMode = SelectionMode.Single;
+
 			ContentPage detailsPage = new ContentPage
 			{
 				Padding = new Thickness(80, 80, 80, 80),
@@ -149,11 +132,11 @@ namespace RocnikovaPraceDrivka.Views
 			{
 				try
 				{
-					cls.Students.List.Add(AddStudent(l));
+					cls.Students.Add(AddStudent(l));
 				}
 				catch (Exception exc)
 				{
-					await DisplayAlert("Error", exc.ToString(), "OK");
+					await DisplayAlert("Error", exc.Message, "OK");
 				}
 				finally
 				{
@@ -165,11 +148,11 @@ namespace RocnikovaPraceDrivka.Views
 			{
 				try
 				{
-					cls.Students.List.Add(AddStudent(l));
+					cls.Students.Add(AddStudent(l));
 				}
 				catch (Exception exc)
 				{
-					await DisplayAlert("Error", exc.ToString(), "OK");
+					await DisplayAlert("Error", exc.Message, "OK");
 				}
 				finally
 				{
@@ -226,7 +209,6 @@ namespace RocnikovaPraceDrivka.Views
 
 				return new Student(nameEntry.Text);
 			}
-
 		}
 
 		private void EditLessonsButton_Clicked(object sender, EventArgs e)
@@ -291,6 +273,7 @@ namespace RocnikovaPraceDrivka.Views
 			else
 				EditStudentsButton.IsVisible = true;
 
+			RaloadCountLabel();
 		}
 
 		private void EditStudentsCancel_Clicked(object sender, EventArgs e)
@@ -301,6 +284,8 @@ namespace RocnikovaPraceDrivka.Views
 
 			Students.SelectionMode = SelectionMode.Single;
 			Students.SelectedItems = null;
+
+			RaloadCountLabel();
 		}
 
 		private void EditLessonsOk_Clicked(object sender, EventArgs e)
@@ -323,6 +308,8 @@ namespace RocnikovaPraceDrivka.Views
 				EditLessonsButton.IsVisible = false;
 			else
 				EditLessonsButton.IsVisible = true;
+
+			RaloadCountLabel();
 		}
 
 		private void EditLessonsCancel_Clicked(object sender, EventArgs e)
@@ -333,12 +320,16 @@ namespace RocnikovaPraceDrivka.Views
 
 			Lessons.SelectionMode = SelectionMode.Single;
 			Students.SelectedItems = null;
+
+			RaloadCountLabel();
 		}
 
-		private async void Students_SelectionChangedAsync(object sender, SelectionChangedEventArgs e)
+		private async void TapStudents_Tapped(object sender, EventArgs e)
 		{
 			if (Students.SelectionMode == SelectionMode.Single)
 			{
+				Student item = Students.SelectedItem as Student;
+
 				ContentPage detailsPage = new ContentPage
 				{
 					Padding = new Thickness(80, 80, 80, 80),
@@ -347,7 +338,7 @@ namespace RocnikovaPraceDrivka.Views
 
 				AddStudentPopup l = new AddStudentPopup();
 
-				l.FindByName<Entry>("NameEntry").Text = ((Student)(sender as CollectionView).SelectedItem).Name;
+				l.FindByName<Entry>("NameEntry").Text = item.Name;
 
 				detailsPage.Content = l.Content;
 				l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
@@ -359,11 +350,11 @@ namespace RocnikovaPraceDrivka.Views
 				{
 					try
 					{
-						cls.Students.List.Add(AddStudent(l));
+						cls.Students.Update(item, AddStudent(l));
 					}
 					catch (Exception exc)
 					{
-						await DisplayAlert("Error", exc.ToString(), "OK");
+						await DisplayAlert("Error", exc.Message, "OK");
 					}
 					finally
 					{
@@ -375,11 +366,11 @@ namespace RocnikovaPraceDrivka.Views
 				{
 					try
 					{
-						cls.Students.List.Add(AddStudent(l));
+						cls.Students.Update(item, AddStudent(l));
 					}
 					catch (Exception exc)
 					{
-						await DisplayAlert("Error", exc.ToString(), "OK");
+						await DisplayAlert("Error", exc.Message, "OK");
 					}
 					finally
 					{
@@ -388,13 +379,17 @@ namespace RocnikovaPraceDrivka.Views
 				});
 
 				await Navigation.PushModalAsync(detailsPage, false);
+
+				Students.SelectedItem = null;
 			}
 		}
 
-		private async void Lessons_SelectionChangedAsync(object sender, SelectionChangedEventArgs e)
+		private async void TapLessons_Tapped(object sender, EventArgs e)
 		{
 			if (Lessons.SelectionMode == SelectionMode.Single)
 			{
+				Lesson item = Lessons.SelectedItem as Lesson;
+
 				ContentPage detailsPage = new ContentPage
 				{
 					Padding = new Thickness(80, 80, 80, 80),
@@ -403,11 +398,10 @@ namespace RocnikovaPraceDrivka.Views
 
 				AddLessonPopup l = new AddLessonPopup();
 
-				Lesson lesson = (Lesson)(sender as CollectionView).SelectedItem;
-				l.FindByName<Entry>("NameEntry").Text = lesson.Name;
-				l.FindByName<TimePicker>("StartTimePicker").Time = lesson.Start;
-				l.FindByName<TimePicker>("EndTimePicker").Time = lesson.End;
-				l.FindByName<Picker>("DayPicker").SelectedIndex = DOW.Names.IndexOf(lesson.Day);
+				l.FindByName<Entry>("NameEntry").Text = item.Name;
+				l.FindByName<TimePicker>("StartTimePicker").Time = item.Start;
+				l.FindByName<TimePicker>("EndTimePicker").Time = item.End;
+				l.FindByName<Picker>("DayPicker").SelectedIndex = DOW.Names.IndexOf(item.Day);
 
 				detailsPage.Content = l.Content;
 				l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
@@ -419,11 +413,11 @@ namespace RocnikovaPraceDrivka.Views
 				{
 					try
 					{
-						cls.Lessons.Add(AddLesson(l));
+						cls.Lessons.Update(item, AddLesson(l));
 					}
 					catch (Exception exc)
 					{
-						await DisplayAlert("Error", exc.ToString(), "OK");
+						await DisplayAlert("Error", exc.Message, "OK");
 					}
 					finally
 					{
@@ -435,11 +429,11 @@ namespace RocnikovaPraceDrivka.Views
 				{
 					try
 					{
-						cls.Lessons.Add(AddLesson(l));
+						cls.Lessons.Update(item, AddLesson(l));
 					}
 					catch (Exception exc)
 					{
-						await DisplayAlert("Error", exc.ToString(), "OK");
+						await DisplayAlert("Error", exc.Message, "OK");
 					}
 					finally
 					{
@@ -448,7 +442,35 @@ namespace RocnikovaPraceDrivka.Views
 				});
 
 				await Navigation.PushModalAsync(detailsPage, false);
+
+				Lessons.SelectedItem = null;
 			}
+		}
+
+		private void RaloadCountLabel()
+		{
+			StudentsCountSpan.Text = cls.Students.List.Count.ToString();
+			LessonsWeeklyCountSpan.Text = cls.Lessons.List.Count.ToString();
+
+			if (cls.Students.List.Count != 1)
+				EndStudentsSpan.Text = "s";
+			else
+				EndStudentsSpan.Text = string.Empty;
+
+			if (cls.Lessons.List.Count != 1)
+				EndHoursSpan.Text = "s";
+			else
+				EndHoursSpan.Text = string.Empty;
+
+			if (cls.Students.List.Count == 0)
+				EditStudentsButton.IsVisible = false;
+			else
+				EditStudentsButton.IsVisible = true;
+
+			if (cls.Lessons.List.Count == 0)
+				EditLessonsButton.IsVisible = false;
+			else
+				EditLessonsButton.IsVisible = true;
 		}
 	}
 }

@@ -59,16 +59,15 @@ namespace RocnikovaPraceDrivka.Views
 		private void LoadGridTable()
 		{
 			double multiplier = 2;
-			
-			Grid zapati = new Grid();
+
+			Grid zapati = new Grid
+			{
+				ColumnSpacing = 0,
+			};
 
 			zapati.RowDefinitions.Add(new RowDefinition()
 			{
 				Height = GridLength.Auto,
-			});
-			zapati.ColumnDefinitions.Add(new ColumnDefinition
-			{
-				Width = new GridLength(90, GridUnitType.Absolute),
 			});
 
 			for (int i = 7; i < 21; i++)
@@ -93,7 +92,11 @@ namespace RocnikovaPraceDrivka.Views
 			Grid mainGrid = new Grid()
 			{
 				VerticalOptions = LayoutOptions.FillAndExpand,
-			};
+			}; 
+			zapati.ColumnDefinitions.Add(new ColumnDefinition
+			{
+				Width = new GridLength(90, GridUnitType.Absolute),
+			});
 			mainGrid.ColumnDefinitions.Add(new ColumnDefinition
 			{
 				Width = GridLength.Auto,
@@ -104,48 +107,39 @@ namespace RocnikovaPraceDrivka.Views
 			});
 
 			mainGrid.Children.Add(zapati);
-			Grid.SetColumn(zapati, 0);
-			Grid.SetRow(zapati, mainGrid.RowDefinitions.Count - 1);
-
-			//
+			Grid.SetColumn(zapati, 1);
+			Grid.SetRow(zapati, 0);
 
 			List<Grid> gridList = new List<Grid>();
-
-			foreach (string s in DOW.Names) {
-				Grid grid = new Grid
+			for (int i = 0; i < DOW.Names.Count; i++) {
+				mainGrid.RowDefinitions.Add(new RowDefinition
 				{
-					VerticalOptions = LayoutOptions.FillAndExpand,
-					HorizontalOptions = LayoutOptions.FillAndExpand,
-				};
-
-				grid.RowDefinitions.Add(new RowDefinition
-				{
-					Height = GridLength.Auto,
-				});
-				grid.ColumnDefinitions.Add(new ColumnDefinition
-				{
-					Width = new GridLength(90, GridUnitType.Absolute)
+					Height = new GridLength(1, GridUnitType.Star),
 				});
 
 				Label label = new Label
 				{
-					Text = s,
+					Text = DOW.Names[i],
 				};
-				grid.Children.Add(label);
+				mainGrid.Children.Add(label);
 
 				Grid.SetColumn(label, 0);
-				Grid.SetRow(label, 0);
+				Grid.SetRow(label, i + 1);
 
-				gridList.Add(grid);
+				gridList.Add(new Grid
+				{
+					ColumnSpacing = 0,
+				});
 			}
 
 			//
 
-			List<Lesson> lessonsList = new List<Lesson>();
-			foreach (Class cls in user.Classes.List)
+			List<IndexedLesson> lessonsList = new List<IndexedLesson>();
+			for(int i = 0; i < user.Classes.List.Count; i++)
 			{
+				Class cls = user.Classes.List[i];
 				foreach (Lesson l in cls.Lessons.List)
-					lessonsList.Add(l);
+					lessonsList.Add(new IndexedLesson(l, i));
 			}
 
 			lessonsList.Sort(new Comparer.LessonComparer());
@@ -159,48 +153,47 @@ namespace RocnikovaPraceDrivka.Views
 			while (lessonsIndex < lessonsList.Count)
 			{
 				Grid grid = gridList[dayIndex];
-				Lesson lesson = lessonsList[lessonsIndex];
+				IndexedLesson lesson = lessonsList[lessonsIndex];
 				TimeSpan startShort = lesson.Start - new TimeSpan(dayIndex, 0, 0, 0);
 				TimeSpan endShort = lesson.End - new TimeSpan(dayIndex, 0, 0, 0);
 				Frame f;
-				Label l;
 
 				if (lesson.Start.Days == dayIndex)
 				{
 					TimeSpan difference = startShort - lastEnd;
 
-					if (startShort.TotalMinutes != 0)
+					if (difference.TotalMinutes != 0)
 					{
 						f = new Frame
 						{
 							Padding = 0,
 							Margin = 0,
-							BorderColor = Color.White,
 							HasShadow = false,
 						};
 						grid.Children.Add(f);
 
 						grid.ColumnDefinitions.Add(new ColumnDefinition
 						{
-							Width = new GridLength((difference.TotalMinutes - 1) * multiplier, GridUnitType.Absolute)
+							Width = new GridLength(difference.TotalMinutes * multiplier, GridUnitType.Absolute)
 						});
 						Grid.SetColumn(f, grid.Children.Count - 1);
 						Grid.SetRow(f, 0);
 					}
 
-					StackLayout s = new StackLayout();
-					s.Children.Add(new Label
+					StackLayout s = new StackLayout
 					{
-						Text = lesson.Name,
 						VerticalOptions = LayoutOptions.Center,
 						HorizontalOptions = LayoutOptions.Center,
+						Orientation = StackOrientation.Vertical,
+					};
+					s.Children.Add(new Label
+					{
+						Text = lesson.Name + ", " + user.Classes.List[lesson.ClassIndex].Name,
 					});
 					s.Children.Add(new Label
 					{
-						
+						Text = lesson.LengthMinutes.ToString() + " min",
 					});
-
-
 
 					f = new Frame
 					{
@@ -236,16 +229,12 @@ namespace RocnikovaPraceDrivka.Views
 
 			//
 
-			foreach(Grid grid in gridList)
+			for(int i = 0; i < gridList.Count; i++)
 			{
-				mainGrid.RowDefinitions.Add(new RowDefinition
-				{
-					Height = new GridLength(1, GridUnitType.Star),
-				});
-				mainGrid.Children.Add(grid);
+				mainGrid.Children.Add(gridList[i]);
 
-				Grid.SetColumn(grid, 0);
-				Grid.SetRow(grid, mainGrid.RowDefinitions.Count - 1);
+				Grid.SetColumn(gridList[i], 1);
+				Grid.SetRow(gridList[i], i + 1);
 			}
 
 			ListLessons.Children.Add(mainGrid);

@@ -32,15 +32,14 @@ namespace RocnikovaPraceDrivka.Views
 		protected override void OnAppearing()
 		{
 			list.ItemsSource = user.Classes.List;
-			ClassesCountSpan.Text = user.Classes.List.Count.ToString();
-
-			if (user.Classes.List.Count != 1)
-				endingClassesSpan.Text = "es";
-			else
-
-				endingClassesSpan.Text = string.Empty;
+			ReloadCount();
 
 			ChangeLightMode();
+
+			OkButton.IsVisible = false;
+			CancelButton.IsVisible = false;
+
+			list.SelectionMode = SelectionMode.Single;
 
 			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
 
@@ -84,19 +83,53 @@ namespace RocnikovaPraceDrivka.Views
 				Navigation.PopModalAsync();
 			});
 
-			l.FindByName<Button>("OkButton").Clicked += ((o2, e2) =>
+			l.FindByName<Button>("OkButton").Clicked += (async (o2, e2) =>
 			{
-				AddClass(l);
+				try
+				{
+					user.Classes.Add(AddClass(l));
+				}
+				catch(Exception exc)
+				{
+					await DisplayAlert("Error", exc.Message, "OK");
+				}
+				finally
+				{
+					await Navigation.PopModalAsync();
+				}
 			});
 
-			l.FindByName<Entry>("NameEntry").Completed += ((o2, e2) =>
+			l.FindByName<Entry>("NameEntry").Completed += (async (o2, e2) =>
 			{
-				AddClass(l);
+				try
+				{
+					user.Classes.Add(AddClass(l));
+				}
+				catch(Exception exc)
+				{
+					await DisplayAlert("Error", exc.Message, "OK");
+				}
+				finally
+				{
+					await Navigation.PopModalAsync();
+				}
+
 			});
 
-			l.FindByName<Entry>("DescEntry").Completed += ((o2, e2) =>
+			l.FindByName<Entry>("DescEntry").Completed += (async (o2, e2) =>
 			{
-				AddClass(l);
+				try
+				{
+					user.Classes.Add(AddClass(l));
+				}
+				catch(Exception exc)
+				{
+					await DisplayAlert("Error", exc.Message, "OK");
+				}
+				finally
+				{
+					await Navigation.PopModalAsync();
+				}
 			});
 
 			await Navigation.PushModalAsync(detailsPage, false);
@@ -104,7 +137,7 @@ namespace RocnikovaPraceDrivka.Views
 
 		//
 
-		private async void AddClass(ContentPage l)
+		private Class AddClass(ContentPage l)
 		{
 			Entry nameEntry = l.FindByName<Entry>("NameEntry");
 			Entry descEntry = l.FindByName<Entry>("DescEntry");
@@ -113,21 +146,21 @@ namespace RocnikovaPraceDrivka.Views
 				descEntry.Text = string.Empty;
 
 			if (string.IsNullOrWhiteSpace(nameEntry.Text))
-				await DisplayAlert("Error", "Enter name", "OK");
+				throw new Exception("Enter name");
 			else
 			{
+				Class cls;
 				try
 				{
 					string str = nameEntry.Text.ToUpper();
-					user.Classes.Add(new Class(nameEntry.Text, descEntry.Text));
+					cls = new Class(nameEntry.Text, descEntry.Text);
 				}
-				catch(Exception exc)
+				catch (Exception exc)
 				{
-					await DisplayAlert("Error", "Wrong format, try something like 1.C", "OK");
-					return;
+					throw new Exception("Wrong format, try something like 1.C");
 				}
 
-				await Navigation.PopModalAsync();
+				return cls;
 			}
 		}
 
@@ -143,5 +176,133 @@ namespace RocnikovaPraceDrivka.Views
 			}
 		}
 
+		private async void TapClass_TappedAsync(object sender, EventArgs e)
+		{
+			if (list.SelectionMode == SelectionMode.Single) {
+				ContentPage detailsPage = new ContentPage
+				{
+					Padding = new Thickness(80, 80, 80, 80),
+					BackgroundColor = Color.Transparent
+				};
+
+				Class item = list.SelectedItem as Class;
+
+				AddClassPopup l = new AddClassPopup();
+				detailsPage.Content = l.Content;
+
+				l.FindByName<Entry>("NameEntry").Text = item.Name;
+				l.FindByName<Entry>("DescEntry").Text = item.Desc;
+
+				l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
+				{
+					Navigation.PopModalAsync();
+				});
+
+				l.FindByName<Button>("OkButton").Clicked += (async (o2, e2) =>
+				{
+					try
+					{
+						user.Classes.Update(item, AddClass(l));
+					}
+					catch (Exception exc)
+					{
+						await DisplayAlert("Error", exc.Message, "OK");
+					}
+					finally
+					{
+						await Navigation.PopModalAsync();
+					}
+				});
+
+				l.FindByName<Entry>("NameEntry").Completed += (async (o2, e2) =>
+				{
+					try
+					{
+						user.Classes.Update(item, AddClass(l));
+					}
+					catch (Exception exc)
+					{
+						await DisplayAlert("Error", exc.Message, "OK");
+					}
+					finally
+					{
+						await Navigation.PopModalAsync();
+					}
+
+				});
+
+				l.FindByName<Entry>("DescEntry").Completed += (async (o2, e2) =>
+				{
+					try
+					{
+						user.Classes.Update(item, AddClass(l));
+					}
+					catch (Exception exc)
+					{
+						await DisplayAlert("Error", exc.Message, "OK");
+					}
+					finally
+					{
+						await Navigation.PopModalAsync();
+					}
+				});
+
+				await Navigation.PushModalAsync(detailsPage, false);
+				
+				list.SelectedItem = null;
+			}
+		}
+
+		private void EditButton_Clicked(object sender, EventArgs e)
+		{
+			EditButton.IsVisible = false;
+			OkButton.IsVisible = true;
+			CancelButton.IsVisible = true;
+
+			list.SelectionMode = SelectionMode.Multiple;
+		}
+
+		private void CancelButton_Clicked(object sender, EventArgs e)
+		{
+			OkButton.IsVisible = false;
+			CancelButton.IsVisible = false;
+
+			list.SelectionMode = SelectionMode.Single;
+
+			ReloadCount();
+		}
+
+		private void OkButton_Clicked(object sender, EventArgs e)
+		{
+			OkButton.IsVisible = false;
+			CancelButton.IsVisible = false;
+
+			List<Class> choosen = new List<Class>();
+
+			foreach (Class c in list.SelectedItems)
+				choosen.Add(c);
+
+			foreach (Class c in choosen)
+				user.Classes.Delete(c);
+			
+			list.SelectionMode = SelectionMode.Single;
+			list.SelectedItems = null;
+			ReloadCount();
+		}
+
+		private void ReloadCount()
+		{
+			if (user.Classes.List.Count != 0)
+				EditButton.IsVisible = true;
+			else
+				EditButton.IsVisible = false;
+
+			ClassesCountSpan.Text = user.Classes.List.Count.ToString();
+
+			if (user.Classes.List.Count != 1)
+				endingClassesSpan.Text = "es";
+			else
+				endingClassesSpan.Text = string.Empty;
+		}
 	}
 }

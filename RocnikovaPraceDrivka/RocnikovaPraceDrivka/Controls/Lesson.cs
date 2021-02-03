@@ -38,5 +38,22 @@ namespace RocnikovaPraceDrivka.Controls
 
 		//
 
+		public override bool Equals(object obj)
+		{
+			return Equals(this, obj as Lesson);
+		}
+
+		public static bool Equals(Lesson o1, Lesson o2)
+		{
+			if (o1 == null || o2 == null)
+				return false;
+
+			return (
+				o1.Day == o2.Day &&
+				o1.Start == o2.Start &&
+				o1.End == o2.End &&
+				o1.Name == o2.Name);
+		}
+
 	}
 }

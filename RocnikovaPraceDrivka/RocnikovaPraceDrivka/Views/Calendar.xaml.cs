@@ -15,23 +15,32 @@ namespace RocnikovaPraceDrivka.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Calendar : ContentPage
 	{
+		private bool reload;
+		
 		private User user;
-
-		//List<Lesson> weekly = new List<Lesson>();
 
 		//
 
 		public Calendar(User user)
 		{
 			InitializeComponent();
+
 			this.user = user;
+
+			CalendarControl.AllLessons.PropertyChanged += AllLessons_PropertyChanged;
+
+			LoadGridTable();
 		}
 
 		//
 
 		protected override void OnAppearing()
 		{
-			LoadGridTable();
+			if (reload)
+			{
+				LoadGridTable();
+				reload = false;
+			}
 
 			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
 
@@ -48,6 +57,11 @@ namespace RocnikovaPraceDrivka.Views
 		}
 
 		//
+
+		private void AllLessons_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			reload = true;
+		}
 
 		private void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
@@ -92,7 +106,7 @@ namespace RocnikovaPraceDrivka.Views
 			Grid mainGrid = new Grid()
 			{
 				VerticalOptions = LayoutOptions.FillAndExpand,
-			}; 
+			};
 			zapati.ColumnDefinitions.Add(new ColumnDefinition
 			{
 				Width = new GridLength(90, GridUnitType.Absolute),
@@ -134,26 +148,14 @@ namespace RocnikovaPraceDrivka.Views
 
 			//
 
-			List<IndexedLesson> lessonsList = new List<IndexedLesson>();
-			for(int i = 0; i < user.Classes.List.Count; i++)
-			{
-				Class cls = user.Classes.List[i];
-				foreach (Lesson l in cls.Lessons.List)
-					lessonsList.Add(new IndexedLesson(l, i));
-			}
-
-			lessonsList.Sort(new Comparer.LessonComparer());
-
-			//
-
 			int dayIndex = 0;
 			int lessonsIndex = 0;
 			TimeSpan lastEnd = new TimeSpan(7, 0, 0);
 
-			while (lessonsIndex < lessonsList.Count)
+			while (lessonsIndex < CalendarControl.AllLessons.List.Count)
 			{
 				Grid grid = gridList[dayIndex];
-				IndexedLesson lesson = lessonsList[lessonsIndex];
+				Lesson lesson = CalendarControl.AllLessons.List[lessonsIndex];
 				TimeSpan startShort = lesson.Start - new TimeSpan(dayIndex, 0, 0, 0);
 				TimeSpan endShort = lesson.End - new TimeSpan(dayIndex, 0, 0, 0);
 				Frame f;
@@ -180,17 +182,37 @@ namespace RocnikovaPraceDrivka.Views
 						Grid.SetRow(f, 0);
 					}
 
-					StackLayout s = new StackLayout
+					StackLayout sl = new StackLayout
 					{
 						VerticalOptions = LayoutOptions.Center,
 						HorizontalOptions = LayoutOptions.Center,
 						Orientation = StackOrientation.Vertical,
+						Spacing = 1,
 					};
-					s.Children.Add(new Label
+
+					sl.Children.Add(new Label
 					{
-						Text = lesson.Name + ", " + user.Classes.List[lesson.ClassIndex].Name,
+						Text = lesson.Name,
 					});
-					s.Children.Add(new Label
+
+					string text = string.Empty;
+					if (lesson is IndexedLesson)
+						text = (lesson as IndexedLesson).Owner.Name;
+					else if(lesson is MergedLesson)
+					{
+						text = (lesson as MergedLesson).OwnerList[0].Name;
+						if ((lesson as MergedLesson).OwnerList.Count > 1) {
+							for (int i = 1; i < (lesson as MergedLesson).OwnerList.Count - 1; i++)
+								text += ", " + (lesson as MergedLesson).OwnerList[i];
+							text += " and " + (lesson as MergedLesson).OwnerList[(lesson as MergedLesson).OwnerList.Count - 1];
+						}
+					}
+
+					sl.Children.Add(new Label
+					{
+						Text = text,
+					});
+					sl.Children.Add(new Label
 					{
 						Text = lesson.LengthMinutes.ToString() + " min",
 					});
@@ -200,11 +222,23 @@ namespace RocnikovaPraceDrivka.Views
 						//WidthRequest = 200,
 						//HeightRequest = 200,
 						BorderColor = Color.White,
-						Content = s,
+						Content = sl,
 						Margin = 0,
 						Padding = 3,
 						HasShadow = false,
+						BindingContext = lesson,
 					};
+
+					TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
+					{
+						NumberOfTapsRequired = 1,
+					};
+					tapGestureRecognizer.Tapped += (s, e) =>
+					{
+						TapStudents_Tapped(s, e);
+					};
+					f.GestureRecognizers.Add(tapGestureRecognizer);
+
 					grid.Children.Add(f);
 
 					grid.ColumnDefinitions.Add(new ColumnDefinition
@@ -240,28 +274,21 @@ namespace RocnikovaPraceDrivka.Views
 			ListLessons.Children.Add(mainGrid);
 		}
 
-		private void AddElementGrid(int minutes, List<Grid> list, int day, string label)
-		{
-			ColumnDefinition column = new ColumnDefinition
-			{
-				Width = new GridLength(minutes)
-			};
-
-			list[day].ColumnDefinitions.Add(column);
-
-			Label popis = new Label
-			{
-				Text = label
-			};
-
-			list[day].Children.Add(popis);
-
-			Grid.SetColumn(popis, list[day].ColumnDefinitions.Count - 1);
-		}
-
-		
 		private void ChangeLightMode()
 		{
+
+		}
+
+		//
+
+		private void TapStudents_Tapped(object sender, EventArgs e)
+		{
+			Lesson l = (sender as Frame).BindingContext as Lesson;
+
+			// todo
+			// Popup window
+
+			
 
 		}
 

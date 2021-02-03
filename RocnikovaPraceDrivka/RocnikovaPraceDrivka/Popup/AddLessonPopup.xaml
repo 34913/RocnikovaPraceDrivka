@@ -10,11 +10,11 @@
 			Padding="1">
 
 				<StackLayout 
-				BackgroundColor="{DynamicResource Background}"
-				Orientation="Vertical"
-				HorizontalOptions="Fill"
-				VerticalOptions="FillAndExpand"
-				Padding="50,60">
+					BackgroundColor="{DynamicResource Background}"
+					Orientation="Vertical"
+					HorizontalOptions="Fill"
+					VerticalOptions="FillAndExpand"
+					Padding="50,60">
 
 					<StackLayout
 						Padding="0,0,0,20">
@@ -23,52 +23,100 @@
 							WidthRequest="100"/>
 					</StackLayout>
 
-					<Entry 
-					x:Name="NameEntry"
-					Placeholder="Name"
-					BackgroundColor="{DynamicResource Background}"
-					TextColor="{DynamicResource Label}"
-					PlaceholderColor="{DynamicResource Label}"
-					FontSize="20"/>
+					<StackLayout 
+						Orientation="Horizontal">
+						<CheckBox
+							x:Name="CreateNewCheckBox"
+							IsChecked="true"/>
+						<Label 
+							Text="Create new lesson"
+							TextColor="{DynamicResource Label}"
+							VerticalOptions="Center"/>
+					</StackLayout>
+					
+					<StackLayout
+						x:Name="New"
+						IsEnabled="true">
 
-					<Label 
-					Text="Start of lesson"
-					TextColor="{DynamicResource Label}"
-					FontSize="Small"/>
+						<Entry 
+							x:Name="NameEntry"
+							Placeholder="Name"
+							BackgroundColor="{DynamicResource Background}"
+							TextColor="{DynamicResource Label}"
+							PlaceholderColor="{DynamicResource Label}"
+							FontSize="20"/>
 
-					<TimePicker 
-					x:Name="StartTimePicker"
-					BackgroundColor="{DynamicResource Background}"
-					TextColor="{DynamicResource Label}"/>
+						<Label 
+							Text="Start of lesson"
+							TextColor="{DynamicResource Label}"
+							FontSize="Small"/>
 
-					<Label 
-					Text="End of lesson"
-					TextColor="{DynamicResource Label}"
-					FontSize="Small"/>
+						<TimePicker 
+							x:Name="StartTimePicker"
+							BackgroundColor="{DynamicResource Background}"
+							TextColor="{DynamicResource Label}"/>
 
-					<TimePicker
-						x:Name="EndTimePicker"
-						BackgroundColor="{DynamicResource Background}"
-						TextColor="{DynamicResource Label}"/>
+						<Label 
+							Text="End of lesson"
+							TextColor="{DynamicResource Label}"
+							FontSize="Small"/>
 
-					<Picker 
-					x:Name="DayPicker"
-					Title="Day of week"
-					BackgroundColor="{DynamicResource Background}"
-					TextColor="{DynamicResource Label}"
-					TitleColor="{DynamicResource Label}"/>
+						<TimePicker
+							x:Name="EndTimePicker"
+							BackgroundColor="{DynamicResource Background}"
+							TextColor="{DynamicResource Label}"/>
+
+						<Picker 
+							x:Name="DayPicker"
+							Title="Day of week"
+							BackgroundColor="{DynamicResource Background}"
+							TextColor="{DynamicResource Label}"
+							TitleColor="{DynamicResource Label}"/>
+
+					</StackLayout>
+
+					<StackLayout
+						Orientation="Horizontal">
+						<CheckBox
+							x:Name="MergeCheckBox"
+							IsChecked="false"/>
+						<Label 
+							Text="Merge"
+							TextColor="{DynamicResource Label}"
+							VerticalOptions="Center"/>
+					</StackLayout>
 
 					<StackLayout 
-					VerticalOptions="EndAndExpand"
-					HorizontalOptions="CenterAndExpand"
-					Orientation="Horizontal">
+						IsEnabled="False">
+
+						<Picker
+							x:Name="ClassPicker"
+							Title="Class"
+							SelectedIndexChanged="ClassPicker_SelectedIndexChanged"
+							BackgroundColor="{DynamicResource Background}"
+							TextColor="{DynamicResource Label}"
+							TitleColor="{DynamicResource Label}"/>
+						<Picker
+							x:Name="LessonPicker"
+							Title="Lesson"
+							SelectedIndexChanged="LessonPicker_SelectedIndexChanged"
+							BackgroundColor="{DynamicResource Background}"
+							TextColor="{DynamicResource Label}"
+							TitleColor="{DynamicResource Label}"/>
+
+					</StackLayout>
+
+					<StackLayout 
+						VerticalOptions="EndAndExpand"
+						HorizontalOptions="CenterAndExpand"
+						Orientation="Horizontal">
 
 						<Button 
-						Text="Cancel"
-						x:Name="CancelButton"/>
+							Text="Cancel"
+							x:Name="CancelButton"/>
 						<Button 
-						Text="OK"
-						x:Name="OkButton"/>
+							Text="OK"
+							x:Name="OkButton"/>
 					</StackLayout>
 
 				</StackLayout>

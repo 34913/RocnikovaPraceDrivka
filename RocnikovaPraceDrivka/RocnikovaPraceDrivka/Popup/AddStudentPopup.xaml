@@ -24,7 +24,7 @@
 							WidthRequest="100"/>
 					</StackLayout>
 
-					<Entry 
+					<Entry
 						x:Name="NameEntry"
 						FontSize="20"
 						Placeholder="Name"

@@ -22,5 +22,14 @@ namespace RocnikovaPraceDrivka.Managers
 			List.Add(new Student("TohleJeJmeno"));
 		}
 
+		public override void Update(int index, Student newItem)
+		{
+			List.Insert(index, newItem);
+
+			List[index].Draw = List[index + 1].Draw;
+			
+			List.RemoveAt(index + 1);
+		}
+
 	}
 }

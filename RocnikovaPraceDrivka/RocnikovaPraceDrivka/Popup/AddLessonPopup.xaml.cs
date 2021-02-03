@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using RocnikovaPraceDrivka.Handles;
+using RocnikovaPraceDrivka.Controls;
 
 namespace RocnikovaPraceDrivka.Popup
 {
@@ -65,5 +66,14 @@ namespace RocnikovaPraceDrivka.Popup
 			}
 		}
 
+		private void ClassPicker_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			LessonPicker.ItemsSource = (sender as Class).Lessons.List;
+		}
+
+		private void LessonPicker_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

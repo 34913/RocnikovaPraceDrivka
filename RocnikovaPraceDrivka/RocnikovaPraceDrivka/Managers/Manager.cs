@@ -65,5 +65,7 @@ namespace RocnikovaPraceDrivka.Managers
 			List.RemoveAt(index + 1);
 		}
 
+
+
 	}
 }

@@ -382,18 +382,17 @@
 						<StackLayout
 							Grid.Row="0"
 							Grid.Column="0"
-							Orientation="Horizontal">
+							Orientation="Horizontal"
+							HorizontalOptions="Center">
 							
 							<Button
 								x:Name="DrawButton"
 								Text="Draw"
-								HorizontalOptions="Center"
 								Clicked="DrawButton_Clicked"/>
 
 							<Button
 								x:Name="OverrideDrawButton"
 								Text="Override"
-								HorizontalOptions="Center"
 								Clicked="OverrideDrawButton_Clicked"/>
 						</StackLayout>
 							

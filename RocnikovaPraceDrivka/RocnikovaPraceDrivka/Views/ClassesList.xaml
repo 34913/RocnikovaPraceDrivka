@@ -92,6 +92,7 @@
 								Tapped="TapClass_TappedAsync"
 								NumberOfTapsRequired="1"/>
 						</Frame.GestureRecognizers>
+						
 						<Grid 
 							VerticalOptions="FillAndExpand">
 							<Grid.ColumnDefinitions>

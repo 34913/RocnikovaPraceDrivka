@@ -23,7 +23,7 @@ namespace RocnikovaPraceDrivka.Managers
 
 		public override void Add(Lesson item)
 		{
-			base.Add(item);
+			base.Add(item as Lesson);
 		}
 
 		public override void Update(int index, Lesson newItem)

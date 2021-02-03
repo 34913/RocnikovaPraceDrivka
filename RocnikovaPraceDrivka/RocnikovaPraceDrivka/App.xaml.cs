@@ -12,6 +12,8 @@ namespace RocnikovaPraceDrivka
 		{
 			InitializeComponent();
 
+			Handles.DayNightHandle.DayNight = new Handles.DayNightHandle();
+
 			Handles.DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
 
 			MainPage = new NavigationPage(new Views.SignIn());
@@ -21,8 +23,6 @@ namespace RocnikovaPraceDrivka
 			else
 				NaviBarTheme();
 		}
-
-
 
 		protected override void OnStart()
 		{

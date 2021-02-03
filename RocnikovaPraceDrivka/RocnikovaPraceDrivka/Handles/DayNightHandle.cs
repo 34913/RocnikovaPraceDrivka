@@ -101,7 +101,7 @@ namespace RocnikovaPraceDrivka.Handles
 		}
 
 
-		public static DayNightHandle DayNight = new DayNightHandle();
+		public static DayNightHandle DayNight;
 	}
 
 }

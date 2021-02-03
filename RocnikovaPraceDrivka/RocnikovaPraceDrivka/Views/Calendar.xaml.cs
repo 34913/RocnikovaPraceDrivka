@@ -15,7 +15,7 @@ namespace RocnikovaPraceDrivka.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Calendar : ContentPage
 	{
-		private bool reload;
+		private bool reload = true;
 		
 		private User user;
 
@@ -27,9 +27,9 @@ namespace RocnikovaPraceDrivka.Views
 
 			this.user = user;
 
-			CalendarControl.AllLessons.PropertyChanged += AllLessons_PropertyChanged;
+			ResetCalendarControl();
 
-			LoadGridTable();
+			CalendarControl.AllLessons.PropertyChanged += AllLessons_PropertyChanged;
 		}
 
 		//
@@ -38,6 +38,7 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			if (reload)
 			{
+				ListLessons.Children.Clear();
 				LoadGridTable();
 				reload = false;
 			}
@@ -50,8 +51,6 @@ namespace RocnikovaPraceDrivka.Views
 		protected override void OnDisappearing()
 		{
 			DayNightHandle.DayNight.PropertyChanged -= DayNight_PropertyChanged;
-
-			ListLessons.Children.Clear();
 
 			base.OnDisappearing();
 		}
@@ -279,6 +278,20 @@ namespace RocnikovaPraceDrivka.Views
 
 		}
 
+		private void ResetCalendarControl()
+		{
+			CalendarControl.AllLessons = new CalendarControl();
+
+			foreach (Class cls in user.Classes.List)
+			{
+				foreach(Lesson l in cls.Lessons.List)
+				{
+					CalendarControl.AllLessons.AddLesson(new IndexedLesson(l, cls));
+				}
+
+			}
+		}
+
 		//
 
 		private void TapStudents_Tapped(object sender, EventArgs e)
@@ -287,8 +300,6 @@ namespace RocnikovaPraceDrivka.Views
 
 			// todo
 			// Popup window
-
-			
 
 		}
 

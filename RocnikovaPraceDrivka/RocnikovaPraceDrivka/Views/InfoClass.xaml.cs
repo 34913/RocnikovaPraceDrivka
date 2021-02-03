@@ -137,7 +137,8 @@ namespace RocnikovaPraceDrivka.Views
 
 			}
 
-			DrawBox(DrawStack.IsVisible);
+			if (DrawStack.IsVisible)
+				DrawBox(true);
 		}
 
 		private void RaloadCountLabel()
@@ -249,9 +250,11 @@ namespace RocnikovaPraceDrivka.Views
 					};
 					square.SetDynamicResource(Frame.BorderColorProperty, "Border");
 
-					DataTrigger dataTrigger = new DataTrigger(typeof(Frame));
-					dataTrigger.Binding = new Binding("OneDraw");
-					dataTrigger.Value = true;
+					DataTrigger dataTrigger = new DataTrigger(typeof(Frame))
+					{
+						Binding = new Binding("OneDraw"),
+						Value = true
+					};
 					dataTrigger.Setters.Add(new Setter
 					{
 						Property = Frame.BackgroundColorProperty,
@@ -259,9 +262,11 @@ namespace RocnikovaPraceDrivka.Views
 					});
 					square.Triggers.Add(dataTrigger);
 
-					dataTrigger = new DataTrigger(typeof(Frame));
-					dataTrigger.Binding = new Binding("OneDraw");
-					dataTrigger.Value = false;
+					dataTrigger = new DataTrigger(typeof(Frame))
+					{
+						Binding = new Binding("OneDraw"),
+						Value = false
+					};
 					dataTrigger.Setters.Add(new Setter
 					{
 						Property = Frame.BackgroundColorProperty,
@@ -294,7 +299,11 @@ namespace RocnikovaPraceDrivka.Views
 			Students.SelectionMode = SelectionMode.Single;
 			Students.SelectedItems = null;
 
-			RaloadCountLabel();
+			StudentsCountSpan.Text = cls.Students.List.Count.ToString();
+			if (cls.Students.List.Count != 1)
+				EndStudentsSpan.Text = "s";
+			else
+				EndStudentsSpan.Text = string.Empty;
 		}
 
 		private void LessonViewReset()
@@ -307,9 +316,13 @@ namespace RocnikovaPraceDrivka.Views
 				EditLessonsButton.IsVisible = true;
 
 			Lessons.SelectionMode = SelectionMode.Single;
-			Students.SelectedItems = null;
+			Lessons.SelectedItems = null;
 
-			RaloadCountLabel();
+			LessonsWeeklyCountSpan.Text = cls.Lessons.List.Count.ToString();
+			if (cls.Lessons.List.Count != 1)
+				EndHoursSpan.Text = "s";
+			else
+				EndHoursSpan.Text = string.Empty;
 		}
 
 		private async void StudentPop(bool nStudent)
@@ -336,42 +349,35 @@ namespace RocnikovaPraceDrivka.Views
 				Navigation.PopModalAsync();
 			});
 
-			l.FindByName<Button>("OkButton").Clicked += (async (o2, e2) =>
+			async void action(object o2, EventArgs e2)
 			{
+				Student s = null;
 				try
 				{
-					if (nStudent)
-						cls.Students.Add(AddStudent(l));
-					else
-						cls.Students.Update(item, AddStudent(l));
+					s = AddStudent(l);
 				}
 				catch (Exception exc)
 				{
 					await DisplayAlert("Error", exc.Message, "OK");
+					return;
 				}
-				finally
-				{
-					await Navigation.PopModalAsync();
-				}
+
+				if (nStudent)
+					cls.Students.Add(s);
+				else
+					cls.Students.Update(item, s);
+
+				await Navigation.PopModalAsync();
+			}
+
+			l.FindByName<Button>("OkButton").Clicked += ((o2, e2) =>
+			{
+				action(o2, e2);
 			});
 
-			l.FindByName<Entry>("NameEntry").Completed += (async (o2, e2) =>
+			l.FindByName<Entry>("NameEntry").Completed += ((o2, e2) =>
 			{
-				try
-				{
-					if (nStudent)
-						cls.Students.Add(AddStudent(l));
-					else
-						cls.Students.Update(item, AddStudent(l));
-				}
-				catch (Exception exc)
-				{
-					await DisplayAlert("Error", exc.Message, "OK");
-				}
-				finally
-				{
-					await Navigation.PopModalAsync();
-				}
+				action(o2, e2);
 			});
 
 			StudentViewReset();
@@ -406,42 +412,38 @@ namespace RocnikovaPraceDrivka.Views
 				Navigation.PopModalAsync();
 			});
 
-			l.FindByName<Button>("OkButton").Clicked += (async (o2, e2) =>
+			async void action(object o2, EventArgs e2)
 			{
+				Lesson newL = null;
 				try
 				{
-					if (nLesson)
-						cls.Lessons.Add(AddLesson(l));
-					else
-						cls.Lessons.Update(item, AddLesson(l));
+					newL = AddLesson(l);
 				}
 				catch (Exception exc)
 				{
 					await DisplayAlert("Error", exc.Message, "OK");
+					return;
 				}
-				finally
+
+				if (nLesson)
 				{
-					await Navigation.PopModalAsync();
+					cls.Lessons.Add(newL);
+					CalendarControl.AllLessons.AddLesson(new IndexedLesson(newL, cls));
 				}
+				else
+					cls.Lessons.Update(item, newL);
+
+				await Navigation.PopModalAsync();
+			}
+
+			l.FindByName<Button>("OkButton").Clicked += ((o2, e2) =>
+			{
+				action(o2, e2);
 			});
 
-			l.FindByName<Entry>("NameEntry").Completed += (async (o2, e2) =>
+			l.FindByName<Entry>("NameEntry").Completed += ((o2, e2) =>
 			{
-				try
-				{
-					if (nLesson)
-						cls.Lessons.Add(AddLesson(l));
-					else
-						cls.Lessons.Update(item, AddLesson(l));
-				}
-				catch (Exception exc)
-				{
-					await DisplayAlert("Error", exc.Message, "OK");
-				}
-				finally
-				{
-					await Navigation.PopModalAsync();
-				}
+				action(o2, e2);
 			});
 
 			LessonViewReset();
@@ -518,6 +520,7 @@ namespace RocnikovaPraceDrivka.Views
 			if (Students.SelectionMode == SelectionMode.Single)
 			{
 				StudentPop(false);
+				Students.SelectedItem = null;
 			}
 		}
 
@@ -525,7 +528,8 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			if (Lessons.SelectionMode == SelectionMode.Single)
 			{
-				LessonPop(false);	
+				LessonPop(false);
+				Lessons.SelectedItem = null;
 			}
 		}
 
@@ -580,18 +584,17 @@ namespace RocnikovaPraceDrivka.Views
 				draw.ChoosenStudent.Draw++;
 				draw.Null();
 
-				OkDrawButton.IsVisible = false;
-				StudentDrawLabel.Text = string.Empty;
-
 				Students.ItemsSource = null;
 				Students.ItemsSource = cls.Students.List;
 			}
-			else
-				StudentDrawLabel.Text = string.Empty;
+
+			OkDrawButton.IsVisible = false;
+			StudentDrawLabel.Text = string.Empty;
+
 		}
 
 		//
-
+		
 		private void TapDrawGestureRecognizer_Tapped(object sender, EventArgs e)
 		{
 			DrawStack.IsVisible = !DrawStack.IsVisible;

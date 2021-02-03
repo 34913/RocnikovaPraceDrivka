@@ -29,10 +29,12 @@ namespace RocnikovaPraceDrivka.Controls
 
 		public void AddLesson(IndexedLesson l)
 		{
+#pragma warning disable IDE0059 // Nepotřebné přiřazení hodnoty
 			int i = 0;
-			for(i = 0; i < List.Count;)
-			{
+#pragma warning restore IDE0059 // Nepotřebné přiřazení hodnoty
 
+			for (i = 0; i < List.Count;)
+			{
 				if (l.Start < List[i].Start)
 				{
 					List.Insert(i, l);
@@ -53,10 +55,6 @@ namespace RocnikovaPraceDrivka.Controls
 			NotifyPropertyChanged();
 		}
 
-
-
-
-
-		public static CalendarControl AllLessons = new CalendarControl();
+		public static CalendarControl AllLessons;
 	}
 }

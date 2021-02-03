@@ -37,6 +37,14 @@
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
+    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidSigningKeyStore>C:\Users\fanda\AppData\Local\Xamarin\Mono for Android\Keystore\eagle\eagle.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>pe3qwi47xz</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>eagle</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>Se2l84LQ4p</AndroidSigningKeyPass>
+    <MandroidI18n />
+    <AndroidSupportedAbis />
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,8 +75,8 @@
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms">
       <Version>2.4.11.982</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1931" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

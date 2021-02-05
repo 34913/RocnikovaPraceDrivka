@@ -122,13 +122,13 @@ namespace RocnikovaPraceDrivka.Views
             }
 			else
             {
-                User user = new User(EmailEntry.Text);
+                User.u = new User(EmailEntry.Text);
 
                 if (register)
                 {
                     try
                     {
-                        user.Add();
+                        User.u.Add();
                     }
                     catch (Exception exc)
                     {
@@ -139,10 +139,10 @@ namespace RocnikovaPraceDrivka.Views
                 {
                     try
                     {
-                        user.Select();
-                        user.Classes.Select();
+                        User.u.Select();
+                        User.u.Classes.Select();
 
-                        foreach(Class cls in user.Classes.List)
+                        foreach(Class cls in User.u.Classes.List)
 						{
                             cls.Students.Select();
                             cls.Lessons.Select();
@@ -153,6 +153,9 @@ namespace RocnikovaPraceDrivka.Views
                         throw exc;
                     }
                 }
+
+                CalendarControl.cc = new CalendarControl();
+                CalendarControl.cc.LoadAll();
 
                 register = false;
 
@@ -171,7 +174,7 @@ namespace RocnikovaPraceDrivka.Views
                     int currentLine = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileLineNumber();
                     throw new Exception(string.Format("file {0}, line {1}", currentFile, currentLine));
                 }
-                await Navigation.PushAsync(new Tabs.CalendarClassesTabs(user));
+                await Navigation.PushAsync(new Tabs.CalendarClassesTabs(), false);
             }
             ClearPswd();
 		}

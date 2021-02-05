@@ -29,6 +29,8 @@ namespace RocnikovaPraceDrivka.Views
 			InitializeComponent();
 			this.cls = cls;
 
+			DrawBox(false);
+
 			draw = new Draw();
 		}
 
@@ -64,63 +66,8 @@ namespace RocnikovaPraceDrivka.Views
 			base.OnDisappearing();
 		}
 
-		private void AddLessonButton_Clicked(object sender, EventArgs e)
-		{
-			LessonPop(true);
-		}
-
-		private void AddStudentButton_Clicked(object sender, EventArgs e)
-		{
-			StudentPop(true);
-		}
 
 		//
-
-		private Lesson AddLesson(AddLessonPopup l)
-		{
-			Entry nameEntry = l.FindByName<Entry>("NameEntry");
-			TimePicker startPicker = l.FindByName<TimePicker>("StartTimePicker");
-			TimePicker endPicker = l.FindByName<TimePicker>("EndTimePicker");
-			Picker dayPicker = l.FindByName<Picker>("DayPicker");
-
-			if (string.IsNullOrWhiteSpace(nameEntry.Text))
-				throw new Exception("Enter name");
-			else if (startPicker.Time > endPicker.Time)
-				throw new Exception("Beggining of lesson has to be before the end of lesson");
-			else if (dayPicker.SelectedItem == null)
-				throw new Exception("Choose day of week");
-			else if (startPicker.Time < new TimeSpan(7, 0, 0))
-				throw new Exception("Choose start of lesson after 7 AM");
-			else if (endPicker.Time > new TimeSpan(20, 0, 0))
-				throw new Exception("Choose end of lesson before 8 PM");
-			else
-			{
-				int day = dayPicker.SelectedIndex;
-
-				TimeSpan start = startPicker.Time;
-				TimeSpan end = endPicker.Time;
-
-				start = new TimeSpan(day, start.Hours, start.Minutes, start.Seconds);
-				end = new TimeSpan(day, end.Hours, end.Minutes, end.Seconds);
-
-				EditLessonsButton.IsVisible = true;
-				return new Lesson(nameEntry.Text, start, end);
-			}
-		}
-
-		private Student AddStudent(AddStudentPopup l)
-		{
-			Entry nameEntry = l.FindByName<Entry>("NameEntry");
-
-			if (string.IsNullOrWhiteSpace(nameEntry.Text))
-				throw new Exception("Enter name");
-			else
-			{ 
-				EditStudentsButton.IsVisible = true;
-
-				return new Student(nameEntry.Text);
-			}
-		}
 
 		private void ChangeLightMode()
 		{
@@ -333,16 +280,15 @@ namespace RocnikovaPraceDrivka.Views
 				BackgroundColor = Color.Transparent
 			};
 
-			AddStudentPopup l = new AddStudentPopup();
+			AddStudentPopup l;
+			if (nStudent)
+				l = new AddStudentPopup();
+			else
+				l = new AddStudentPopup(Students.SelectedItem as Student);
+			
 			detailsPage.Content = l.Content;
 
-			Student item = null;
-			if (!nStudent)
-			{
-				item = Students.SelectedItem as Student;
-
-				l.FindByName<Entry>("NameEntry").Text = (Students.SelectedItem as Student).Name;
-			}
+			Entry nameEntry = l.FindByName<Entry>("NameEntry");
 
 			l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
 			{
@@ -354,7 +300,14 @@ namespace RocnikovaPraceDrivka.Views
 				Student s = null;
 				try
 				{
-					s = AddStudent(l);
+					if (string.IsNullOrWhiteSpace(nameEntry.Text))
+						throw new Exception("Enter name");
+					else
+					{
+						EditStudentsButton.IsVisible = true;
+
+						s = new Student(nameEntry.Text);
+					}
 				}
 				catch (Exception exc)
 				{
@@ -365,7 +318,7 @@ namespace RocnikovaPraceDrivka.Views
 				if (nStudent)
 					cls.Students.Add(s);
 				else
-					cls.Students.Update(item, s);
+					cls.Students.Update(Students.SelectedItem as Student, s);
 
 				await Navigation.PopModalAsync();
 			}
@@ -393,18 +346,25 @@ namespace RocnikovaPraceDrivka.Views
 				BackgroundColor = Color.Transparent,
 			};
 
-			AddLessonPopup l = new AddLessonPopup();
+			AddLessonPopup l;
+			if (nLesson)
+				l = new AddLessonPopup();
+			else
+				l = new AddLessonPopup(Lessons.SelectedItem as Lesson);
 
-			Lesson item = null;
-			if (!nLesson)
-			{
-				item = Lessons.SelectedItem as Lesson;
+			Entry nameEntry = l.FindByName<Entry>("NameEntry");
+			TimePicker startPicker = l.FindByName<TimePicker>("StartTimePicker");
+			TimePicker endPicker = l.FindByName<TimePicker>("EndTimePicker");
+			Picker dayPicker = l.FindByName<Picker>("DayPicker");
 
-				l.FindByName<Entry>("NameEntry").Text = item.Name;
-				l.FindByName<TimePicker>("StartTimePicker").Time = item.Start;
-				l.FindByName<TimePicker>("EndTimePicker").Time = item.End;
-				l.FindByName<Picker>("DayPicker").SelectedIndex = DOW.Names.IndexOf(item.Day);
-			}
+			Picker classPicker = l.FindByName<Picker>("ClassPicker");
+			Picker lessonPicker = l.FindByName<Picker>("LessonPicker");
+
+			CheckBox createCheckBox = l.FindByName<CheckBox>("CreateNewCheckBox");
+
+			List<Class> classes = new List<Class>(User.u.Classes.List);
+			classes.RemoveAt(User.u.Classes.List.IndexOf(cls));
+			classPicker.ItemsSource = classes;
 
 			detailsPage.Content = l.Content;
 			l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
@@ -417,7 +377,40 @@ namespace RocnikovaPraceDrivka.Views
 				Lesson newL = null;
 				try
 				{
-					newL = AddLesson(l);
+					if (createCheckBox.IsChecked){
+						if (string.IsNullOrWhiteSpace(nameEntry.Text))
+							throw new Exception("Enter name");
+						else if (startPicker.Time > endPicker.Time)
+							throw new Exception("Beggining of lesson has to be before the end of lesson");
+						else if (dayPicker.SelectedItem == null)
+							throw new Exception("Choose day of week");
+						else if (startPicker.Time < new TimeSpan(7, 0, 0))
+							throw new Exception("Choose start of lesson after 7 AM");
+						else if (endPicker.Time > new TimeSpan(20, 0, 0))
+							throw new Exception("Choose end of lesson before 8 PM");
+
+						int day = dayPicker.SelectedIndex;
+
+						TimeSpan start = startPicker.Time;
+						TimeSpan end = endPicker.Time;
+
+						start = new TimeSpan(day, start.Hours, start.Minutes, start.Seconds);
+						end = new TimeSpan(day, end.Hours, end.Minutes, end.Seconds);
+
+						EditLessonsButton.IsVisible = true;
+						newL = new Lesson(nameEntry.Text, start, end);
+
+						if (!CalendarControl.cc.DontCross(newL))
+							throw new Exception("There is another lesson in this time");
+					}
+					else
+					{
+						if (classPicker.SelectedItem == null || lessonPicker.SelectedItem == null)
+							throw new Exception("Pick class and lesson to merge this lesson with");
+						
+						newL = lessonPicker.SelectedItem as Lesson;
+
+					}
 				}
 				catch (Exception exc)
 				{
@@ -428,10 +421,13 @@ namespace RocnikovaPraceDrivka.Views
 				if (nLesson)
 				{
 					cls.Lessons.Add(newL);
-					CalendarControl.AllLessons.AddLesson(new IndexedLesson(newL, cls));
+					CalendarControl.cc.AddLesson(newL, cls);
 				}
 				else
-					cls.Lessons.Update(item, newL);
+				{
+					cls.Lessons.Update(Lessons.SelectedItem as Lesson, newL);
+					CalendarControl.cc.UpdateLesson(Lessons.SelectedItem as Lesson, newL);
+				}
 
 				await Navigation.PopModalAsync();
 			}
@@ -441,7 +437,7 @@ namespace RocnikovaPraceDrivka.Views
 				action(o2, e2);
 			});
 
-			l.FindByName<Entry>("NameEntry").Completed += ((o2, e2) =>
+			nameEntry.Completed += ((o2, e2) =>
 			{
 				action(o2, e2);
 			});
@@ -452,6 +448,16 @@ namespace RocnikovaPraceDrivka.Views
 		}
 
 		//
+
+		private void AddLessonButton_Clicked(object sender, EventArgs e)
+		{
+			LessonPop(true);
+		}
+
+		private void AddStudentButton_Clicked(object sender, EventArgs e)
+		{
+			StudentPop(true);
+		}
 
 		private void EditLessonsButton_Clicked(object sender, EventArgs e)
 		{
@@ -503,7 +509,10 @@ namespace RocnikovaPraceDrivka.Views
 				choosen.Add(l);
 
 			foreach (Lesson l in choosen)
+			{
+				CalendarControl.cc.RemoveLesson(l, cls);
 				cls.Lessons.Delete(l);
+			}
 
 			LessonViewReset();	
 		}
@@ -534,6 +543,7 @@ namespace RocnikovaPraceDrivka.Views
 		}
 
 		//
+
 		private void DrawButton_Clicked(object sender, EventArgs e)
 		{
 			if (cls.Students.List.Count > 0)

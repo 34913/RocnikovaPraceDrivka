@@ -62,5 +62,10 @@ namespace RocnikovaPraceDrivka.Controls
 
 		//
 
+		public override string ToString()
+		{
+			return Name;
+		}
+
 	}
 }

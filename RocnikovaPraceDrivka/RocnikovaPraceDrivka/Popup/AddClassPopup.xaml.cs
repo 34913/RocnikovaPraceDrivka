@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using RocnikovaPraceDrivka.Handles;
+using RocnikovaPraceDrivka.Controls;
 
 namespace RocnikovaPraceDrivka.Popup
 {
@@ -17,6 +18,16 @@ namespace RocnikovaPraceDrivka.Popup
 		public AddClassPopup()
 		{
 			InitializeComponent();
+
+			ChangeLightMode();
+		}
+
+		public AddClassPopup(Class cls)
+		{
+			InitializeComponent();
+
+			NameEntry.Text = cls.Name;
+			DescEntry.Text = cls.Desc;
 
 			ChangeLightMode();
 		}

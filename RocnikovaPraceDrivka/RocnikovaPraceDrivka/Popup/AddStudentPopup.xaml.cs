@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using RocnikovaPraceDrivka.Controls;
+
 namespace RocnikovaPraceDrivka.Popup
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
@@ -15,6 +17,15 @@ namespace RocnikovaPraceDrivka.Popup
 		public AddStudentPopup()
 		{
 			InitializeComponent();
+
+			ChangeLightMode();
+		}
+
+		public AddStudentPopup(Student student)
+		{
+			InitializeComponent();
+
+			NameEntry.Text = student.Name;
 
 			ChangeLightMode();
 		}

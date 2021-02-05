@@ -86,7 +86,8 @@
 
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
-					<Frame>
+					<Frame
+						BackgroundColor="Transparent">
 						<Frame.GestureRecognizers>
 							<TapGestureRecognizer
 								Tapped="TapClass_TappedAsync"
@@ -97,7 +98,7 @@
 							VerticalOptions="FillAndExpand">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="2*"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
 
@@ -117,14 +118,14 @@
 								HorizontalTextAlignment="Center"
 								VerticalTextAlignment="Center"/>
 
-							<myE:MyClassButton 
+							<Button
 								Text="Details"
-								FontSize="Medium"
+								FontSize="Small"
 								Grid.Column="2"
-								VerticalOptions="FillAndExpand"
+								VerticalOptions="Center"
 								HorizontalOptions="Center"
 								Clicked="DetailsButton_Clicked"
-								ClassItem="{Binding .}"/>
+								BindingContext="{Binding .}"/>
 						</Grid>
 					</Frame>
 				</DataTemplate>

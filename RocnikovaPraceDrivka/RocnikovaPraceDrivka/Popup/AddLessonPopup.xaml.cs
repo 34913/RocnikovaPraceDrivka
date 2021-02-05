@@ -27,6 +27,20 @@ namespace RocnikovaPraceDrivka.Popup
 			ChangeLightMode();
 		}
 
+		public AddLessonPopup(Lesson lesson)
+		{
+			InitializeComponent();
+
+			DayPicker.ItemsSource = DOW.Names;
+
+			NameEntry.Text = lesson.Name;
+			StartTimePicker.Time = lesson.Start;
+			EndTimePicker.Time = lesson.End;
+			DayPicker.SelectedIndex = DOW.Names.IndexOf(lesson.Day);
+
+			ChangeLightMode();
+		}
+
 		//
 
 		protected override void OnAppearing()
@@ -46,13 +60,6 @@ namespace RocnikovaPraceDrivka.Popup
 		}
 
 		//
-		
-		private void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-		{
-			ChangeLightMode();
-		}
-
-		//
 
 		private void ChangeLightMode()
 		{
@@ -66,14 +73,58 @@ namespace RocnikovaPraceDrivka.Popup
 			}
 		}
 
+		//
+
 		private void ClassPicker_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			LessonPicker.ItemsSource = (sender as Class).Lessons.List;
+			LessonPicker.ItemsSource = (ClassPicker.SelectedItem as Class).Lessons.List;
 		}
 
 		private void LessonPicker_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			Lesson lesson = LessonPicker.SelectedItem as Lesson;
+			
+			NameEntry.Text = lesson.Name;
+			StartTimePicker.Time = lesson.Start;
+			EndTimePicker.Time = lesson.End;
+			DayPicker.SelectedIndex = DOW.Names.IndexOf(lesson.Day);
+		}
 
+		private void DayNight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			ChangeLightMode();
+		}
+
+		private void MergeCheckBox_Tapped(object sender, EventArgs e)
+		{
+			CreateNewCheckBox.IsChecked = !CreateNewCheckBox.IsChecked;
+
+			if (MergeCheckBox.IsChecked)
+			{
+				New.IsVisible = false;
+				Merge.IsVisible = true;
+			}
+			else
+			{
+				New.IsVisible = true;
+				Merge.IsVisible = false;
+			}
+		}
+
+		private void CreateNewCheckBox_Tapped(object sender, EventArgs e)
+		{
+			MergeCheckBox.IsChecked = !MergeCheckBox.IsChecked;
+
+			if (MergeCheckBox.IsChecked)
+			{
+				New.IsVisible = false;
+				Merge.IsVisible = true;
+			}
+			else
+			{
+				New.IsVisible = true;
+				Merge.IsVisible = false;
+			}
 		}
 	}
 }

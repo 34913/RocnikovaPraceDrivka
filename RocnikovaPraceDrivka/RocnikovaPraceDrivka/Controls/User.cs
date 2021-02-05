@@ -16,11 +16,9 @@ namespace RocnikovaPraceDrivka.Controls
 
 		string pswd;
 
-
-
 		//
 
-		public ClassesManager Classes { get; } = new ClassesManager();
+		public ClassesManager Classes { get; }
 
 		//
 
@@ -46,12 +44,16 @@ namespace RocnikovaPraceDrivka.Controls
 		{
 			Email = email;
 			Name = email;
+
+			Classes = new ClassesManager();
 		}
 
 		public User(string name, string email)
 		{
 			Name = name;
 			Email = email;
+
+			Classes = new ClassesManager();
 		}
 
 		//
@@ -75,6 +77,8 @@ namespace RocnikovaPraceDrivka.Controls
 		{
 
 		}
+
+		public static User u;
 
 	}
 }

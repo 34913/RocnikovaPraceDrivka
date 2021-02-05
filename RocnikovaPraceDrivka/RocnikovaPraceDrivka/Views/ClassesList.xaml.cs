@@ -18,20 +18,17 @@ namespace RocnikovaPraceDrivka.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ClassesList : ContentPage
 	{
-		private User user;
-
+		
 		//
 
-		public ClassesList(User user)
+		public ClassesList()
 		{
 			InitializeComponent();
-
-			this.user = user;
 		}
 
 		protected override void OnAppearing()
 		{
-			list.ItemsSource = user.Classes.List;
+			list.ItemsSource = User.u.Classes.List;
 			ReloadCount();
 
 			ChangeLightMode();
@@ -62,9 +59,9 @@ namespace RocnikovaPraceDrivka.Views
 
 		private async void DetailsButton_Clicked(object sender, EventArgs e)
 		{
-			MyClassButton obj = sender as MyClassButton;
+			Button button = sender as Button;
 
-			await Navigation.PushAsync(new InfoClass(obj.ClassItem));
+			await Navigation.PushAsync(new InfoClass(button.BindingContext as Class));
 		}
 
 		private void AddButton_Clicked(object sender, EventArgs e)
@@ -111,7 +108,7 @@ namespace RocnikovaPraceDrivka.Views
 				choosen.Add(c);
 
 			foreach (Class c in choosen)
-				user.Classes.Delete(c);
+				User.u.Classes.Delete(c);
 
 			list.SelectionMode = SelectionMode.Single;
 			list.SelectedItems = null;
@@ -161,14 +158,14 @@ namespace RocnikovaPraceDrivka.Views
 
 		private void ReloadCount()
 		{
-			if (user.Classes.List.Count != 0)
+			if (User.u.Classes.List.Count != 0)
 				EditButton.IsVisible = true;
 			else
 				EditButton.IsVisible = false;
 
-			ClassesCountSpan.Text = user.Classes.List.Count.ToString();
+			ClassesCountSpan.Text = User.u.Classes.List.Count.ToString();
 
-			if (user.Classes.List.Count != 1)
+			if (User.u.Classes.List.Count != 1)
 				endingClassesSpan.Text = "es";
 			else
 				endingClassesSpan.Text = string.Empty;
@@ -182,17 +179,13 @@ namespace RocnikovaPraceDrivka.Views
 				BackgroundColor = Color.Transparent
 			};
 
-			AddClassPopup l = new AddClassPopup();
+			AddClassPopup l;
+			if (nClass)
+				l = new AddClassPopup();
+			else
+				l = new AddClassPopup(list.SelectedItem as Class);
+			
 			detailsPage.Content = l.Content;
-
-			Class item = null;
-			if (!nClass)
-			{
-				item = list.SelectedItem as Class;
-
-				l.FindByName<Entry>("NameEntry").Text = item.Name;
-				l.FindByName<Entry>("DescEntry").Text = item.Desc;
-			}
 
 			l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
 			{
@@ -213,9 +206,9 @@ namespace RocnikovaPraceDrivka.Views
 				}
 
 				if (nClass)
-					user.Classes.Add(c);
+					User.u.Classes.Add(c);
 				else
-					user.Classes.Update(item, c);
+					User.u.Classes.Update(list.SelectedItem as Class, c);
 
 				await Navigation.PopModalAsync();
 			}

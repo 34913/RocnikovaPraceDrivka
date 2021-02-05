@@ -15,21 +15,16 @@ namespace RocnikovaPraceDrivka.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Calendar : ContentPage
 	{
+
 		private bool reload = true;
 		
-		private User user;
-
 		//
 
-		public Calendar(User user)
+		public Calendar()
 		{
 			InitializeComponent();
 
-			this.user = user;
-
-			ResetCalendarControl();
-
-			CalendarControl.AllLessons.PropertyChanged += AllLessons_PropertyChanged;
+			CalendarControl.cc.PropertyChanged += AllLessons_PropertyChanged;
 		}
 
 		//
@@ -151,10 +146,10 @@ namespace RocnikovaPraceDrivka.Views
 			int lessonsIndex = 0;
 			TimeSpan lastEnd = new TimeSpan(7, 0, 0);
 
-			while (lessonsIndex < CalendarControl.AllLessons.List.Count)
+			while (lessonsIndex < CalendarControl.cc.List.Count)
 			{
 				Grid grid = gridList[dayIndex];
-				Lesson lesson = CalendarControl.AllLessons.List[lessonsIndex];
+				MergedLesson lesson = CalendarControl.cc.List[lessonsIndex];
 				TimeSpan startShort = lesson.Start - new TimeSpan(dayIndex, 0, 0, 0);
 				TimeSpan endShort = lesson.End - new TimeSpan(dayIndex, 0, 0, 0);
 				Frame f;
@@ -170,6 +165,8 @@ namespace RocnikovaPraceDrivka.Views
 							Padding = 0,
 							Margin = 0,
 							HasShadow = false,
+							BackgroundColor = Color.Transparent,
+							BorderColor = Color.Transparent,
 						};
 						grid.Children.Add(f);
 
@@ -194,17 +191,13 @@ namespace RocnikovaPraceDrivka.Views
 						Text = lesson.Name,
 					});
 
-					string text = string.Empty;
-					if (lesson is IndexedLesson)
-						text = (lesson as IndexedLesson).Owner.Name;
-					else if(lesson is MergedLesson)
+					string text = lesson.OwnerList[0].Name;
+					if (lesson.OwnerList.Count > 1)
 					{
-						text = (lesson as MergedLesson).OwnerList[0].Name;
-						if ((lesson as MergedLesson).OwnerList.Count > 1) {
-							for (int i = 1; i < (lesson as MergedLesson).OwnerList.Count - 1; i++)
-								text += ", " + (lesson as MergedLesson).OwnerList[i];
-							text += " and " + (lesson as MergedLesson).OwnerList[(lesson as MergedLesson).OwnerList.Count - 1];
-						}
+						if (lesson.OwnerList.Count > 2)
+							for (int i = 1; i < lesson.OwnerList.Count - 1; i++)
+								text += ", " + lesson.OwnerList[i];
+						text += " and " + lesson.OwnerList[lesson.OwnerList.Count - 1];
 					}
 
 					sl.Children.Add(new Label
@@ -220,6 +213,7 @@ namespace RocnikovaPraceDrivka.Views
 					{
 						//WidthRequest = 200,
 						//HeightRequest = 200,
+						BackgroundColor = Color.Transparent,
 						BorderColor = Color.White,
 						Content = sl,
 						Margin = 0,
@@ -278,25 +272,13 @@ namespace RocnikovaPraceDrivka.Views
 
 		}
 
-		private void ResetCalendarControl()
-		{
-			CalendarControl.AllLessons = new CalendarControl();
-
-			foreach (Class cls in user.Classes.List)
-			{
-				foreach(Lesson l in cls.Lessons.List)
-				{
-					CalendarControl.AllLessons.AddLesson(new IndexedLesson(l, cls));
-				}
-
-			}
-		}
-
 		//
 
 		private void TapStudents_Tapped(object sender, EventArgs e)
 		{
 			Lesson l = (sender as Frame).BindingContext as Lesson;
+
+			
 
 			// todo
 			// Popup window

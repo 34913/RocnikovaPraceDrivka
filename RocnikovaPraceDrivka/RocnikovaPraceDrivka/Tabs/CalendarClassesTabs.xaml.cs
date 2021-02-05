@@ -18,14 +18,14 @@ namespace RocnikovaPraceDrivka.Tabs
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CalendarClassesTabs : TabbedPage
 	{
-		public CalendarClassesTabs(User user)
+		public CalendarClassesTabs()
 		{
 			InitializeComponent();
 
-			Title = user.Name;
+			Title = User.u.Name;
 
-			Children.Add(new Calendar(user));
-			Children.Add(new ClassesList(user));
+			Children.Add(new Calendar());
+			Children.Add(new ClassesList());
 
 			CurrentPageChanged += CurrentPageHasChanged;
 		}

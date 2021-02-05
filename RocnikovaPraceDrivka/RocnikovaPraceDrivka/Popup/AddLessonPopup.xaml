@@ -27,7 +27,11 @@
 						Orientation="Horizontal">
 						<CheckBox
 							x:Name="CreateNewCheckBox"
-							IsChecked="true"/>
+							IsChecked="true">
+							<CheckBox.GestureRecognizers>
+								<TapGestureRecognizer Tapped="CreateNewCheckBox_Tapped"/>
+							</CheckBox.GestureRecognizers>
+						</CheckBox>
 						<Label 
 							Text="Create new lesson"
 							TextColor="{DynamicResource Label}"
@@ -35,8 +39,7 @@
 					</StackLayout>
 					
 					<StackLayout
-						x:Name="New"
-						IsEnabled="true">
+						x:Name="New">
 
 						<Entry 
 							x:Name="NameEntry"
@@ -79,7 +82,11 @@
 						Orientation="Horizontal">
 						<CheckBox
 							x:Name="MergeCheckBox"
-							IsChecked="false"/>
+							IsChecked="false">
+							<CheckBox.GestureRecognizers>
+								<TapGestureRecognizer Tapped="MergeCheckBox_Tapped"/>
+							</CheckBox.GestureRecognizers>
+						</CheckBox>
 						<Label 
 							Text="Merge"
 							TextColor="{DynamicResource Label}"
@@ -87,7 +94,8 @@
 					</StackLayout>
 
 					<StackLayout 
-						IsEnabled="False">
+						x:Name="Merge"
+						IsVisible="False">
 
 						<Picker
 							x:Name="ClassPicker"

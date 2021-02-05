@@ -11,6 +11,8 @@
 		Orientation="Horizontal"
 		VerticalOptions="FillAndExpand">
 
+		
+		
 		<StackLayout
 			x:Name="ListLessons"
 			Orientation="Vertical"

@@ -11,21 +11,16 @@ namespace RocnikovaPraceDrivka.Controls
 		public MergedLesson(Lesson lesson, List<Class> owners)
 			: base(lesson.Name, lesson.Start, lesson.End)
 		{
-			OwnerList = owners;
+			OwnerList = new List<Class>(owners);
 		}
 
 		public MergedLesson(Lesson lesson, Class owner)
 			: base(lesson.Name, lesson.Start, lesson.End)
 		{
-			OwnerList = new List<Class>();
-			OwnerList.Add(owner);
-		}
-
-		public MergedLesson(IndexedLesson lesson)
-			: base(lesson.Name, lesson.Start, lesson.End)
-		{
-			OwnerList = new List<Class>();
-			OwnerList.Add(lesson.Owner);
+			OwnerList = new List<Class>
+			{
+				owner,
+			};
 		}
 
 		//

@@ -55,5 +55,10 @@ namespace RocnikovaPraceDrivka.Controls
 				o1.Name == o2.Name);
 		}
 
+		public override string ToString()
+		{
+			return Name;
+		}
+
 	}
 }

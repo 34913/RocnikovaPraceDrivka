@@ -27,22 +27,15 @@ namespace RocnikovaPraceDrivka.Controls
 
 		//
 
-		public void Clear()
-		{
-			List.Clear();
-			NotifyPropertyChanged();
-		}
-
 		public void LoadAll()
 		{
 			foreach (Class c in User.u.Classes.List)
-				foreach (Lesson l in c.Lessons.List)
-					AddLesson(l, c);
+				foreach (MergedLesson l in c.Lessons.List)
+					AddLesson(l);
 		}
 
-		public void AddLesson(Lesson lesson, Class owner)
+		public void AddLesson(MergedLesson lesson)
 		{
-
 			int i = 0;
 
 			while(i < List.Count)
@@ -51,30 +44,32 @@ namespace RocnikovaPraceDrivka.Controls
 					break;
 				else if (lesson.Equals(List[i]))
 				{
-					List[i].OwnerList.Add(owner);
+					foreach (Class owner in lesson.OwnerList)
+						List[i].OwnerList.Add(owner);
+
 					NotifyPropertyChanged();
 					return;
 				}
 				i++;
 			}
-			List.Insert(i, new MergedLesson(lesson, owner));
+			List.Insert(i, lesson);
 
 			NotifyPropertyChanged();
 		}
 
-		public void UpdateLesson(Lesson oldLesson, Lesson newLesson)
+		public void UpdateLesson(MergedLesson oldLesson, MergedLesson newLesson)
 		{
 			for (int i = 0; i < List.Count; i++)
 			{
-				MergedLesson inst = List[i];
-				if (oldLesson.Equals(inst))
+				if (oldLesson.Equals(List[i]))
 				{
-					inst = new MergedLesson(newLesson, inst.OwnerList);
+					List[i].SetValues(newLesson);
 
 					NotifyPropertyChanged();
 					return;
 				}
 			}
+			throw new Exception("dont exist");
 		}
 
 		public void RemoveLesson(Lesson lesson, Class owner)
@@ -98,6 +93,8 @@ namespace RocnikovaPraceDrivka.Controls
 		{
 			foreach(Lesson inst in List)
 			{
+				if (l.Equals(inst))
+					continue;
 				if ((inst.Start > l.Start && inst.Start < l.End) ||
 					(l.Start > inst.Start && l.Start < inst.End) ||
 					(l.Start == inst.Start) ||

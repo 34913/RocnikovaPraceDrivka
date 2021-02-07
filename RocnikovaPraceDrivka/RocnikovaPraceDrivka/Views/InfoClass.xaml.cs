@@ -18,9 +18,9 @@ namespace RocnikovaPraceDrivka.Views
 	{
 		//private User user;
 
-		private Class cls;
+		private readonly Class cls;
 
-		private Draw draw;
+		private readonly Draw draw;
 
 		//
 
@@ -346,11 +346,13 @@ namespace RocnikovaPraceDrivka.Views
 				BackgroundColor = Color.Transparent,
 			};
 
+			MergedLesson choosen = Lessons.SelectedItem as MergedLesson;
+
 			AddLessonPopup l;
 			if (nLesson)
 				l = new AddLessonPopup();
 			else
-				l = new AddLessonPopup(Lessons.SelectedItem as Lesson);
+				l = new AddLessonPopup(choosen);
 
 			Entry nameEntry = l.FindByName<Entry>("NameEntry");
 			TimePicker startPicker = l.FindByName<TimePicker>("StartTimePicker");
@@ -374,7 +376,7 @@ namespace RocnikovaPraceDrivka.Views
 
 			async void action(object o2, EventArgs e2)
 			{
-				Lesson newL = null;
+				MergedLesson newL = null;
 				try
 				{
 					if (createCheckBox.IsChecked){
@@ -398,7 +400,7 @@ namespace RocnikovaPraceDrivka.Views
 						end = new TimeSpan(day, end.Hours, end.Minutes, end.Seconds);
 
 						EditLessonsButton.IsVisible = true;
-						newL = new Lesson(nameEntry.Text, start, end);
+						newL = new MergedLesson(new Lesson(nameEntry.Text, start, end), cls);
 
 						if (!CalendarControl.cc.DontCross(newL))
 							throw new Exception("There is another lesson in this time");
@@ -407,9 +409,8 @@ namespace RocnikovaPraceDrivka.Views
 					{
 						if (classPicker.SelectedItem == null || lessonPicker.SelectedItem == null)
 							throw new Exception("Pick class and lesson to merge this lesson with");
-						
-						newL = lessonPicker.SelectedItem as Lesson;
 
+						newL = lessonPicker.SelectedItem as MergedLesson;
 					}
 				}
 				catch (Exception exc)
@@ -421,19 +422,20 @@ namespace RocnikovaPraceDrivka.Views
 				if (nLesson)
 				{
 					cls.Lessons.Add(newL);
-					CalendarControl.cc.AddLesson(newL, cls);
+					CalendarControl.cc.AddLesson(newL);
 				}
 				else
 				{
-					cls.Lessons.Update(Lessons.SelectedItem as Lesson, newL);
-					CalendarControl.cc.UpdateLesson(Lessons.SelectedItem as Lesson, newL);
+					cls.Lessons.Update(choosen, newL);
+					CalendarControl.cc.UpdateLesson(choosen, newL);
 				}
 
 				await Navigation.PopModalAsync();
 			}
 
-			l.FindByName<Button>("OkButton").Clicked += ((o2, e2) =>
+			l.FindByName<Button>("OkButton").Clicked += (async(o2, e2) =>
 			{
+				await DisplayAlert("title", choosen.Name, "OK");
 				action(o2, e2);
 			});
 
@@ -511,7 +513,7 @@ namespace RocnikovaPraceDrivka.Views
 			foreach (Lesson l in choosen)
 			{
 				CalendarControl.cc.RemoveLesson(l, cls);
-				cls.Lessons.Delete(l);
+				cls.Lessons.Delete(l as MergedLesson);
 			}
 
 			LessonViewReset();	

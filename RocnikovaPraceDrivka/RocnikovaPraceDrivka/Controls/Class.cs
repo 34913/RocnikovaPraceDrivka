@@ -8,11 +8,11 @@ using RocnikovaPraceDrivka.Managers;
 
 namespace RocnikovaPraceDrivka.Controls
 {
-	public class Class
+	public class Class: Items<Class>
 	{
-		public StudentsManager Students { get; set; } = new StudentsManager();
+		public StudentsManager Students { get; set; }
 
-		public LessonsManager Lessons { get; set; } = new LessonsManager();
+		public LessonsManager Lessons { get; set; }
 
 		//
 
@@ -51,6 +51,9 @@ namespace RocnikovaPraceDrivka.Controls
 		{
 			Name = name;
 			Desc = desc;
+
+			Students = new StudentsManager();
+			Lessons = new LessonsManager(this);
 		}
 
 		public Class(int year, char type, string desc)
@@ -58,6 +61,9 @@ namespace RocnikovaPraceDrivka.Controls
 			this.year = year;
 			this.type = type;
 			Desc = desc;
+
+			Students = new StudentsManager();
+			Lessons = new LessonsManager(this);
 		}
 
 		//
@@ -65,6 +71,18 @@ namespace RocnikovaPraceDrivka.Controls
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		//
+
+		public override void SetValues(Class vals)
+		{
+			Name = vals.Name;
+			Desc = vals.Desc;
+
+
+			Lessons = vals.Lessons;
+			Students = vals.Students;
 		}
 
 	}

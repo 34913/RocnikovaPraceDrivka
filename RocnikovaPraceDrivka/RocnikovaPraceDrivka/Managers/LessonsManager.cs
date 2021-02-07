@@ -8,31 +8,36 @@ namespace RocnikovaPraceDrivka.Managers
 {
 	public class LessonsManager: Manager<Lesson>
 	{
-		public LessonsManager()
+		private Class owner;
+		
+		public LessonsManager(Class owner)
 			: base("StudentsTable")
 		{
-
+			this.owner = owner;
 		}
 
 		//
 
 		public override void Select()
 		{
-			List.Add(new Lesson("TohleJeHodina", new TimeSpan(0, 7, 0, 0), new TimeSpan(0, 12, 0, 0)));
+			List.Add(new MergedLesson(new Lesson("TohleJeHodina", new TimeSpan(0, 7, 0, 0), new TimeSpan(0, 12, 0, 0)), owner));
 		}
 
-		public override void Add(Lesson item)
+		public override void UpdateValues(Lesson oldItem, Lesson newItem)
 		{
-			base.Add(item as Lesson);
+			oldItem.SetValues(newItem);
 		}
 
-		public override void Update(int index, Lesson newItem)
+		public override void AddDB(Lesson item)
 		{
-			if (List[index].Equals(newItem))
-				return;
-
-			base.Update(index, newItem);
 		}
 
+		public override void DeleteDB(Lesson item)
+		{
+		}
+
+		public override void UpdateDB(int index, Lesson newItem)
+		{
+		}
 	}
 }

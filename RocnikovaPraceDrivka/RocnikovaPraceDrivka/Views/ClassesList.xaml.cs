@@ -135,7 +135,7 @@ namespace RocnikovaPraceDrivka.Views
 					string str = nameEntry.Text.ToUpper();
 					cls = new Class(nameEntry.Text, descEntry.Text);
 				}
-				catch (Exception exc)
+				catch (Exception)
 				{
 					throw new Exception("Wrong format, try something like 1.C");
 				}

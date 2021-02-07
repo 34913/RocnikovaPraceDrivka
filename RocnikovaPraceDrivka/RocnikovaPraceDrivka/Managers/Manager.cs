@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
+using RocnikovaPraceDrivka.Controls;
+
 namespace RocnikovaPraceDrivka.Managers
 {
 	public abstract class Manager<T>
@@ -21,51 +23,39 @@ namespace RocnikovaPraceDrivka.Managers
 		
 		//
 
-		public virtual void Add(T item)
+		public void Add(T item)
 		{
 			List.Add(item);
+			AddDB(item);
 		}
+
+		public abstract void AddDB(T item);
 
 		public abstract void Select();
 
 		public void Delete(T item)
 		{
-			int index = List.IndexOf(item);
-			if (index == -1)
+			if (List.IndexOf(item) == -1)
 				throw new Exception("Not existing item");
-			Delete(List.IndexOf(item));
+
+			DeleteDB(item);
+			List.Remove(item);
 		}
 
-		public virtual void Delete(int indexWhere)
-		{
-			if(indexWhere == -1)
-			{
-				throw new Exception("Not valid index");
-			}
-			try
-			{
-				List.RemoveAt(indexWhere);
-			}
-			catch(Exception exc)
-			{
-				throw exc;
-			}
-		}
+		public abstract void DeleteDB(T item);
 
 		public void Update(T oldItem, T newItem)
 		{
 			int index = List.IndexOf(oldItem);
 
-			Update(index, newItem);
+			UpdateValues(oldItem, newItem);
+
+			UpdateDB(index, newItem);
 		}
 
-		public virtual void Update(int index, T newItem)
-		{
-			List.Insert(index, newItem);
-			List.RemoveAt(index + 1);
-		}
+		public abstract void UpdateDB(int index, T newItem);
 
-
+		public abstract void UpdateValues(T oldItem, T newItem);
 
 	}
 }

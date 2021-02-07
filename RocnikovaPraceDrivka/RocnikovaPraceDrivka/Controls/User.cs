@@ -8,7 +8,7 @@ using RocnikovaPraceDrivka.Managers;
 
 namespace RocnikovaPraceDrivka.Controls
 {
-	public class User
+	public class User: Items<User>
 	{
 		protected string name;
 
@@ -18,7 +18,7 @@ namespace RocnikovaPraceDrivka.Controls
 
 		//
 
-		public ClassesManager Classes { get; }
+		public ClassesManager Classes { get; private set; }
 
 		//
 
@@ -76,6 +76,14 @@ namespace RocnikovaPraceDrivka.Controls
 		public void Update()
 		{
 
+		}
+
+		public override void SetValues(User vals)
+		{
+			name = vals.name;
+			id = vals.id;
+			pswd = vals.pswd;
+			Classes = vals.Classes;
 		}
 
 		public static User u;

@@ -276,7 +276,7 @@ namespace RocnikovaPraceDrivka.Views
 
 		private void TapStudents_Tapped(object sender, EventArgs e)
 		{
-			Lesson l = (sender as Frame).BindingContext as Lesson;
+			Lesson l = (sender as Frame).BindingContext as MergedLesson;
 
 			
 

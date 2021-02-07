@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RocnikovaPraceDrivka.Controls
 {
-	public class Student
+	public class Student: Items<Student>
 	{
 		protected string name;
 
@@ -51,6 +51,19 @@ namespace RocnikovaPraceDrivka.Controls
 			return (
 				name == s.name &&
 				draw == s.draw);
+		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
+		}
+
+		//
+
+		public override void SetValues(Student vals)
+		{
+			name = vals.name;
+			draw = vals.draw;
 		}
 
 	}

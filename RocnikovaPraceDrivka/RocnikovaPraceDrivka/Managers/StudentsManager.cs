@@ -22,13 +22,22 @@ namespace RocnikovaPraceDrivka.Managers
 			List.Add(new Student("TohleJeJmeno"));
 		}
 
-		public override void Update(int index, Student newItem)
+		public override void AddDB(Student item)
 		{
-			List.Insert(index, newItem);
 
-			List[index].Draw = List[index + 1].Draw;
-			
-			List.RemoveAt(index + 1);
+		}
+
+		public override void DeleteDB(Student item)
+		{
+		}
+
+		public override void UpdateDB(int index, Student newItem)
+		{
+		}
+
+		public override void UpdateValues(Student oldItem, Student newItem)
+		{
+			oldItem.SetValues(newItem);
 		}
 
 	}

@@ -5,12 +5,12 @@ using System.Text;
 
 namespace RocnikovaPraceDrivka.Controls
 {
-	public class Lesson
+	public class Lesson: Items<Lesson>
 	{
 		protected string name;
 
 		//
-
+		
 		public TimeSpan Start { get; private set; }
 
 		public TimeSpan End { get; private set; }
@@ -46,13 +46,12 @@ namespace RocnikovaPraceDrivka.Controls
 		public static bool Equals(Lesson o1, Lesson o2)
 		{
 			if (o1 == null || o2 == null)
-				return false;
+				throw new Exception("argument is of value null");
 
 			return (
 				o1.Day == o2.Day &&
 				o1.Start == o2.Start &&
-				o1.End == o2.End &&
-				o1.Name == o2.Name);
+				o1.End == o2.End);
 		}
 
 		public override string ToString()
@@ -60,5 +59,13 @@ namespace RocnikovaPraceDrivka.Controls
 			return Name;
 		}
 
+		//
+
+		public override void SetValues(Lesson vals)
+		{
+			name = vals.name;
+			Start = vals.Start;
+			End = vals.End;
+		}
 	}
 }

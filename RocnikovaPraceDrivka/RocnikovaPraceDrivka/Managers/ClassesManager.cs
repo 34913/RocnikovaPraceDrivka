@@ -16,8 +16,10 @@ namespace RocnikovaPraceDrivka.Managers
 
 		}
 
+
+
 		//
-		
+
 		public override void Select()
 		{
 			List.Add(new Class("1.C", "TohleJePopis"));
@@ -25,14 +27,21 @@ namespace RocnikovaPraceDrivka.Managers
 
 		}
 
-		public override void Update(int index, Class newItem)
+		public override void AddDB(Class item)
 		{
-			List.Insert(index, newItem);
+		}
 
-			List[index].Lessons = List[index + 1].Lessons;
-			List[index].Students = List[index + 1].Students;
+		public override void DeleteDB(Class item)
+		{
+		}
 
-			List.RemoveAt(index + 1);
+		public override void UpdateDB(int index, Class newItem)
+		{
+		}
+
+		public override void UpdateValues(Class oldItem, Class newItem)
+		{
+			oldItem.SetValues(newItem);
 		}
 
 		//

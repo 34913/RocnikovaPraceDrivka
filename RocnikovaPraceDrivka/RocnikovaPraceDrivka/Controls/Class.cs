@@ -17,11 +17,11 @@ namespace RocnikovaPraceDrivka.Controls
 		//
 
 		private int year;
-		private char type;
+		private string type;
 
 		public int Year { get => year; }
 
-		public char Type { get => type; }
+		public string Type { get => type; }
 
 		public static char separator = '.';
 
@@ -30,12 +30,39 @@ namespace RocnikovaPraceDrivka.Controls
 			set
 			{
 				string str = value;
+				string[] array;
 				if (!str.Contains("."))
-					throw new Exception("wrong parse");
-				string[] array = str.Split('.');
+				{
+					int i = 0;
+					do
+					{
+						if (!char.IsDigit(str[i]))
+						{
+							if (i == 0)
+								throw new Exception("No class number");
+							else
+								break;
+						}
+						i++;
+					} while (i < str.Length);
 
-				if (!(int.TryParse(array[0], out year) && char.TryParse(array[1], out type)))
-					throw new Exception("wrong parse");
+					if (i == str.Length)
+						throw new Exception("No class character");
+					array = new string[2];
+
+					array[0] = str.Substring(0, i);
+					array[1] = str.Substring(i);
+				}
+				else
+				{
+					array = str.Split('.');
+					if (array.Length != 2)
+						throw new Exception("Too many dots");
+				}
+			
+				if (!(int.TryParse(array[0], out year)))
+					throw new Exception("Class number is not number");
+				type = array[1];
 			}
 			get
 			{
@@ -56,7 +83,7 @@ namespace RocnikovaPraceDrivka.Controls
 			Lessons = new LessonsManager(this);
 		}
 
-		public Class(int year, char type, string desc)
+		public Class(int year, string type, string desc)
 		{
 			this.year = year;
 			this.type = type;
@@ -81,8 +108,8 @@ namespace RocnikovaPraceDrivka.Controls
 			Desc = vals.Desc;
 
 
-			Lessons = vals.Lessons;
-			Students = vals.Students;
+			//Lessons = vals.Lessons;
+			//Students = vals.Students;
 		}
 
 	}

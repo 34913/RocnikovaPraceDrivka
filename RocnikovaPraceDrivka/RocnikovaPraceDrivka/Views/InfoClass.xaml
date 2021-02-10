@@ -38,7 +38,8 @@
 				</StackLayout>
 				<StackLayout Padding="0,0,50,0"
 							 Orientation="Vertical"
-							 HorizontalOptions="End">
+							 HorizontalOptions="EndAndExpand"
+							 VerticalOptions="Center">
 					<Label
 						TextColor="{DynamicResource Label}">
 						<Label.FormattedText>

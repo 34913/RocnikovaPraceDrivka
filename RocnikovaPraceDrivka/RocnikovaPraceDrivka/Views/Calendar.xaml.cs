@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 
 using RocnikovaPraceDrivka.Controls;
 using RocnikovaPraceDrivka.Handles;
+using RocnikovaPraceDrivka.Popup;
 
 namespace RocnikovaPraceDrivka.Views
 {
@@ -17,7 +18,7 @@ namespace RocnikovaPraceDrivka.Views
 	{
 
 		private bool reload = true;
-		
+
 		//
 
 		public Calendar()
@@ -87,8 +88,9 @@ namespace RocnikovaPraceDrivka.Views
 
 				Label label = new Label
 				{
-					Text = i.ToString() + ":00"
+					Text = i.ToString() + ":00",
 				};
+				label.SetDynamicResource(Label.TextColorProperty, "Label");
 				zapati.Children.Add(label);
 
 				Grid.SetColumn(label, zapati.ColumnDefinitions.Count - 1);
@@ -129,6 +131,7 @@ namespace RocnikovaPraceDrivka.Views
 				{
 					Text = DOW.Names[i],
 				};
+				label.SetDynamicResource(Label.TextColorProperty, "Label");
 				mainGrid.Children.Add(label);
 
 				Grid.SetColumn(label, 0);
@@ -152,6 +155,7 @@ namespace RocnikovaPraceDrivka.Views
 				MergedLesson lesson = CalendarControl.cc.List[lessonsIndex];
 				TimeSpan startShort = lesson.Start - new TimeSpan(dayIndex, 0, 0, 0);
 				TimeSpan endShort = lesson.End - new TimeSpan(dayIndex, 0, 0, 0);
+				Label l;
 				Frame f;
 
 				if (lesson.Start.Days == dayIndex)
@@ -186,10 +190,12 @@ namespace RocnikovaPraceDrivka.Views
 						Spacing = 1,
 					};
 
-					sl.Children.Add(new Label
+					l = new Label
 					{
 						Text = lesson.Name,
-					});
+					};
+					l.SetDynamicResource(Label.TextColorProperty, "Label");
+					sl.Children.Add(l);
 
 					string text = lesson.OwnerList[0].Name;
 					if (lesson.OwnerList.Count > 1)
@@ -200,14 +206,19 @@ namespace RocnikovaPraceDrivka.Views
 						text += " and " + lesson.OwnerList[lesson.OwnerList.Count - 1];
 					}
 
-					sl.Children.Add(new Label
+					l = new Label
 					{
 						Text = text,
-					});
-					sl.Children.Add(new Label
+					};
+					l.SetDynamicResource(Label.TextColorProperty, "Label");
+					sl.Children.Add(l);
+
+					l = new Label
 					{
 						Text = lesson.LengthMinutes.ToString() + " min",
-					});
+					};
+					l.SetDynamicResource(Label.TextColorProperty, "Label");
+					sl.Children.Add(l);
 
 					f = new Frame
 					{
@@ -221,6 +232,8 @@ namespace RocnikovaPraceDrivka.Views
 						HasShadow = false,
 						BindingContext = lesson,
 					};
+					f.SetDynamicResource(Frame.BorderColorProperty, "Border");
+					f.SetDynamicResource(Frame.BackgroundColorProperty, "Background");
 
 					TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
 					{
@@ -269,7 +282,92 @@ namespace RocnikovaPraceDrivka.Views
 
 		private void ChangeLightMode()
 		{
+			if (DayNightHandle.DayNight.Day)
+			{
+				
+			}
+			else
+			{
 
+			}
+		}
+
+		private async void LessonPop(Lesson lesson)
+		{
+			ContentPage detailsPage = new ContentPage
+			{
+				BackgroundColor = Color.Transparent,
+			};
+
+			MergedLesson selected = lesson as MergedLesson;
+
+			AddLessonPopup l = new AddLessonPopup(selected);
+
+			Entry nameEntry = l.FindByName<Entry>("NameEntry");
+			TimePicker startPicker = l.FindByName<TimePicker>("StartTimePicker");
+			TimePicker endPicker = l.FindByName<TimePicker>("EndTimePicker");
+			Picker dayPicker = l.FindByName<Picker>("DayPicker");
+
+			l.FindByName<StackLayout>("CreateNewStack").IsVisible = false;
+			l.FindByName<StackLayout>("MergeStack").IsVisible = false;
+
+			detailsPage.Content = l.Content;
+			l.FindByName<Button>("CancelButton").Clicked += ((o2, e2) =>
+			{
+				Navigation.PopModalAsync();
+			});
+
+			async void action(object o2, EventArgs e2)
+			{
+				try
+				{
+					if (string.IsNullOrWhiteSpace(nameEntry.Text))
+						throw new Exception("Enter name");
+					else if (startPicker.Time > endPicker.Time)
+						throw new Exception("Beggining of lesson has to be before the end of lesson");
+					else if (dayPicker.SelectedItem == null)
+						throw new Exception("Choose day of week");
+					else if (startPicker.Time < new TimeSpan(7, 0, 0))
+						throw new Exception("Choose start of lesson after 7 AM");
+					else if (endPicker.Time > new TimeSpan(20, 0, 0))
+						throw new Exception("Choose end of lesson before 8 PM");
+
+					int day = dayPicker.SelectedIndex;
+
+					TimeSpan start = startPicker.Time;
+					TimeSpan end = endPicker.Time;
+
+					Lesson newL = new Lesson(nameEntry.Text, new TimeSpan(day, start.Hours, start.Minutes, start.Seconds), new TimeSpan(day, end.Hours, end.Minutes, end.Seconds));
+
+					if (!CalendarControl.cc.DontCross(selected, newL))
+						throw new Exception("There is another lesson in this time");
+
+					CalendarControl.cc.UpdateLesson(selected, newL);
+					for(int i = 0; i < selected.OwnerList.Count; i++)
+						selected.OwnerList[i].Lessons.Update(selected, newL);
+				}
+				catch (Exception exc)
+				{
+					await DisplayAlert("Error", exc.Message, "OK");
+					return;
+				}
+
+				LoadGridTable();
+
+				await Navigation.PopModalAsync();
+			}
+
+			l.FindByName<Button>("OkButton").Clicked += ((o2, e2) =>
+			{
+				action(o2, e2);
+			});
+
+			nameEntry.Completed += ((o2, e2) =>
+			{
+				action(o2, e2);
+			});
+
+			await Navigation.PushModalAsync(detailsPage, false);
 		}
 
 		//
@@ -278,7 +376,7 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			Lesson l = (sender as Frame).BindingContext as MergedLesson;
 
-			
+			LessonPop(l);
 
 			// todo
 			// Popup window

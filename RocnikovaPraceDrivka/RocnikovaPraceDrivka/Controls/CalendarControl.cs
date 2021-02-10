@@ -44,8 +44,7 @@ namespace RocnikovaPraceDrivka.Controls
 					break;
 				else if (lesson.Equals(List[i]))
 				{
-					foreach (Class owner in lesson.OwnerList)
-						List[i].OwnerList.Add(owner);
+					List[i].OwnerList.AddRange(lesson.OwnerList);
 
 					NotifyPropertyChanged();
 					return;
@@ -57,7 +56,7 @@ namespace RocnikovaPraceDrivka.Controls
 			NotifyPropertyChanged();
 		}
 
-		public void UpdateLesson(MergedLesson oldLesson, MergedLesson newLesson)
+		public void UpdateLesson(Lesson oldLesson, Lesson newLesson)
 		{
 			for (int i = 0; i < List.Count; i++)
 			{
@@ -69,36 +68,37 @@ namespace RocnikovaPraceDrivka.Controls
 					return;
 				}
 			}
-			throw new Exception("dont exist");
+			throw new Exception(string.Format("dont exist, length {0}", List.Count));
 		}
 
 		public void RemoveLesson(Lesson lesson, Class owner)
 		{
 			for(int i = 0; i < List.Count; i++)
 			{
-				MergedLesson inst = List[i];
-				if (lesson.Equals(inst))
+				if (lesson.Equals(List[i]))
 				{
-					inst.OwnerList.Remove(owner);
+					List[i].OwnerList.Remove(owner);
 
-					if (inst.OwnerList.Count == 0)
+					if (List[i].OwnerList.Count == 0)
 						List.RemoveAt(i);
 					NotifyPropertyChanged();
 					return;
 				}
 			}
+			throw new Exception(string.Format("dont exist, length {0}", List.Count));
 		}
 
-		public bool DontCross(Lesson l)
+		public bool DontCross(Lesson oldLesson, Lesson newLesson)
 		{
 			foreach(Lesson inst in List)
 			{
-				if (l.Equals(inst))
-					continue;
-				if ((inst.Start > l.Start && inst.Start < l.End) ||
-					(l.Start > inst.Start && l.Start < inst.End) ||
-					(l.Start == inst.Start) ||
-					(l.End == inst.End))
+				if (oldLesson != null)
+					if (inst.Equals(oldLesson))
+						continue;
+				if ((inst.Start > newLesson.Start && inst.Start < newLesson.End) ||
+					(newLesson.Start > inst.Start && newLesson.Start < inst.End) ||
+					(newLesson.Start == inst.Start) ||
+					(newLesson.End == inst.End))
 					return false;
 			}
 			return true;

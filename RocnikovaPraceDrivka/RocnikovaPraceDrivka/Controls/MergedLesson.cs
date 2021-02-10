@@ -8,14 +8,14 @@ namespace RocnikovaPraceDrivka.Controls
 	{
 		public List<Class> OwnerList { get; private set; }
 
-		public MergedLesson(Lesson lesson, List<Class> owners)
-			: base(lesson.Name, lesson.Start, lesson.End)
+		public MergedLesson(string name, TimeSpan start, TimeSpan end, List<Class> owners)
+			: base(name, start, end)
 		{
 			OwnerList = new List<Class>(owners);
 		}
 
-		public MergedLesson(Lesson lesson, Class owner)
-			: base(lesson.Name, lesson.Start, lesson.End)
+		public MergedLesson(string name, TimeSpan start, TimeSpan end, Class owner)
+			: base(name, start, end)
 		{
 			OwnerList = new List<Class>
 			{
@@ -27,7 +27,7 @@ namespace RocnikovaPraceDrivka.Controls
 
 		public override bool Equals(object obj)
 		{
-			return base.Equals(obj);
+			return Lesson.Equals(this, obj as MergedLesson);
 		}
 
 	}

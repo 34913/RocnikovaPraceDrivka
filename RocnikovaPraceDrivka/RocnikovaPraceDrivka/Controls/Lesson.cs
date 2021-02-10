@@ -15,7 +15,7 @@ namespace RocnikovaPraceDrivka.Controls
 
 		public TimeSpan End { get; private set; }
 
-		public TimeSpan Length { get; private set; }
+		public TimeSpan Length { get => End - Start; }
 
 		public int LengthMinutes { get => (int)Length.TotalMinutes; }
 
@@ -32,8 +32,6 @@ namespace RocnikovaPraceDrivka.Controls
 			this.name = name;
 			Start = start;
 			End = end;
-
-			Length = end - start;
 		}
 
 		//
@@ -46,10 +44,12 @@ namespace RocnikovaPraceDrivka.Controls
 		public static bool Equals(Lesson o1, Lesson o2)
 		{
 			if (o1 == null || o2 == null)
-				throw new Exception("argument is of value null");
+				throw new Exception(string.Format("argument {0} is of value null", (o1 == null && o2 == null) ? "1 and 2" : ((o1 == null) ? "1" : "2")));
 
+			if (o1 == o2)
+				return true;
 			return (
-				o1.Day == o2.Day &&
+				o1.name == o2.name &&
 				o1.Start == o2.Start &&
 				o1.End == o2.End);
 		}
@@ -66,6 +66,11 @@ namespace RocnikovaPraceDrivka.Controls
 			name = vals.name;
 			Start = vals.Start;
 			End = vals.End;
+		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
 		}
 	}
 }

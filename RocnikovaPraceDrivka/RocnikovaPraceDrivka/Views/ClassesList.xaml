@@ -125,6 +125,7 @@
 								VerticalOptions="Center"
 								HorizontalOptions="Center"
 								Clicked="DetailsButton_Clicked"
+								IsVisible="true"
 								BindingContext="{Binding .}"/>
 						</Grid>
 					</Frame>

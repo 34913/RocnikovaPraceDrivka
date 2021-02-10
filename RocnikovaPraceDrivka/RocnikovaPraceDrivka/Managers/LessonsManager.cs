@@ -8,7 +8,7 @@ namespace RocnikovaPraceDrivka.Managers
 {
 	public class LessonsManager: Manager<Lesson>
 	{
-		private Class owner;
+		private readonly Class owner;
 		
 		public LessonsManager(Class owner)
 			: base("StudentsTable")
@@ -20,7 +20,7 @@ namespace RocnikovaPraceDrivka.Managers
 
 		public override void Select()
 		{
-			List.Add(new MergedLesson(new Lesson("TohleJeHodina", new TimeSpan(0, 7, 0, 0), new TimeSpan(0, 12, 0, 0)), owner));
+			List.Add(new MergedLesson("TohleJeHodina", new TimeSpan(0, 7, 0, 0), new TimeSpan(0, 12, 0, 0), owner));
 		}
 
 		public override void UpdateValues(Lesson oldItem, Lesson newItem)

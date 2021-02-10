@@ -276,15 +276,16 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			ContentPage detailsPage = new ContentPage
 			{
-				Padding = new Thickness(80, 80, 80, 80),
 				BackgroundColor = Color.Transparent
 			};
+
+			Student selected = Students.SelectedItem as Student;
 
 			AddStudentPopup l;
 			if (nStudent)
 				l = new AddStudentPopup();
 			else
-				l = new AddStudentPopup(Students.SelectedItem as Student);
+				l = new AddStudentPopup(selected);
 			
 			detailsPage.Content = l.Content;
 
@@ -308,6 +309,10 @@ namespace RocnikovaPraceDrivka.Views
 
 						s = new Student(nameEntry.Text);
 					}
+
+					for (int i = 0; i < cls.Students.List.Count; i++)
+						if (s.Equals(cls.Students.List[i]))
+							throw new Exception("This class contains student of this name");
 				}
 				catch (Exception exc)
 				{
@@ -318,7 +323,10 @@ namespace RocnikovaPraceDrivka.Views
 				if (nStudent)
 					cls.Students.Add(s);
 				else
-					cls.Students.Update(Students.SelectedItem as Student, s);
+					cls.Students.Update(selected, s);
+
+				Students.ItemsSource = null;
+				Students.ItemsSource = cls.Students.List;
 
 				await Navigation.PopModalAsync();
 			}
@@ -342,17 +350,16 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			ContentPage detailsPage = new ContentPage
 			{
-				Padding = new Thickness(80, 80, 80, 80),
 				BackgroundColor = Color.Transparent,
 			};
 
-			MergedLesson choosen = Lessons.SelectedItem as MergedLesson;
+			MergedLesson selected = Lessons.SelectedItem as MergedLesson;
 
 			AddLessonPopup l;
 			if (nLesson)
 				l = new AddLessonPopup();
 			else
-				l = new AddLessonPopup(choosen);
+				l = new AddLessonPopup(selected);
 
 			Entry nameEntry = l.FindByName<Entry>("NameEntry");
 			TimePicker startPicker = l.FindByName<TimePicker>("StartTimePicker");
@@ -396,13 +403,10 @@ namespace RocnikovaPraceDrivka.Views
 						TimeSpan start = startPicker.Time;
 						TimeSpan end = endPicker.Time;
 
-						start = new TimeSpan(day, start.Hours, start.Minutes, start.Seconds);
-						end = new TimeSpan(day, end.Hours, end.Minutes, end.Seconds);
-
 						EditLessonsButton.IsVisible = true;
-						newL = new MergedLesson(new Lesson(nameEntry.Text, start, end), cls);
+						newL = new MergedLesson(nameEntry.Text, new TimeSpan(day, start.Hours, start.Minutes, start.Seconds), new TimeSpan(day, end.Hours, end.Minutes, end.Seconds), cls);
 
-						if (!CalendarControl.cc.DontCross(newL))
+						if (!CalendarControl.cc.DontCross(selected, newL))
 							throw new Exception("There is another lesson in this time");
 					}
 					else
@@ -410,7 +414,31 @@ namespace RocnikovaPraceDrivka.Views
 						if (classPicker.SelectedItem == null || lessonPicker.SelectedItem == null)
 							throw new Exception("Pick class and lesson to merge this lesson with");
 
-						newL = lessonPicker.SelectedItem as MergedLesson;
+						selected = lessonPicker.SelectedItem as MergedLesson;
+						newL = new MergedLesson(selected.Name, selected.Start, selected.End, cls);
+					}
+
+					if (nLesson)
+					{
+						CalendarControl.cc.AddLesson(newL);
+
+						if (createCheckBox.IsChecked)
+							cls.Lessons.Add(newL);
+						else
+							cls.Lessons.Add(selected);
+					}
+					else
+					{
+						if (createCheckBox.IsChecked)
+						{
+							CalendarControl.cc.UpdateLesson(selected, newL);
+						}
+						else
+						{
+							CalendarControl.cc.RemoveLesson(selected, cls);
+							CalendarControl.cc.AddLesson(newL);
+						}
+						cls.Lessons.Update(selected, newL);
 					}
 				}
 				catch (Exception exc)
@@ -419,23 +447,14 @@ namespace RocnikovaPraceDrivka.Views
 					return;
 				}
 
-				if (nLesson)
-				{
-					cls.Lessons.Add(newL);
-					CalendarControl.cc.AddLesson(newL);
-				}
-				else
-				{
-					cls.Lessons.Update(choosen, newL);
-					CalendarControl.cc.UpdateLesson(choosen, newL);
-				}
+				Lessons.ItemsSource = null;
+				Lessons.ItemsSource = cls.Lessons.List;
 
 				await Navigation.PopModalAsync();
 			}
 
-			l.FindByName<Button>("OkButton").Clicked += (async(o2, e2) =>
+			l.FindByName<Button>("OkButton").Clicked += ((o2, e2) =>
 			{
-				await DisplayAlert("title", choosen.Name, "OK");
 				action(o2, e2);
 			});
 
@@ -501,7 +520,7 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			StudentViewReset();
 		}
-
+		
 		private void EditLessonsOk_Clicked(object sender, EventArgs e)
 		{
 

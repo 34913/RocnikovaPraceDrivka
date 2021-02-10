@@ -34,8 +34,8 @@ namespace RocnikovaPraceDrivka.Popup
 			DayPicker.ItemsSource = DOW.Names;
 
 			NameEntry.Text = lesson.Name;
-			StartTimePicker.Time = lesson.Start;
-			EndTimePicker.Time = lesson.End;
+			StartTimePicker.Time = lesson.Start - TimeSpan.FromDays(lesson.Start.Days);
+			EndTimePicker.Time = lesson.End - TimeSpan.FromDays(lesson.End.Days);
 			DayPicker.SelectedIndex = DOW.Names.IndexOf(lesson.Day);
 
 			ChangeLightMode();
@@ -77,16 +77,23 @@ namespace RocnikovaPraceDrivka.Popup
 
 		private void ClassPicker_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			Class cls = ClassPicker.SelectedItem as Class;
+			LessonPicker.SelectedItem = null;
+
+			if (cls == null)
+				return;
 			LessonPicker.ItemsSource = (ClassPicker.SelectedItem as Class).Lessons.List;
 		}
 
 		private void LessonPicker_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			Lesson lesson = LessonPicker.SelectedItem as Lesson;
-			
+
+			if (lesson == null)
+				return;
 			NameEntry.Text = lesson.Name;
-			StartTimePicker.Time = lesson.Start;
-			EndTimePicker.Time = lesson.End;
+			StartTimePicker.Time = lesson.Start - TimeSpan.FromDays(lesson.Start.Days);
+			EndTimePicker.Time = lesson.End - TimeSpan.FromDays(lesson.End.Days);
 			DayPicker.SelectedIndex = DOW.Names.IndexOf(lesson.Day);
 		}
 

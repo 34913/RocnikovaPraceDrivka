@@ -4,28 +4,42 @@
              x:Class="RocnikovaPraceDrivka.Popup.AddClassPopup">
 
 	<ContentPage.Content>
-		<ScrollView
-			Orientation="Vertical">
-			<StackLayout 
-			BackgroundColor="{DynamicResource Border}"
-			Padding="1">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="1*"/>
+				<RowDefinition Height="5*"/>
+				<RowDefinition Height="1*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="400"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
 
-				<StackLayout
-				BackgroundColor="{DynamicResource Background}"
+			<ScrollView
 				Orientation="Vertical"
-				HorizontalOptions="Fill"
-				VerticalOptions="FillAndExpand"
-				Padding="50,60">
+				Grid.Row="1"
+				Grid.Column="1">
+				<StackLayout 
+					BackgroundColor="{DynamicResource Border}"
+					Padding="1">
 
-					<StackLayout 
+					<StackLayout
+						BackgroundColor="{DynamicResource Background}"
+						Orientation="Vertical"
+						HorizontalOptions="Fill"
+						VerticalOptions="FillAndExpand"
+						Padding="50,60">
+
+						<StackLayout 
 					Padding="0,0,0,20"
 					HorizontalOptions="Center">
-						<Image 
+							<Image 
 						x:Name="ClassImage"
 						WidthRequest="100"/>
-					</StackLayout>
+						</StackLayout>
 
-					<Entry 
+						<Entry 
 					BackgroundColor="{DynamicResource Background}"
 					TextColor="{DynamicResource Label}"
 					PlaceholderColor="{DynamicResource Label}"
@@ -33,7 +47,7 @@
 					Placeholder="Name"
 					FontSize="20"/>
 
-					<Entry 
+						<Entry 
 					BackgroundColor="{DynamicResource Background}"
 					TextColor="{DynamicResource Label}"
 					PlaceholderColor="{DynamicResource Label}"
@@ -41,19 +55,20 @@
 					Placeholder="Description"
 					FontSize="20"/>
 
-					<StackLayout 
+						<StackLayout 
 					VerticalOptions="EndAndExpand"
 					HorizontalOptions="CenterAndExpand"
 					Orientation="Horizontal">
-						<Button 
+							<Button 
 						Text="Cancel"
 						x:Name="CancelButton"/>
-						<Button 
+							<Button 
 						Text="OK"
 						x:Name="OkButton"/>
+						</StackLayout>
 					</StackLayout>
-			</StackLayout>
-			</StackLayout>
-		</ScrollView>
+				</StackLayout>
+			</ScrollView>
+		</Grid>
 	</ContentPage.Content>
 </ContentPage>

@@ -5,130 +5,152 @@
 	
 	<ContentPage.Content>
 		<ScrollView>
-			<StackLayout 
-			BackgroundColor="{DynamicResource Border}"
-			Padding="1">
-
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="400"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="5*"/>
+					<ColumnDefinition Width="1*"/>
+				</Grid.ColumnDefinitions>
+				
 				<StackLayout 
-					BackgroundColor="{DynamicResource Background}"
-					Orientation="Vertical"
-					HorizontalOptions="Fill"
-					VerticalOptions="FillAndExpand"
-					Padding="50,60">
-
-					<StackLayout
-						Padding="0,0,0,20">
-						<Image
-							x:Name="LessonImage"
-							WidthRequest="100"/>
-					</StackLayout>
+					BackgroundColor="{DynamicResource Border}"
+					Padding="1"
+					Grid.Row="1"
+					Grid.Column="1">
 
 					<StackLayout 
-						Orientation="Horizontal">
-						<CheckBox
-							x:Name="CreateNewCheckBox"
-							IsChecked="true">
-							<CheckBox.GestureRecognizers>
-								<TapGestureRecognizer Tapped="CreateNewCheckBox_Tapped"/>
-							</CheckBox.GestureRecognizers>
-						</CheckBox>
-						<Label 
-							Text="Create new lesson"
-							TextColor="{DynamicResource Label}"
-							VerticalOptions="Center"/>
+						BackgroundColor="{DynamicResource Background}"
+						Orientation="Vertical"
+						HorizontalOptions="Fill"
+						VerticalOptions="FillAndExpand"
+						Padding="50,60">
+
+						<StackLayout
+							Padding="0,0,0,20">
+							<Image
+								x:Name="LessonImage"
+								WidthRequest="100"/>
+						</StackLayout>
+
+						<StackLayout
+							Orientation="Horizontal">
+							<StackLayout 
+								Orientation="Horizontal"
+								HorizontalOptions="Start"
+								x:Name="CreateNewStack">
+								<CheckBox
+									x:Name="CreateNewCheckBox"
+									IsChecked="true">
+									<CheckBox.GestureRecognizers>
+										<TapGestureRecognizer Tapped="CreateNewCheckBox_Tapped"/>
+									</CheckBox.GestureRecognizers>
+								</CheckBox>
+								<Label 
+									Text="Create new lesson"
+									TextColor="{DynamicResource Label}"
+									VerticalOptions="Center"/>
+							</StackLayout>
+							<StackLayout
+								Orientation="Horizontal"
+								x:Name="MergeStack"
+								HorizontalOptions="End">
+								<CheckBox
+									x:Name="MergeCheckBox"
+									IsChecked="false">
+									<CheckBox.GestureRecognizers>
+										<TapGestureRecognizer Tapped="MergeCheckBox_Tapped"/>
+									</CheckBox.GestureRecognizers>
+								</CheckBox>
+								<Label 
+									Text="Merge"
+									TextColor="{DynamicResource Label}"
+									VerticalOptions="Center"/>
+							</StackLayout>
+						</StackLayout>
+
+
+						<StackLayout
+							x:Name="New">
+
+							<Entry 
+								x:Name="NameEntry"
+								Placeholder="Name"
+								BackgroundColor="{DynamicResource Background}"
+								TextColor="{DynamicResource Label}"
+								PlaceholderColor="{DynamicResource Label}"
+								FontSize="20"/>
+
+							<Label 
+								Text="Start of lesson"
+								TextColor="{DynamicResource Label}"
+								FontSize="Small"/>
+
+							<TimePicker 
+								x:Name="StartTimePicker"
+								BackgroundColor="{DynamicResource Background}"
+								TextColor="{DynamicResource Label}"/>
+
+							<Label 
+								Text="End of lesson"
+								TextColor="{DynamicResource Label}"
+								FontSize="Small"/>
+
+							<TimePicker
+								x:Name="EndTimePicker"
+								BackgroundColor="{DynamicResource Background}"
+								TextColor="{DynamicResource Label}"/>
+
+							<Picker 
+								x:Name="DayPicker"
+								Title="Day of week"
+								BackgroundColor="{DynamicResource Background}"
+								TextColor="{DynamicResource Label}"
+								TitleColor="{DynamicResource Label}"/>
+
+						</StackLayout>
+
+						<StackLayout 
+							x:Name="Merge"
+							IsVisible="False">
+
+							<Picker
+								x:Name="ClassPicker"
+								Title="Class"
+								SelectedIndexChanged="ClassPicker_SelectedIndexChanged"
+								BackgroundColor="{DynamicResource Background}"
+								TextColor="{DynamicResource Label}"
+								TitleColor="{DynamicResource Label}"/>
+							<Picker
+								x:Name="LessonPicker"
+								Title="Lesson"
+								SelectedIndexChanged="LessonPicker_SelectedIndexChanged"
+								BackgroundColor="{DynamicResource Background}"
+								TextColor="{DynamicResource Label}"
+								TitleColor="{DynamicResource Label}"/>
+
+						</StackLayout>
+
+						<StackLayout 
+							VerticalOptions="EndAndExpand"
+							HorizontalOptions="CenterAndExpand"
+							Orientation="Horizontal">
+
+							<Button 
+								Text="Cancel"
+								x:Name="CancelButton"/>
+							<Button 
+								Text="OK"
+								x:Name="OkButton"/>
+						</StackLayout>
+
 					</StackLayout>
-					
-					<StackLayout
-						x:Name="New">
-
-						<Entry 
-							x:Name="NameEntry"
-							Placeholder="Name"
-							BackgroundColor="{DynamicResource Background}"
-							TextColor="{DynamicResource Label}"
-							PlaceholderColor="{DynamicResource Label}"
-							FontSize="20"/>
-
-						<Label 
-							Text="Start of lesson"
-							TextColor="{DynamicResource Label}"
-							FontSize="Small"/>
-
-						<TimePicker 
-							x:Name="StartTimePicker"
-							BackgroundColor="{DynamicResource Background}"
-							TextColor="{DynamicResource Label}"/>
-
-						<Label 
-							Text="End of lesson"
-							TextColor="{DynamicResource Label}"
-							FontSize="Small"/>
-
-						<TimePicker
-							x:Name="EndTimePicker"
-							BackgroundColor="{DynamicResource Background}"
-							TextColor="{DynamicResource Label}"/>
-
-						<Picker 
-							x:Name="DayPicker"
-							Title="Day of week"
-							BackgroundColor="{DynamicResource Background}"
-							TextColor="{DynamicResource Label}"
-							TitleColor="{DynamicResource Label}"/>
-
-					</StackLayout>
-
-					<StackLayout
-						Orientation="Horizontal">
-						<CheckBox
-							x:Name="MergeCheckBox"
-							IsChecked="false">
-							<CheckBox.GestureRecognizers>
-								<TapGestureRecognizer Tapped="MergeCheckBox_Tapped"/>
-							</CheckBox.GestureRecognizers>
-						</CheckBox>
-						<Label 
-							Text="Merge"
-							TextColor="{DynamicResource Label}"
-							VerticalOptions="Center"/>
-					</StackLayout>
-
-					<StackLayout 
-						x:Name="Merge"
-						IsVisible="False">
-
-						<Picker
-							x:Name="ClassPicker"
-							Title="Class"
-							SelectedIndexChanged="ClassPicker_SelectedIndexChanged"
-							BackgroundColor="{DynamicResource Background}"
-							TextColor="{DynamicResource Label}"
-							TitleColor="{DynamicResource Label}"/>
-						<Picker
-							x:Name="LessonPicker"
-							Title="Lesson"
-							SelectedIndexChanged="LessonPicker_SelectedIndexChanged"
-							BackgroundColor="{DynamicResource Background}"
-							TextColor="{DynamicResource Label}"
-							TitleColor="{DynamicResource Label}"/>
-
-					</StackLayout>
-
-					<StackLayout 
-						VerticalOptions="EndAndExpand"
-						HorizontalOptions="CenterAndExpand"
-						Orientation="Horizontal">
-
-						<Button 
-							Text="Cancel"
-							x:Name="CancelButton"/>
-						<Button 
-							Text="OK"
-							x:Name="OkButton"/>
-					</StackLayout>
-
 				</StackLayout>
-			</StackLayout>
+			</Grid>
 		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

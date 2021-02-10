@@ -135,9 +135,9 @@ namespace RocnikovaPraceDrivka.Views
 					string str = nameEntry.Text.ToUpper();
 					cls = new Class(nameEntry.Text, descEntry.Text);
 				}
-				catch (Exception)
+				catch (Exception exc)
 				{
-					throw new Exception("Wrong format, try something like 1.C");
+					throw new Exception(string.Format("Wrong format, try something like 1.C\n{0}", exc.Message));
 				}
 
 				return cls;
@@ -175,15 +175,16 @@ namespace RocnikovaPraceDrivka.Views
 		{
 			ContentPage detailsPage = new ContentPage
 			{
-				Padding = new Thickness(80, 80, 80, 80),
 				BackgroundColor = Color.Transparent
 			};
+
+			Class selected = list.SelectedItem as Class;
 
 			AddClassPopup l;
 			if (nClass)
 				l = new AddClassPopup();
 			else
-				l = new AddClassPopup(list.SelectedItem as Class);
+				l = new AddClassPopup(selected);
 			
 			detailsPage.Content = l.Content;
 
@@ -208,7 +209,10 @@ namespace RocnikovaPraceDrivka.Views
 				if (nClass)
 					User.u.Classes.Add(c);
 				else
-					User.u.Classes.Update(list.SelectedItem as Class, c);
+					User.u.Classes.Update(selected, c);
+
+				list.ItemsSource = null;
+				list.ItemsSource = User.u.Classes.List;
 
 				await Navigation.PopModalAsync();
 			}

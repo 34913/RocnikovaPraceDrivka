@@ -48,17 +48,17 @@
 						</StackLayout>
 
 						<Entry 
-							BackgroundColor="{DynamicResource Background}"
-							TextColor="{DynamicResource Label}"
-							PlaceholderColor="{DynamicResource Label}"
+							BackgroundColor="{DynamicResource EntryBackground}"
+							TextColor="{DynamicResource EntryText}"
+							PlaceholderColor="{DynamicResource EntryText}"
 							x:Name="NameEntry"
 							Placeholder="Name"
 							FontSize="20"/>
 
 						<Entry 
-							BackgroundColor="{DynamicResource Background}"
-							TextColor="{DynamicResource Label}"
-							PlaceholderColor="{DynamicResource Label}"
+							BackgroundColor="{DynamicResource EntryBackground}"
+							TextColor="{DynamicResource EntryText}"
+							PlaceholderColor="{DynamicResource EntryText}"
 							x:Name="DescEntry"
 							Placeholder="Description"
 							FontSize="20"/>
@@ -68,12 +68,20 @@
 							HorizontalOptions="CenterAndExpand"
 							Orientation="Horizontal"
 							Padding="0,20,0,0">
+							
 							<Button 
 								Text="Cancel"
-								x:Name="CancelButton"/>
+								x:Name="CancelButton"
+								BackgroundColor="{DynamicResource ButtonBackground}"
+								BorderColor="{DynamicResource Border}"
+								TextColor="{DynamicResource ButtonText}"/>
 							<Button 
 								Text="OK"
-								x:Name="OkButton"/>
+								x:Name="OkButton"
+								BackgroundColor="{DynamicResource ButtonBackground}"
+								BorderColor="{DynamicResource Border}"
+								TextColor="{DynamicResource ButtonText}"/>
+			
 						</StackLayout>
 					</StackLayout>
 				</StackLayout>

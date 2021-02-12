@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RocnikovaPraceDrivka.Views.UserInfo"
+			 BackgroundColor="{DynamicResource Background}"
+			 NavigationPage.HasBackButton="true"
+			 MinimumHeightRequest="400">
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			x:Name="DayNightToolbarItem"
+			Clicked="DayNightToolbarItem_Clicked"/>
+	</ContentPage.ToolbarItems>
+
+	<ContentPage.Content>
+		<StackLayout 
+			HorizontalOptions="CenterAndExpand"
+			VerticalOptions="CenterAndExpand">
+			<ScrollView
+			Orientation="Vertical">
+				<StackLayout
+			x:Name="MainStack">
+
+					<Image 
+				x:Name="UserImage"
+				HorizontalOptions="Center"
+				WidthRequest="250"/>
+
+					<Entry 
+				Text="{Binding Name}"
+				TextChanged="NameEntry_TextChanged"/>
+
+					<Label
+				TextColor="{DynamicResource Label}"
+				Text="{Binding Email}"/>
+
+					<Label
+				TextColor="{DynamicResource Label}">
+						<Label.FormattedText>
+							<FormattedString>
+								<FormattedString.Spans>
+									<Span
+								Text="Počet tříd: "/>
+									<Span
+								x:Name="ClassesCount"/>
+								</FormattedString.Spans>
+							</FormattedString>
+						</Label.FormattedText>
+					</Label>
+
+					<Label
+				TextColor="{DynamicResource Label}">
+						<Label.FormattedText>
+							<FormattedString>
+								<FormattedString.Spans>
+									<Span
+								Text="Počet hodin: "/>
+									<Span
+								x:Name="LessonsCount"/>
+								</FormattedString.Spans>
+							</FormattedString>
+						</Label.FormattedText>
+					</Label>
+
+					<Label
+				TextColor="{DynamicResource Label}">
+						<Label.FormattedText>
+							<FormattedString>
+								<FormattedString.Spans>
+									<Span
+								Text="Počet studentů: "/>
+									<Span
+								x:Name="StudentsCount"/>
+								</FormattedString.Spans>
+							</FormattedString>
+						</Label.FormattedText>
+					</Label>
+
+				</StackLayout>
+			</ScrollView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

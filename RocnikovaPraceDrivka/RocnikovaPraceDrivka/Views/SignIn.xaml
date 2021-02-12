@@ -4,7 +4,8 @@
              x:Class="RocnikovaPraceDrivka.Views.SignIn"
 			 NavigationPage.HasNavigationBar="true"
 			 NavigationPage.HasBackButton="false"
-			 BackgroundColor="{DynamicResource Background}">
+			 BackgroundColor="{DynamicResource Background}"
+			 MinimumHeightRequest="400">
 
 	<ContentPage.ToolbarItems>
 		<ToolbarItem x:Name="InfoToolbarItem"
@@ -12,7 +13,9 @@
 		<ToolbarItem x:Name="DayNightToolbarItem"
 					 Clicked="DayNightToolbarItem_Clicked"/>
 	</ContentPage.ToolbarItems>
-	
+
+	<ScrollView
+		Orientation="Vertical">
 	<StackLayout Padding="10"
 				 x:Name="content">
 
@@ -27,18 +30,27 @@
 				   TextChanged="Entry_TextChanged"
 				   Completed="SubmitButton_Clicked"
 				   Placeholder="Email"
-				   Keyboard="Email"/>
+				   Keyboard="Email"
+				   BackgroundColor="{DynamicResource EntryBackground}"
+				   TextColor="{DynamicResource EntryText}"
+				   PlaceholderColor="{DynamicResource EntryText}"/>
 			<Entry x:Name="PswdEntry"
 				   TextChanged="Entry_TextChanged"
 				   Completed="SubmitButton_Clicked"
 				   Placeholder="Password"
-				   IsPassword="True"/>
+				   IsPassword="True"
+				   BackgroundColor="{DynamicResource EntryBackground}"
+				   TextColor="{DynamicResource EntryText}"
+				   PlaceholderColor="{DynamicResource EntryText}"/>
 			<Entry x:Name="PswdVerifyEntry"
 				   TextChanged="Entry_TextChanged"
 				   Completed="SubmitButton_Clicked"
 				   Placeholder="Verify password"
 				   IsVisible="false"
-				   IsPassword="True"/>
+				   IsPassword="True"
+				   BackgroundColor="{DynamicResource EntryBackground}"
+				   TextColor="{DynamicResource EntryText}"
+				   PlaceholderColor="{DynamicResource EntryText}"/>
 
 			<StackLayout WidthRequest="140"
 							 HorizontalOptions="Center"
@@ -73,4 +85,6 @@
 
 
 	</StackLayout>
+	</ScrollView>
+
 </ContentPage>

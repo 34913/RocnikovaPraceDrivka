@@ -15,6 +15,10 @@ namespace RocnikovaPraceDrivka.Popup
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AddLessonPopup : ContentPage
 	{
+		private bool changed = false;
+
+		//
+
 		public AddLessonPopup()
 		{
 			InitializeComponent();
@@ -102,24 +106,16 @@ namespace RocnikovaPraceDrivka.Popup
 			ChangeLightMode();
 		}
 
-		private void MergeCheckBox_Tapped(object sender, EventArgs e)
+		private void CreateNewCheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			CreateNewCheckBox.IsChecked = !CreateNewCheckBox.IsChecked;
-
-			if (MergeCheckBox.IsChecked)
+			if (changed)
 			{
-				New.IsVisible = false;
-				Merge.IsVisible = true;
+				changed = false;
+				return;
 			}
-			else
-			{
-				New.IsVisible = true;
-				Merge.IsVisible = false;
-			}
-		}
 
-		private void CreateNewCheckBox_Tapped(object sender, EventArgs e)
-		{
+			changed = true;
+
 			MergeCheckBox.IsChecked = !MergeCheckBox.IsChecked;
 
 			if (MergeCheckBox.IsChecked)
@@ -133,5 +129,30 @@ namespace RocnikovaPraceDrivka.Popup
 				Merge.IsVisible = false;
 			}
 		}
+
+		private void MergeCheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+		{
+			if (changed)
+			{
+				changed = false;
+				return;
+			}
+
+			changed = true;
+
+			CreateNewCheckBox.IsChecked = !CreateNewCheckBox.IsChecked;
+
+			if (MergeCheckBox.IsChecked)
+			{
+				New.IsVisible = false;
+				Merge.IsVisible = true;
+			}
+			else
+			{
+				New.IsVisible = true;
+				Merge.IsVisible = false;
+			}
+		}
+	
 	}
 }

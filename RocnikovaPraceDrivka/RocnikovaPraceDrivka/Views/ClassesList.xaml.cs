@@ -69,7 +69,7 @@ namespace RocnikovaPraceDrivka.Views
 			ClassPop(true);
 		}
 
-		private void TapClass_TappedAsync(object sender, EventArgs e)
+		private void TapClass_Tapped(object sender, EventArgs e)
 		{
 			if (list.SelectionMode == SelectionMode.Single)
 			{
@@ -234,5 +234,6 @@ namespace RocnikovaPraceDrivka.Views
 
 			await Navigation.PushModalAsync(detailsPage, false);
 		}
+
 	}
 }

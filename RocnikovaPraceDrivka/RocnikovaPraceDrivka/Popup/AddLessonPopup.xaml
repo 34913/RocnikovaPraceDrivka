@@ -52,10 +52,11 @@
 								x:Name="CreateNewStack">
 								<CheckBox
 									x:Name="CreateNewCheckBox"
-									IsChecked="true">
-									<CheckBox.GestureRecognizers>
-										<TapGestureRecognizer Tapped="CreateNewCheckBox_Tapped"/>
-									</CheckBox.GestureRecognizers>
+									IsChecked="true"
+									
+									Color="{DynamicResource CheckBox}"
+									BackgroundColor="{DynamicResource CheckBoxBackground}"
+									CheckedChanged="CreateNewCheckBox_CheckedChanged">
 								</CheckBox>
 								<Label 
 									Text="Create new lesson"
@@ -68,10 +69,10 @@
 								HorizontalOptions="End">
 								<CheckBox
 									x:Name="MergeCheckBox"
-									IsChecked="false">
-									<CheckBox.GestureRecognizers>
-										<TapGestureRecognizer Tapped="MergeCheckBox_Tapped"/>
-									</CheckBox.GestureRecognizers>
+									IsChecked="false"
+									Color="{DynamicResource CheckBox}"
+									BackgroundColor="{DynamicResource CheckBoxBackground}"
+									CheckedChanged="MergeCheckBox_CheckedChanged">
 								</CheckBox>
 								<Label 
 									Text="Merge"
@@ -80,16 +81,15 @@
 							</StackLayout>
 						</StackLayout>
 
-
 						<StackLayout
 							x:Name="New">
 
 							<Entry 
 								x:Name="NameEntry"
 								Placeholder="Name"
-								BackgroundColor="{DynamicResource Background}"
-								TextColor="{DynamicResource Label}"
-								PlaceholderColor="{DynamicResource Label}"
+								BackgroundColor="{DynamicResource EntryBackground}"
+								TextColor="{DynamicResource EntryText}"
+								PlaceholderColor="{DynamicResource EntryText}"
 								FontSize="20"/>
 
 							<Label 
@@ -99,8 +99,8 @@
 
 							<TimePicker 
 								x:Name="StartTimePicker"
-								BackgroundColor="{DynamicResource Background}"
-								TextColor="{DynamicResource Label}"/>
+								BackgroundColor="{DynamicResource PickerBackground}"
+								TextColor="{DynamicResource PickerText}"/>
 
 							<Label 
 								Text="End of lesson"
@@ -109,15 +109,15 @@
 
 							<TimePicker
 								x:Name="EndTimePicker"
-								BackgroundColor="{DynamicResource Background}"
-								TextColor="{DynamicResource Label}"/>
+								BackgroundColor="{DynamicResource PickerBackground}"
+								TextColor="{DynamicResource PickerText}"/>
 
 							<Picker 
 								x:Name="DayPicker"
 								Title="Day of week"
-								BackgroundColor="{DynamicResource Background}"
-								TextColor="{DynamicResource Label}"
-								TitleColor="{DynamicResource Label}"/>
+								BackgroundColor="{DynamicResource PickerBackground}"
+								TextColor="{DynamicResource PickerText}"
+								TitleColor="{DynamicResource PickerText}"/>
 
 						</StackLayout>
 
@@ -129,16 +129,16 @@
 								x:Name="ClassPicker"
 								Title="Class"
 								SelectedIndexChanged="ClassPicker_SelectedIndexChanged"
-								BackgroundColor="{DynamicResource Background}"
-								TextColor="{DynamicResource Label}"
-								TitleColor="{DynamicResource Label}"/>
+								BackgroundColor="{DynamicResource PickerBackground}"
+								TextColor="{DynamicResource PickerText}"
+								TitleColor="{DynamicResource PickerText}"/>
 							<Picker
 								x:Name="LessonPicker"
 								Title="Lesson"
 								SelectedIndexChanged="LessonPicker_SelectedIndexChanged"
-								BackgroundColor="{DynamicResource Background}"
-								TextColor="{DynamicResource Label}"
-								TitleColor="{DynamicResource Label}"/>
+								BackgroundColor="{DynamicResource PickerBackground}"
+								TextColor="{DynamicResource PickerText}"
+								TitleColor="{DynamicResource PickerText}"/>
 
 						</StackLayout>
 
@@ -149,10 +149,16 @@
 
 							<Button 
 								Text="Cancel"
-								x:Name="CancelButton"/>
+								x:Name="CancelButton"
+								BackgroundColor="{DynamicResource ButtonBackground}"
+								BorderColor="{DynamicResource Border}"
+								TextColor="{DynamicResource ButtonText}"/>
 							<Button 
 								Text="OK"
-								x:Name="OkButton"/>
+								x:Name="OkButton"
+								BackgroundColor="{DynamicResource ButtonBackground}"
+								BorderColor="{DynamicResource Border}"
+								TextColor="{DynamicResource ButtonText}"/>
 						</StackLayout>
 
 					</StackLayout>

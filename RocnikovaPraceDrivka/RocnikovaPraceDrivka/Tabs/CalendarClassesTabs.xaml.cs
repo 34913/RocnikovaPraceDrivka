@@ -26,16 +26,16 @@ namespace RocnikovaPraceDrivka.Tabs
 
 			Children.Add(new Calendar());
 			Children.Add(new ClassesList());
-
-			CurrentPageChanged += CurrentPageHasChanged;
 		}
 
 		//
+		
 		protected override void OnAppearing()
 		{
 			ChangeLightMode();
 
 			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;
+			Title = User.u.Name;
 
 			base.OnAppearing();
 		}
@@ -54,20 +54,14 @@ namespace RocnikovaPraceDrivka.Tabs
 			ChangeLightMode();
 		}
 
-		private void InfoToolbarItem_Clicked(object sender, EventArgs e)
+		private async void InfoToolbarItem_Clicked(object sender, EventArgs e)
 		{
-
+			await Navigation.PushAsync(new UserInfo());
 		}
 
 		private void DayNightToolbarItem_Clicked(object sender, EventArgs e)
 		{
 			DayNightHandle.DayNight.Swap();
-		}
-
-		private void CurrentPageHasChanged(object sender, EventArgs e)
-		{
-			TabbedPage tabbedPage = (TabbedPage)sender;
-			Title = tabbedPage.CurrentPage.Title;
 		}
 
 		//

@@ -72,20 +72,21 @@ namespace RocnikovaPraceDrivka.Views
         }
 
         private async void SubmitButton_Clicked(object sender, EventArgs e)
-		{
-			if (string.IsNullOrWhiteSpace(EmailEntry.Text) 
-                || string.IsNullOrWhiteSpace(PswdEntry.Text) 
+        {
+            if (string.IsNullOrWhiteSpace(EmailEntry.Text)
+                || string.IsNullOrWhiteSpace(PswdEntry.Text)
                 || (string.IsNullOrWhiteSpace(PswdVerifyEntry.Text) && register))
-			{
+            {
                 bool first = false;
                 string s = "Please enter ";
 
-                if (string.IsNullOrWhiteSpace(EmailEntry.Text)) {
+                if (string.IsNullOrWhiteSpace(EmailEntry.Text))
+                {
                     s += "email";
                     first = true;
                 }
-				if (string.IsNullOrWhiteSpace(PswdEntry.Text))
-				{
+                if (string.IsNullOrWhiteSpace(PswdEntry.Text))
+                {
                     if (first)
                     {
                         if (string.IsNullOrWhiteSpace(PswdVerifyEntry.Text) && register)
@@ -95,13 +96,13 @@ namespace RocnikovaPraceDrivka.Views
                     }
                     s += "password";
                     first = true;
-				}
+                }
                 if (string.IsNullOrWhiteSpace(PswdVerifyEntry.Text) && register)
                 {
                     if (first)
                         s += " and ";
                     s += "password verify";
-                    first = true;
+                    //first = true;
                 }
 
                 ClearPswd();
@@ -116,68 +117,20 @@ namespace RocnikovaPraceDrivka.Views
                 return;
             }
 
-			if (!IsValidEmail(EmailEntry.Text))
-            {
-                await DisplayAlert("Invalid email", "Please enter email in valid form", "OK");
-            }
-			else
+            try
             {
                 User.u = new User(EmailEntry.Text);
-
-                if (register)
-                {
-                    try
-                    {
-                        User.u.Add();
-                    }
-                    catch (Exception exc)
-                    {
-                        throw exc;
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        User.u.Select();
-                        User.u.Classes.Select();
-
-                        foreach(Class cls in User.u.Classes.List)
-						{
-                            cls.Students.Select();
-                            cls.Lessons.Select();
-						}
-                    }
-                    catch (Exception exc)
-                    {
-                        throw exc;
-                    }
-                }
-
-                CalendarControl.cc = new CalendarControl();
-                CalendarControl.cc.LoadAll();
-
-                register = false;
-
-                if (Application.Current.Properties.ContainsKey(registeredKey))
-                    Application.Current.Properties.Remove(registeredKey);
-                Application.Current.Properties.Add(registeredKey, 0);
-
-                if (Application.Current.Properties.ContainsKey(loginNameKey))
-                    Application.Current.Properties.Remove(loginNameKey);
-                Application.Current.Properties.Add(loginNameKey, EmailEntry.Text);
-
-                ChangeModeAction();
-
-                if (!(Application.Current.MainPage is NavigationPage)) {
-                    string currentFile = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName();
-                    int currentLine = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileLineNumber();
-                    throw new Exception(string.Format("file {0}, line {1}", currentFile, currentLine));
-                }
-                await Navigation.PushAsync(new Tabs.CalendarClassesTabs(), false);
             }
-            ClearPswd();
-		}
+            catch(Exception exc)
+			{
+                await DisplayAlert("Error", exc.Message, "OK");
+
+                ClearPswd();
+                return;
+			}
+
+            PushView();
+        }
 
 		private void ChangeSignButton_Clicked(object sender, EventArgs e)
 		{
@@ -244,55 +197,6 @@ namespace RocnikovaPraceDrivka.Views
         }
 
         /// <summary>
-        /// Verify if given string is email
-        /// </summary>
-        /// <param name="email">string of email form to verify</param>
-        /// <returns>true if email is truly functional email</returns>
-        private bool IsValidEmail(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                return false;
-
-            try
-            {
-                // Normalize the domain
-                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
-                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
-
-                // Examines the domain part of the email and normalizes it.
-                string DomainMapper(Match match)
-                {
-                    // Use IdnMapping class to convert Unicode domain names.
-                    var idn = new IdnMapping();
-
-                    // Pull out and process domain name (throws ArgumentException on invalid)
-                    string domainName = idn.GetAscii(match.Groups[2].Value);
-
-                    return match.Groups[1].Value + domainName;
-                }
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return false;
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-
-            try
-            {
-                return Regex.IsMatch(email,
-                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// function changing numerous names after changing login/register mode
         /// </summary>
         private void ChangeModeAction()
@@ -319,6 +223,62 @@ namespace RocnikovaPraceDrivka.Views
             PswdEntry.Text = string.Empty;
             PswdVerifyEntry.Text = string.Empty;
 		}
+
+        private async void PushView()
+		{
+            if (register)
+            {
+                try
+                {
+                    User.u.Add();
+                }
+                catch (Exception exc)
+                {
+                    throw exc;
+                }
+            }
+            else
+            {
+                try
+                {
+                    User.u.Select();
+                    User.u.Classes.Select();
+
+                    foreach (Class cls in User.u.Classes.List)
+                    {
+                        cls.Students.Select();
+                        cls.Lessons.Select();
+                    }
+                }
+                catch (Exception exc)
+                {
+                    throw exc;
+                }
+            }
+
+            CalendarControl.cc = new CalendarControl();
+            CalendarControl.cc.LoadAll();
+
+            register = false;
+
+            if (Application.Current.Properties.ContainsKey(registeredKey))
+                Application.Current.Properties.Remove(registeredKey);
+            Application.Current.Properties.Add(registeredKey, 0);
+
+            if (Application.Current.Properties.ContainsKey(loginNameKey))
+                Application.Current.Properties.Remove(loginNameKey);
+            Application.Current.Properties.Add(loginNameKey, EmailEntry.Text);
+
+            ChangeModeAction();
+
+            if (!(Application.Current.MainPage is NavigationPage))
+            {
+                string currentFile = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName();
+                int currentLine = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileLineNumber();
+                throw new Exception(string.Format("file {0}, line {1}", currentFile, currentLine));
+            }
+            await Navigation.PushAsync(new Tabs.CalendarClassesTabs(), false);
+        }
 
 		private void DayNightToolbarItem_Clicked(object sender, EventArgs e)
 		{

@@ -5,11 +5,21 @@
 
 	<Color x:Key="Background">#000000</Color>
 	<Color x:Key="Label">#FFFFFF</Color>
-	<Color x:Key="Navigation">#111111</Color>
-	<Color x:Key="NavigationText">#FFFFFF</Color>
-	<Color x:Key="ButtonText">#FFFFFF</Color>
 	<Color x:Key="Border">#FFFFFF</Color>
 
+	<Color x:Key="Navigation">#111111</Color>
+	<Color x:Key="NavigationText">#FFFFFF</Color>
+	
 	<Color x:Key="ButtonBackground">#444444</Color>
+	<Color x:Key="ButtonText">#FFFFFF</Color>
 
+	<Color x:Key="EntryBackground">#000000</Color>
+	<Color x:Key="EntryText">#FFFFFF</Color>
+
+	<Color x:Key="PickerBackground">#000000</Color>
+	<Color x:Key="PickerText">#FFFFFF</Color>
+
+	<Color x:Key="CheckBoxBackground">black</Color>
+	<Color x:Key="CheckBox">red</Color>
+	
 </ResourceDictionary>

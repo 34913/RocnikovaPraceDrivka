@@ -5,14 +5,13 @@
 			 x:Class="RocnikovaPraceDrivka.Views.Calendar"
 			 Title="Calendar"
 			 NavigationPage.HasNavigationBar="false"
-			 BackgroundColor="{DynamicResource Background}">
+			 BackgroundColor="{DynamicResource Background}"
+			 MinimumHeightRequest="400">
 
 	<ScrollView 
 		Orientation="Horizontal"
 		VerticalOptions="FillAndExpand">
 
-		
-		
 		<StackLayout
 			x:Name="ListLessons"
 			Orientation="Vertical"

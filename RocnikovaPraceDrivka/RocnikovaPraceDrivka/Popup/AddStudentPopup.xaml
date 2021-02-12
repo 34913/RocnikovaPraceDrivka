@@ -60,10 +60,16 @@
 
 							<Button 
 								Text="Cancel"
-								x:Name="CancelButton"/>
+								x:Name="CancelButton"
+								BackgroundColor="{DynamicResource ButtonBackground}"
+								BorderColor="{DynamicResource Border}"
+								TextColor="{DynamicResource ButtonText}"/>
 							<Button 
 								Text="OK"
-								x:Name="OkButton"/>
+								x:Name="OkButton"
+								BackgroundColor="{DynamicResource ButtonBackground}"
+								BorderColor="{DynamicResource Border}"
+								TextColor="{DynamicResource ButtonText}"/>
 
 						</StackLayout>
 					</StackLayout>

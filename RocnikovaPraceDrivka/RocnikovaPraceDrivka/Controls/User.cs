@@ -12,6 +12,8 @@ namespace RocnikovaPraceDrivka.Controls
 	{
 		protected string name;
 
+		protected EmailControl email;
+
 		protected int id;
 
 		string pswd;
@@ -19,8 +21,6 @@ namespace RocnikovaPraceDrivka.Controls
 		//
 
 		public ClassesManager Classes { get; private set; }
-
-		//
 
 		public string Name {
 			get => name;
@@ -36,24 +36,24 @@ namespace RocnikovaPraceDrivka.Controls
 			}
 		}
 
-		public string Email { get; private set; }
+		public string Email { get => email.Address; }
 
 		//
 
 		public User(string email)
 		{
-			Email = email;
 			Name = email;
 
 			Classes = new ClassesManager();
+			this.email = new EmailControl(email);
 		}
 
 		public User(string name, string email)
 		{
 			Name = name;
-			Email = email;
-
+			
 			Classes = new ClassesManager();
+			this.email = new EmailControl(email);
 		}
 
 		//
@@ -83,6 +83,7 @@ namespace RocnikovaPraceDrivka.Controls
 			name = vals.name;
 			id = vals.id;
 			pswd = vals.pswd;
+			email = vals.email;
 			Classes = vals.Classes;
 		}
 

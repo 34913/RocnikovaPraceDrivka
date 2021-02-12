@@ -7,7 +7,8 @@
 			 NavigationPage.HasNavigationBar="True"
 			 NavigationPage.HasBackButton="True"
 			 NavigationPage.BackButtonTitle="Back"
-			 BackgroundColor="{DynamicResource Background}">
+			 BackgroundColor="{DynamicResource Background}"
+			 MinimumHeightRequest="400">
 
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
@@ -17,51 +18,56 @@
 
 	<ContentPage.Content>
 		<StackLayout 
-			HorizontalOptions="Center"
-			VerticalOptions="CenterAndExpand"
+			HorizontalOptions="CenterAndExpand"
+			VerticalOptions="CenterAndExpand">
+			<ScrollView
+			Orientation="Vertical">
+			<StackLayout
 			x:Name="content">
 
-			<Image x:Name="ImageAuthor"
+				<Image x:Name="ImageAuthor"
 				   WidthRequest="250"
 				   HorizontalOptions="Center"/>
 
-			<StackLayout 
+				<StackLayout 
 				WidthRequest="250"
 				HorizontalOptions="Center"
 				Padding="0,50,0,0">
-				
-				<Label 
+
+					<Label 
 					TextColor="{DynamicResource Label}"
 					Text="František Holý"
 					FontSize="22"
 					HorizontalOptions="Center"/>
-				<Label 
+					<Label 
 					TextColor="{DynamicResource Label}"
 					Text="fandaholy1@gmail.com"
 					HorizontalOptions="Center"/>
 
-				<Label 
+					<Label 
 					Padding="0,30,0,0"
 					TextColor="{DynamicResource Label}">
-					<Label.FormattedText>
-						<FormattedString>
-							<FormattedString.Spans>
-								<Span Text="I am "/>
-								<Span x:Name="AgeSpan"/>
-								<Span Text=" years old student, specializing in everything about IT"/>
-							</FormattedString.Spans>
-						</FormattedString>
-					</Label.FormattedText>
-				</Label>
+						<Label.FormattedText>
+							<FormattedString>
+								<FormattedString.Spans>
+									<Span Text="I am "/>
+									<Span x:Name="AgeSpan"/>
+									<Span Text=" years old student, specializing in everything about IT"/>
+								</FormattedString.Spans>
+							</FormattedString>
+						</Label.FormattedText>
+					</Label>
 
-				<Label 
+					<Label 
 					TextColor="{DynamicResource Label}">
-					I love developing apps, especially anything about c, c++ and c#
+						I love developing apps, especially anything about c, c++ and c#
 This was created as my seminar work, purpose of this work was to understand xamarin.forms.
 I was quite new at the beggining, but i would appreciate any advice anyways
-				</Label>
+					</Label>
 
+				</StackLayout>
 			</StackLayout>
+			</ScrollView>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

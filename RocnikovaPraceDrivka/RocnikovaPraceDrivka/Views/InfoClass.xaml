@@ -152,7 +152,8 @@
 										Padding="0"
 										Margin="0"
 										HasShadow="False"
-										BorderColor="{DynamicResource Border}">
+										BorderColor="{DynamicResource Border}"
+										BackgroundColor="{DynamicResource Background}">
 										<Frame.Triggers>
 											<DataTrigger TargetType="Frame" Binding="{Binding OneDraw}" Value="False">
 												<Setter Property="BackgroundColor" Value="{DynamicResource Background}"/>

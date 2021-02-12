@@ -31,6 +31,8 @@ namespace RocnikovaPraceDrivka.Views
 
 			AgeSpan.Text = age.ToString();
 
+			ImageAuthor.Source = "InfoAuthor.png";
+
 			ChangeLightMode();
 
 			DayNightHandle.DayNight.PropertyChanged += DayNight_PropertyChanged;

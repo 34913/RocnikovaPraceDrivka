@@ -6,8 +6,6 @@ namespace RocnikovaPraceDrivka
 {
 	public partial class App : Application
 	{
-
-
 		public App()
 		{
 			InitializeComponent();

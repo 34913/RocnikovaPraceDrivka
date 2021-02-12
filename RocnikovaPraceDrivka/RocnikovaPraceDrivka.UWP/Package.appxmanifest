@@ -8,8 +8,8 @@
 
   <Identity
     Name="584bd72e-857d-4d7b-8eb9-2f7f429c9132"
-    Publisher="CN=5df8cf78-6fca-43d8-977b-2dfb0e294c2e"
-    Version="1.0.0.0" />
+    Publisher="CN=eagle"
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

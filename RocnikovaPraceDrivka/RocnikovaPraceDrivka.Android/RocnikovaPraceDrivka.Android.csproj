@@ -106,7 +106,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\InfoAuthor.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RocnikovaPraceDrivka\RocnikovaPraceDrivka.csproj">
       <Project>{05C9AD89-756D-40CB-8D2A-80D8FA38F773}</Project>
@@ -124,9 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Day.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\InfoAuthor.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\InfoDay.png" />

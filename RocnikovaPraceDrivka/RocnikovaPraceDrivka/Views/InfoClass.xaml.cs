@@ -128,6 +128,7 @@ namespace RocnikovaPraceDrivka.Views
 					Padding = 0,
 					Margin = 0,
 					HasShadow = false,
+					BackgroundColor = Color.Transparent,
 				};
 
 				TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
@@ -595,6 +596,9 @@ namespace RocnikovaPraceDrivka.Views
 
 		private async void DrawResetButton_Clicked(object sender, EventArgs e)
 		{
+			if (cls.Students.List.Count == 0)
+				return;
+
 			if (await DisplayAlert("Confirm", "Are you sure you want to reset the \"draw state\" of all students in this class?", "OK", "Cancel"))
 			{
 				foreach (Student s in cls.Students.List)

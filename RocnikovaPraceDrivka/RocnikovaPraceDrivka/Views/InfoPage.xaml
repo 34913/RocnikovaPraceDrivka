@@ -21,7 +21,7 @@
 			VerticalOptions="CenterAndExpand"
 			x:Name="content">
 
-			<Image Source="InfoAuthor.png"
+			<Image x:Name="ImageAuthor"
 				   WidthRequest="250"
 				   HorizontalOptions="Center"/>
 
